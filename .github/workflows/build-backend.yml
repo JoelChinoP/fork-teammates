@@ -26,6 +26,9 @@ jobs:
           sed -i "s|^app.postgres.username=.*|app.postgres.username=${{ secrets.DB_USER }}|" src/main/resources/build.properties
           sed -i "s|^app.postgres.password=.*|app.postgres.password=${{ secrets.DB_PASS }}|" src/main/resources/build.properties
 
+      - name: Build backend to Production
+        run: ./gradlew build --no-daemon
+
       #- name: Create configs
       #run: ./gradlew createConfigs
       #  run: cp src/main/resources/build.template.properties src/main/resources/build.properties
