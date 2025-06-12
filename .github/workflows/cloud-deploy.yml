@@ -49,15 +49,14 @@ jobs:
 
       - name: Create file private key
         run: |
-          echo "${{ secrets.DEV_KEY }}" > dev_key
+          echo "${{ secrets.VPS_KEY }}" > dev_key
           chmod 600 dev_key
 
       - name: Connect to VPS
-        env:
-          SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
-          ssh -i dev_key -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} "echo 'Conectado correctamente!'"
+          ssh -i dev_key -o StrictHostKeyChecking=no
+            ${secrets.VPS_USER}@${secrets.VPS_HOST} 
+            "echo 'Conectado correctamente!'"
 
   deploy-backend:
     runs-on: ubuntu-latest
