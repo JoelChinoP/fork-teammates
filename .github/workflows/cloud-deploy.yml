@@ -54,12 +54,8 @@ jobs:
           chmod 600 ~/.ssh/private
 
       - name: Connect to VPS
-        env:
-          VPS_USER: ${{ secrets.VPS_USER }}
-          VPS_HOST: ${{ secrets.VPS_HOST }}
         run: |
-          ssh -v -i ~/.ssh/private -o "StrictHostKeyChecking no" ${VPS_USER}@${VPS_HOST}
-          echo "Connected to VPS"
+          ssh -v -i ~/.ssh/private -o "StrictHostKeyChecking no" ${secrets.VPS_USER}@${secrets.VPS_HOST}
 
   deploy-backend:
     runs-on: ubuntu-latest
