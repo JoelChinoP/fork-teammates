@@ -26,7 +26,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build backend image
-        run: docker build -f docker/Dockerfile.backend -t teammates-backend:gha-cache
+        run: docker build -f docker/Dockerfile.backend -t teammates-backend:gha-cache .
 
       - name: Save backend image as tar
         run: docker save teammates-backend:gha-cache -o backend-image.tar

@@ -33,13 +33,13 @@ jobs:
 
       - name: Build frontend
         run: npm run build
-      
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
       - name: Build frontend image
-        run: docker build -f docker/Dockerfile.frontend -t teammates-frontend:gha-cache
-      
+        run: docker build -f docker/Dockerfile.frontend -t teammates-frontend:gha-cache .
+
       - name: Save frontend image as tar
         run: docker save teammates-frontend:gha-cache -o frontend-image.tar
 
