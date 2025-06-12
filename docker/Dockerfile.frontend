@@ -3,8 +3,8 @@ FROM nginx:alpine
 
 # Elimina archivos HTML por defecto de Nginx
 RUN rm -rf /usr/share/nginx/html/*
-# Copia tu build Angular ya generado
-COPY dist/ /usr/share/nginx/html/
+# Copia el contenido de la aplicación Angular al directorio de Nginx
+COPY src/web/dist/ /usr/share/nginx/html/
 
 # Expone el puerto 80
 EXPOSE 4200

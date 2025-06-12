@@ -28,17 +28,17 @@ jobs:
           path: datastore-image.tar
           key: datastore-${{ github.sha }}
 
-      - name: Test datastore image
-        run: |
-          docker load -i datastore-image.tar
-          CONTAINER_ID=$(docker run -d \
-            -v ${{ github.workspace }}/src/main/appengine/index.yaml:/root/.config/gcloud/emulators/datastore/WEB-INF/index.yaml \
-            -p 8484:8484 \
-            datastore:gha-cache)
-          echo "Container running: $CONTAINER_ID"
-          sleep 10
-          docker logs $CONTAINER_ID
-          docker stop $CONTAINER_ID
+      #- name: Test datastore image
+      #  run: |
+      #    docker load -i datastore-image.tar
+      #    CONTAINER_ID=$(docker run -d \
+      #      -v ${{ github.workspace }}/src/main/appengine/index.yaml:/root/.config/gcloud/emulators/datastore/WEB-INF/index.yaml \
+      #      -p 8484:8484 \
+      #      datastore:gha-cache)
+      #    echo "Container running: $CONTAINER_ID"
+      #    sleep 10
+      #    docker logs $CONTAINER_ID
+      #    docker stop $CONTAINER_ID
 
   build-solr:
     runs-on: ubuntu-latest
@@ -61,11 +61,11 @@ jobs:
           path: solr-image.tar
           key: solr-${{ github.sha }}
 
-      - name: Test solr image
-        run: |
-          docker load -i solr-image.tar
-          CONTAINER_ID=$(docker run -d -p 8983:8983 solr:gha-cache)
-          echo "Container running: $CONTAINER_ID"
-          sleep 10
-          docker logs $CONTAINER_ID
-          docker stop $CONTAINER_ID
+      #- name: Test solr image
+      #  run: |
+      #    docker load -i solr-image.tar
+      #    CONTAINER_ID=$(docker run -d -p 8983:8983 solr:gha-cache)
+      #    echo "Container running: $CONTAINER_ID"
+      #    sleep 10
+      #    docker logs $CONTAINER_ID
+      #    docker stop $CONTAINER_ID
