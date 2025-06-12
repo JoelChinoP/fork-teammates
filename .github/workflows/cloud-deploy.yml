@@ -49,15 +49,16 @@ jobs:
 
       - name: Create file private key
         run: |
-          echo "${{ secrets.VPS_KEY }}" > dev_key
-          chmod 600 dev_key
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.VPS_KEY }}" > ~/.ssh/private
+          chmod 600 ~/.ssh/private
 
       - name: Connect to VPS
         env:
           VPS_USER: ${{ secrets.VPS_USER }}
           VPS_HOST: ${{ secrets.VPS_HOST }}
         run: |
-          ssh -v -o StrictHostKeyChecking=no -i dev_key ${VPS_USER}@${VPS_HOST}
+          ssh -v -i ~/.ssh/private -o "StrictHostKeyChecking no" ${VPS_USER}@${VPS_HOST}
           echo "Connected to VPS"
 
   deploy-backend:
