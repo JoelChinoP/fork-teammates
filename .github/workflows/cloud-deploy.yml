@@ -9,6 +9,8 @@ on:
       - main
     paths:
       - ".github/workflows/cloud-deploy.yml"
+      - ".github/workflows/build-backend.yml"
+      - ".github/workflows/build-frontend.yml"
 
 permissions:
   contents: read
