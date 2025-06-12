@@ -1,0 +1,24 @@
+name: Build Backend
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Java 17 with Gradle Cache
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+          cache: "gradle"
+
+      - name: Create configs
+        run: ./gradlew createConfigs
+
+      - name: Build backend to Production
+        working-directory: backend
+        run: ./gradlew build --no-daemon
