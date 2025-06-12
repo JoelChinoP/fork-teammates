@@ -17,17 +17,26 @@ jobs:
           java-version: "17"
           cache: "gradle"
 
-      - name: Create configs
-        #run: ./gradlew createConfigs
-        run: cp src/main/resources/build.template.properties src/main/resources/build.properties
-
-      - name: Build backend to Production custom DB credentials
-        #run: ./gradlew build --no-daemon
+      - name: Crear build.properties con secrets DB
         run: |
-          ./gradlew clean build \
-            -DliquibaseDbUrl="jdbc:postgresql://${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }}/${{ secrets.DB_NAME }}" \
-            -DliquibaseUsername="${{ secrets.DB_USER }}" \
-            -DliquibasePassword="${{ secrets.DB_PASS }}"
+          cp src/main/resources/build.template.properties src/main/resources/build.properties
+          sed -i "s|^app.postgres.host=.*|app.postgres.host=${{ secrets.DB_HOST }}|" src/main/resources/build.properties
+          sed -i "s|^app.postgres.port=.*|app.postgres.port=${{ secrets.DB_PORT }}|" src/main/resources/build.properties
+          sed -i "s|^app.postgres.databasename=.*|app.postgres.databasename=${{ secrets.DB_NAME }}|" src/main/resources/build.properties
+          sed -i "s|^app.postgres.username=.*|app.postgres.username=${{ secrets.DB_USER }}|" src/main/resources/build.properties
+          sed -i "s|^app.postgres.password=.*|app.postgres.password=${{ secrets.DB_PASS }}|" src/main/resources/build.properties
+
+      #- name: Create configs
+      #run: ./gradlew createConfigs
+      #  run: cp src/main/resources/build.template.properties src/main/resources/build.properties
+
+      #- name: Build backend to Production custom DB credentials
+      #run: ./gradlew build --no-daemon
+      #  run: |
+      #    ./gradlew clean build \
+      #      -DliquibaseDbUrl="jdbc:postgresql://${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }}/${{ secrets.DB_NAME }}" \
+      #      -DliquibaseUsername="${{ secrets.DB_USER }}" \
+      #      -DliquibasePassword="${{ secrets.DB_PASS }}"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
