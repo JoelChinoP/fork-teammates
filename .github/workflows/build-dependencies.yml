@@ -34,7 +34,11 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}/src/main/appengine/index.yaml:/root/.config/gcloud/emulators/datastore/WEB-INF/index.yaml \
             -p 8484:8484 \
-            datastore:gha-cache echo "Image works!"
+            datastore:gha-cache
+          echo "Container running: $CONTAINER_ID"
+          sleep 10
+          docker logs $CONTAINER_ID
+          docker stop $CONTAINER_ID
 
   build-solr:
     runs-on: ubuntu-latest
@@ -46,7 +50,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build solr image
-        run: docker build -t solr ./solr
+        run: docker build -t solr:gha-cache -o solr-image.tar
 
       - name: Save solr image as tar
         run: docker save solr:gha-cache -o solr-image.tar
@@ -60,4 +64,8 @@ jobs:
       - name: Test solr image
         run: |
           docker load -i solr-image.tar
-          docker run --rm -p 8983:8983 solr:gha-cache echo "Image works!"
+          docker run --rm -p 8983:8983 solr:gha-cache
+          echo "Container running: $CONTAINER_ID"
+          sleep 10
+          docker logs $CONTAINER_ID
+          docker stop $CONTAINER_ID
