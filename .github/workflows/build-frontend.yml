@@ -26,9 +26,7 @@ jobs:
         run: ./gradlew generateTypes
 
       - name: Install dependencies to Production
-        working-directory: frontend
         run: npm ci --production --no-fund --no-audit --legacy-peer-deps
 
       - name: Build frontend
-        working-directory: frontend
         run: npm run build

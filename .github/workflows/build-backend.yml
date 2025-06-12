@@ -20,5 +20,4 @@ jobs:
         run: ./gradlew createConfigs
 
       - name: Build backend to Production
-        working-directory: backend
         run: ./gradlew build --no-daemon
