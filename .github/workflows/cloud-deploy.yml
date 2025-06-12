@@ -57,7 +57,7 @@ jobs:
           VPS_USER: ${{ secrets.VPS_USER }}
           VPS_HOST: ${{ secrets.VPS_HOST }}
         run: |
-          ssh -i dev_key ${VPS_USER}@${VPS_HOST} -y
+          ssh -v -i dev_key ${VPS_USER}@${VPS_HOST}
           echo "Connected to VPS"
 
   deploy-backend:
