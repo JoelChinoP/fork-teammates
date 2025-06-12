@@ -1,0 +1,13 @@
+FROM tomcat:10-jdk17-temurin
+
+# Borra aplicaciones por defecto (opcional)
+RUN rm -rf /usr/local/tomcat/webapps/*
+
+# Copia tu war al directorio de despliegue
+COPY build/libs/fork-teammates.war /usr/local/tomcat/webapps/ROOT.war
+
+# Expone el puerto por defecto de Tomcat
+EXPOSE 8080
+
+# Inicia Tomcat
+CMD ["catalina.sh", "run"]
