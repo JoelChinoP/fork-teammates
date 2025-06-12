@@ -54,7 +54,7 @@ jobs:
 
       - name: Connect to VPS
         run: |
-          ssh -i dev_key teammates@34.176.190.15 ${secrets.VPS_USER}@${secrets.VPS_HOST} -y
+          ssh -i dev_key ${secrets.VPS_USER}@${secrets.VPS_HOST} -y
 
   deploy-backend:
     runs-on: ubuntu-latest
