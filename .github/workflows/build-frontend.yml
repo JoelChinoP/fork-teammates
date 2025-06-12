@@ -25,6 +25,9 @@ jobs:
       - name: Generate typescript types
         run: ./gradlew generateTypes
 
+      - name: Create config
+        run: cp src/web/environments/config.template.ts src/web/environments/config.ts
+
       - name: Install dependencies to Production
         run: npm ci --no-fund --no-audit --legacy-peer-deps
 
