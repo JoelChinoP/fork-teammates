@@ -55,7 +55,7 @@ jobs:
 
       - name: Connect to VPS
         run: |
-          ssh -v -i ~/.ssh/private -o "StrictHostKeyChecking no" ${secrets.VPS_USER}@${secrets.VPS_HOST}
+          ssh -v -i ~/.ssh/private -o "StrictHostKeyChecking no" "${{secrets.VPS_USER}}"@$"${{secrets.VPS_HOST}}"
 
   deploy-backend:
     runs-on: ubuntu-latest
