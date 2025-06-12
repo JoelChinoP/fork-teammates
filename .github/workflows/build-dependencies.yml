@@ -7,6 +7,10 @@ description: |
 on:
   workflow_call:
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-datastore:
     runs-on: ubuntu-latest
@@ -50,7 +54,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build solr image
-        run: docker build -t solr:gha-cache -o solr-image.tar
+        run: docker build -t solr:gha-cache solr-image.tar
 
       - name: Save solr image as tar
         run: docker save solr:gha-cache -o solr-image.tar
