@@ -17,7 +17,8 @@ jobs:
           cache: "gradle"
 
       - name: Create configs
-        run: ./gradlew createConfigs
+        #run: ./gradlew createConfigs
+        run: cp src/main/resources/build.template.properties src/main/resources/build.properties
 
       - name: Build backend to Production
         run: ./gradlew build --no-daemon
