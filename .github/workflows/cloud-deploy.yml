@@ -38,27 +38,24 @@ jobs:
         with:
           path: datastore-image.tar
           key: datastore-image-${{ github.sha }}
-      - run: echo "Loading datastore image"
 
       - name: Restore solr image tar
         uses: actions/cache@v4
         with:
           path: solr-image.tar
           key: solr-image-${{ github.sha }}
-      - run: echo "Loading solr image"
 
-      - name: Create file private key
+      - name: Connect to VPS with SSH
         run: |
           mkdir -p ~/.ssh/
           echo "${{ secrets.VPS_KEY }}" > ~/.ssh/private
           chmod 600 ~/.ssh/private
-
-      - name: Connect to VPS
-        run: |
-          ssh -v -i ~/.ssh/private -o "StrictHostKeyChecking no" "${{secrets.VPS_USER}}"@$"${{secrets.VPS_HOST}}"
+          ssh -i ~/.ssh/private -o "StrictHostKeyChecking no" "${{secrets.VPS_USER}}"@$"${{secrets.VPS_HOST}}"
+      - run: exit
 
   deploy-backend:
     runs-on: ubuntu-latest
+    environment: google-vps
     needs: [build-backend, deploy-dependencies]
 
     steps:
@@ -68,10 +65,17 @@ jobs:
           path: backend-image.tar
           key: backend-image-${{ github.sha }}
 
-      - run: echo "Loading backend image"
+      - name: Connect to VPS with SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.VPS_KEY }}" > ~/.ssh/private
+          chmod 600 ~/.ssh/private
+          ssh -i ~/.ssh/private -o "StrictHostKeyChecking no" "${{secrets.VPS_USER}}"@$"${{secrets.VPS_HOST}}"
+      - run: exit
 
   deploy-frontend:
     runs-on: ubuntu-latest
+    environment: google-vps
     needs: [build-frontend]
 
     steps:
@@ -81,4 +85,10 @@ jobs:
           path: frontend-image.tar
           key: frontend-image-${{ github.sha }}
 
-      - run: echo "Loading frontend image"
+      - name: Connect to VPS with SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.VPS_KEY }}" > ~/.ssh/private
+          chmod 600 ~/.ssh/private
+          ssh -i ~/.ssh/private -o "StrictHostKeyChecking no" "${{secrets.VPS_USER}}"@$"${{secrets.VPS_HOST}}"
+      - run: exit

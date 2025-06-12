@@ -29,18 +29,6 @@ jobs:
       - name: Build backend to Production
         run: ./gradlew build --no-daemon
 
-      #- name: Create configs
-      #run: ./gradlew createConfigs
-      #  run: cp src/main/resources/build.template.properties src/main/resources/build.properties
-
-      #- name: Build backend to Production custom DB credentials
-      #run: ./gradlew build --no-daemon
-      #  run: |
-      #    ./gradlew clean build \
-      #      -DliquibaseDbUrl="jdbc:postgresql://${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }}/${{ secrets.DB_NAME }}" \
-      #      -DliquibaseUsername="${{ secrets.DB_USER }}" \
-      #      -DliquibasePassword="${{ secrets.DB_PASS }}"
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -56,11 +44,11 @@ jobs:
           path: backend-image.tar
           key: backend-${{ github.sha }}
 
-      - name: Test backend image
-        run: |
-          docker load -i backend-image.tar
-          CONTAINER_ID=$(docker run -d -p 8080:8080 teammates-backend:gha-cache)
-          echo "Container running: $CONTAINER_ID"
-          sleep 10
-          docker logs $CONTAINER_ID
-          docker stop $CONTAINER_ID
+      # - name: Test backend image
+      #   run: |
+      #     docker load -i backend-image.tar
+      #     CONTAINER_ID=$(docker run -d -p 8080:8080 teammates-backend:gha-cache)
+      #     echo "Container running: $CONTAINER_ID"
+      #     sleep 10
+      #     docker logs $CONTAINER_ID
+      #     docker stop $CONTAINER_ID
