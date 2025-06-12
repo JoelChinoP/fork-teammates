@@ -6,7 +6,7 @@ name: Deploy
 on:
   push:
     branches:
-      - main
+      - deploy
     paths:
       - ".github/workflows/cloud-deploy.yml"
       - ".github/workflows/build-backend.yml"
