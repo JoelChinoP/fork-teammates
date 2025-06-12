@@ -43,7 +43,7 @@ jobs:
           sleep 10
           docker logs $CONTAINER_ID
           docker stop $CONTAINER_ID
-
+ 
   build-solr:
     runs-on: ubuntu-latest
     steps:
