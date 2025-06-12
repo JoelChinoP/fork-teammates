@@ -11,6 +11,7 @@ on:
       - ".github/workflows/cloud-deploy.yml"
       - ".github/workflows/build-backend.yml"
       - ".github/workflows/build-frontend.yml"
+      - ".github/workflows/build-dependencies.yml"
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -22,3 +23,24 @@ jobs:
 
   build-frontend:
     uses: ./.github/workflows/build-frontend.yml
+
+  build-dependencies:
+    uses: ./.github/workflows/build-dependencies.yml
+
+  deploy-dependencies:
+    runs-on: ubuntu-latest
+    needs: build-dependencies
+    steps:
+      - name: Restore datastore image tar
+        uses: actions/cache@v4
+        with:
+          path: datastore-image.tar
+          key: datastore-image-${{ github.sha }}
+      - run: echo "Loading datastore image"
+
+      - name: Restore solr image tar
+        uses: actions/cache@v4
+        with:
+          path: solr-image.tar
+          key: solr-image-${{ github.sha }}
+      - run: echo "Loading solr image"

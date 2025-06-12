@@ -1,0 +1,63 @@
+name: Build dependencies
+description: |
+  This workflow builds the datastore and solr dependencies for the project.
+  It is used by the build-backend and build-frontend workflows to ensure that
+  the necessary services are available during the build process.
+
+on:
+  workflow_call:
+
+jobs:
+  build-datastore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build datastore image
+        run: docker build -t datastore:gha-cache ./datastore-dev
+
+      - name: Save datastore image as tar
+        run: docker save datastore:gha-cache -o datastore-image.tar
+
+      - name: Cache datastore image tar
+        uses: actions/cache@v4
+        with:
+          path: datastore-image.tar
+          key: datastore-${{ github.sha }}
+
+      - name: Test datastore image
+        run: |
+          docker load -i datastore-image.tar
+          docker run --rm \
+            -v ${{ github.workspace }}/src/main/appengine/index.yaml:/root/.config/gcloud/emulators/datastore/WEB-INF/index.yaml \
+            -p 8484:8484 \
+            datastore:gha-cache echo "Image works!"
+
+  build-solr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build solr image
+        run: docker build -t solr ./solr
+
+      - name: Save solr image as tar
+        run: docker save solr:gha-cache -o solr-image.tar
+
+      - name: Cache solr image tar
+        uses: actions/cache@v4
+        with:
+          path: solr-image.tar
+          key: solr-${{ github.sha }}
+
+      - name: Test solr image
+        run: |
+          docker load -i solr-image.tar
+          docker run --rm -p 8983:8983 solr:gha-cache echo "Image works!"
