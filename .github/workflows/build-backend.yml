@@ -49,7 +49,7 @@ jobs:
           docker load -i backend-image.tar
           CONTAINER_ID=$(docker run -d -p 8080:8080 teammates-backend:gha-cache)
           echo "Container running: $CONTAINER_ID"
-          sleep 10
+          sleep 30
           docker logs $CONTAINER_ID
           curl http://localhost:8080
           docker stop $CONTAINER_ID

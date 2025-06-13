@@ -54,7 +54,7 @@ jobs:
           docker load -i frontend-image.tar
           CONTAINER_ID=$(docker run -d -p 4200:4200 teammates-frontend:gha-cache)
           echo "Container running: $CONTAINER_ID"
-          sleep 10
+          sleep 30
           docker logs $CONTAINER_ID
           curl http://localhost:4200
           docker stop $CONTAINER_ID
