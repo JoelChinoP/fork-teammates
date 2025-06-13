@@ -29,16 +29,22 @@ jobs:
           mkdir -p ~/.ssh && echo "${{ secrets.VPS_KEY }}" > ~/.ssh/key
           chmod 600 ~/.ssh/key
 
-      - name: Skip if datastore container is already running
+      - name: Check if datastore is already running
+        id: check_datastore
         env:
           VPS_USER: ${{ secrets.VPS_USER }}
           VPS_HOST: ${{ secrets.VPS_HOST }}
         run: |
-          if ssh -i ~/.ssh/key -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST "docker ps --format '{{.Names}} {{.Ports}}'" | grep -q '^datastore .*8484->'; then
-            exit 78
+          if ssh -i ~/.ssh/key -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST \
+              "sudo docker ps --format '{{.Names}} {{.Ports}}'" \
+              | grep -q '^datastore .*8484->'; then
+            echo "already=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "already=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Copy datastore tar and index.yaml to the VPS
+        if: steps.check_datastore.outputs.already == 'false'
         env:
           VPS_USER: ${{ secrets.VPS_USER }}
           VPS_HOST: ${{ secrets.VPS_HOST }}
@@ -65,7 +71,22 @@ jobs:
           mkdir -p ~/.ssh && echo "${{ secrets.VPS_KEY }}" > ~/.ssh/key
           chmod 600 ~/.ssh/key
 
+      - name: Check if solr is already running
+        id: check_solr
+        env:
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+        run: |
+          if ssh -i ~/.ssh/key -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST \
+              "sudo docker ps --format '{{.Names}} {{.Ports}}'" \
+              | grep -q '^solr .*8983->'; then
+            echo "already=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "already=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Copy solr tar to the VPS
+        if: steps.check_solr.outputs.already == 'false'
         env:
           VPS_USER: ${{ secrets.VPS_USER }}
           VPS_HOST: ${{ secrets.VPS_HOST }}
