@@ -44,11 +44,13 @@ jobs:
           path: backend-image.tar
           key: backend-${{ github.sha }}
 
-      # - name: Test backend image
-      #   run: |
-      #     docker load -i backend-image.tar
-      #     CONTAINER_ID=$(docker run -d -p 8080:8080 teammates-backend:gha-cache)
-      #     echo "Container running: $CONTAINER_ID"
-      #     sleep 10
-      #     docker logs $CONTAINER_ID
-      #     docker stop $CONTAINER_ID
+      - name: Test backend image
+        run: |
+          docker load -i backend-image.tar
+          CONTAINER_ID=$(docker run -d -p 8080:8080 teammates-backend:gha-cache)
+          echo "Container running: $CONTAINER_ID"
+          sleep 10
+          docker logs $CONTAINER_ID
+          docker stop $CONTAINER_ID
+
+      - run: curl http://localhost:8080
