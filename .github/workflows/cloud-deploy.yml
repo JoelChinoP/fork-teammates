@@ -117,5 +117,5 @@ jobs:
 
             # Load the new frontend image and run it
             sudo docker load -i ~/frontend/frontend-image.tar
-            sudo docker run -d -p 4200:4200 --name frontend teammates-frontend:gha-cache
+            sudo docker run -d -p 4200:80 --name frontend teammates-frontend:gha-cache
           EOF
