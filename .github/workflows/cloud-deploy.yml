@@ -15,6 +15,7 @@ on:
       - ".github/workflows/build-backend.yml"
       - ".github/workflows/build-frontend.yml"
       - ".github/workflows/build-dependencies.yml"
+      - ".github/workflows/deploy-dependencies.yml"
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
