@@ -33,6 +33,8 @@ jobs:
     needs: build-dependencies
 
     steps:
+      - uses: actions/checkout@v4
+
       - name: Restore datastore image tar
         uses: actions/cache@v4
         with:
@@ -57,13 +59,15 @@ jobs:
           VPS_USER: ${{ secrets.VPS_USER }}
           VPS_HOST: ${{ secrets.VPS_HOST }}
         run: |
-          # Copy tars and index.yaml to the VPS
-          scp -i ~/.ssh/key -o StrictHostKeyChecking=no datastore-image.tar solr-image.tar $VPS_USER@$VPS_HOST:~
-          scp -i ~/.ssh/key -o StrictHostKeyChecking=no ./src/main/appengine/index.yaml $VPS_USER@$VPS_HOST:~/index.yaml
+          # Create dependencies directory on VPS
+          ssh -i ~/.ssh/key -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST "mkdir -p ~/dependencies"
+
+          # Copy tars and index.yaml to the VPS, all from dependencies/
+          scp -i ~/.ssh/key -o StrictHostKeyChecking=no datastore-image.tar solr-image.tar $VPS_USER@$VPS_HOST:~/dependencies/
+          scp -i ~/.ssh/key -o StrictHostKeyChecking=no ./src/main/appengine/index.yaml $VPS_USER@$VPS_HOST:~/dependencies/
 
           # Connect to the VPS using SSH and execute the deployment script
           ssh -i ~/.ssh/key -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST bash <<'EOF'
-
             # Delete the old containers if they exist
             sudo docker ps -q --filter "publish=8484" | xargs -r sudo docker stop | xargs -r sudo docker rm
             sudo docker ps -q --filter "publish=8983" | xargs -r sudo docker stop | xargs -r sudo docker rm
@@ -73,12 +77,12 @@ jobs:
             sudo docker images -q solr:gha-cache | xargs -r sudo docker rmi -f
 
             # Load the new datastore and solr images
-            sudo docker load -i ~/datastore-image.tar
-            sudo docker load -i ~/solr-image.tar
+            sudo docker load -i ~/dependencies/datastore-image.tar
+            sudo docker load -i ~/dependencies/solr-image.tar
 
             # Run the datastore and solr containers
             sudo docker run -d \
-              -v ~/src/main/appengine/index.yaml:/root/.config/gcloud/emulators/datastore/WEB-INF/index.yaml \
+              -v ~/dependencies/index.yaml:/root/.config/gcloud/emulators/datastore/WEB-INF/index.yaml \
               -p 8484:8484 \
               --name datastore datastore:gha-cache
             sudo docker run -d -p 8983:8983 --name solr solr:gha-cache
@@ -107,12 +111,14 @@ jobs:
           VPS_USER: ${{ secrets.VPS_USER }}
           VPS_HOST: ${{ secrets.VPS_HOST }}
         run: |
+          # Create backend directory on VPS
+          ssh -i ~/.ssh/key -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST "mkdir -p ~/backend"
+
           # Copy the backend image tar to the VPS
-          scp -i ~/.ssh/key -o StrictHostKeyChecking=no backend-image.tar $VPS_USER@$VPS_HOST:~
+          scp -i ~/.ssh/key -o StrictHostKeyChecking=no backend-image.tar $VPS_USER@$VPS_HOST:~/backend/
 
           # Connect to the VPS using SSH and execute the deployment script
           ssh -i ~/.ssh/key -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST bash <<'EOF'
-
             # Delete the old container if it exists
             sudo docker ps -q --filter "publish=8080" | xargs -r sudo docker stop | xargs -r sudo docker rm
 
@@ -120,7 +126,7 @@ jobs:
             sudo docker images -q teammates-backend:gha-cache | xargs -r sudo docker rmi -f
 
             # Load the new backend image and run it
-            sudo docker load -i ~/backend-image.tar
+            sudo docker load -i ~/backend/backend-image.tar
             sudo docker run -d -p 8080:8080 --name backend teammates-backend:gha-cache
           EOF
 
@@ -147,12 +153,14 @@ jobs:
           VPS_USER: ${{ secrets.VPS_USER }}
           VPS_HOST: ${{ secrets.VPS_HOST }}
         run: |
+          # Create frontend directory on VPS
+          ssh -i ~/.ssh/key -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST "mkdir -p ~/frontend"
+
           # Copy the frontend image tar to the VPS
-          scp -i ~/.ssh/key -o StrictHostKeyChecking=no frontend-image.tar $VPS_USER@$VPS_HOST:~
+          scp -i ~/.ssh/key -o StrictHostKeyChecking=no frontend-image.tar $VPS_USER@$VPS_HOST:~/frontend/
 
           # Connect to the VPS using SSH and execute the deployment script
           ssh -i ~/.ssh/key -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST bash <<'EOF'
-
             # Delete the old container if it exists
             sudo docker ps -q --filter "publish=4200" | xargs -r sudo docker stop | xargs -r sudo docker rm
 
@@ -160,6 +168,6 @@ jobs:
             sudo docker images -q teammates-frontend:gha-cache | xargs -r sudo docker rmi -f
 
             # Load the new frontend image and run it
-            sudo docker load -i ~/frontend-image.tar
+            sudo docker load -i ~/frontend/frontend-image.tar
             sudo docker run -d -p 4200:4200 --name frontend teammates-frontend:gha-cache
           EOF
