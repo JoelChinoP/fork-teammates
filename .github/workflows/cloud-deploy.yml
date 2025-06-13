@@ -85,10 +85,38 @@ jobs:
           path: frontend-image.tar
           key: frontend-image-${{ github.sha }}
 
-      - name: Connect to VPS with SSH
+      - name: Deploy frontend on VPS via SSH
+        env:
+          VPS_KEY: ${{ secrets.VPS_KEY }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_HOST: ${{ secrets.VPS_HOST }}
         run: |
+          # Create the .ssh directory if it doesn't exist and set the private key from the secret
           mkdir -p ~/.ssh/
-          echo "${{ secrets.VPS_KEY }}" > ~/.ssh/private
+          echo "$VPS_KEY" > ~/.ssh/private
           chmod 600 ~/.ssh/private
-          ssh -i ~/.ssh/private -o "StrictHostKeyChecking no" "${{secrets.VPS_USER}}"@$"${{secrets.VPS_HOST}}"
+
+          # Copy the frontend image tar to the VPS
+          scp -i ~/.ssh/private -o "StrictHostKeyChecking no" frontend-image.tar $VPS_USER@$VPS_HOST:~/frontend-image.tar
+
+          # Connect to the VPS using SSH and execute the deployment script
+          ssh -i ~/.ssh/private -o "StrictHostKeyChecking no" $VPS_USER@$VPS_HOST << 'ENDSSH'
+
+            # Delete the old container if it exists
+            CONTAINER_ID=$(docker ps -q --filter "publish=4200")
+            if [ ! -z "$CONTAINER_ID" ]; then
+              docker stop $CONTAINER_ID
+              docker rm $CONTAINER_ID
+            fi
+
+            # Delete the old image if it exists
+            IMAGE_ID=$(docker images -q frontend:latest)
+            if [ ! -z "$IMAGE_ID" ]; then
+              docker rmi -f $IMAGE_ID
+            fi
+
+            # Load the new frontend image and run it
+            docker load -i ~/frontend-image.tar
+            docker run -d -p 4200:4200 --name frontend frontend:latest
+          ENDSSH
       - run: exit
