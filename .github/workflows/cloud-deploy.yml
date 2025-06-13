@@ -1,7 +1,10 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+# *** Needs docker to be installed on the VPS to run the containers ***
 
 name: Deploy
+
+description: Deploys the backend and frontend applications to a VPS using Docker containers.
 
 on:
   push:
@@ -28,65 +31,8 @@ jobs:
     uses: ./.github/workflows/build-dependencies.yml
 
   deploy-dependencies:
-    runs-on: ubuntu-latest
-    environment: google-vps
-    needs: build-dependencies
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Restore datastore image tar
-        uses: actions/cache@v4
-        with:
-          path: datastore-image.tar
-          key: datastore-${{ github.sha }}
-          fail-on-cache-miss: true
-
-      - name: Restore solr image tar
-        uses: actions/cache@v4
-        with:
-          path: solr-image.tar
-          key: solr-${{ github.sha }}
-          fail-on-cache-miss: true
-
-      - name: Create the .ssh directory and set the private key from the secret
-        run: |
-          mkdir -p ~/.ssh && echo "${{ secrets.VPS_KEY }}" > ~/.ssh/key
-          chmod 600 ~/.ssh/key
-
-      - name: Deploy dependencies on VPS via SSH
-        env:
-          VPS_USER: ${{ secrets.VPS_USER }}
-          VPS_HOST: ${{ secrets.VPS_HOST }}
-        run: |
-          # Create dependencies directory on VPS
-          ssh -i ~/.ssh/key -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST "mkdir -p ~/dependencies"
-
-          # Copy tars and index.yaml to the VPS, all from dependencies/
-          scp -i ~/.ssh/key -o StrictHostKeyChecking=no datastore-image.tar solr-image.tar $VPS_USER@$VPS_HOST:~/dependencies/
-          scp -i ~/.ssh/key -o StrictHostKeyChecking=no ./src/main/appengine/index.yaml $VPS_USER@$VPS_HOST:~/dependencies/
-
-          # Connect to the VPS using SSH and execute the deployment script
-          ssh -i ~/.ssh/key -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST bash <<'EOF'
-            # Delete the old containers if they exist
-            sudo docker ps -q --filter "publish=8484" | xargs -r sudo docker stop | xargs -r sudo docker rm
-            sudo docker ps -q --filter "publish=8983" | xargs -r sudo docker stop | xargs -r sudo docker rm
-
-            # Delete the old images if they exist
-            sudo docker images -q datastore:gha-cache | xargs -r sudo docker rmi -f
-            sudo docker images -q solr:gha-cache | xargs -r sudo docker rmi -f
-
-            # Load the new datastore and solr images
-            sudo docker load -i ~/dependencies/datastore-image.tar
-            sudo docker load -i ~/dependencies/solr-image.tar
-
-            # Run the datastore and solr containers
-            sudo docker run -d \
-              -v ~/dependencies/index.yaml:/root/.config/gcloud/emulators/datastore/WEB-INF/index.yaml \
-              -p 8484:8484 \
-              --name datastore datastore:gha-cache
-            sudo docker run -d -p 8983:8983 --name solr solr:gha-cache
-          EOF
+    needs: [build-dependencies]
+    uses: ./.github/workflows/deploy-dependencies.yml
 
   deploy-backend:
     runs-on: ubuntu-latest

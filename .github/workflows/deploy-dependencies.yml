@@ -1,0 +1,87 @@
+name: Deploy dependencies
+
+on:
+  workflow_call:
+
+jobs:
+  copy-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore datastore image tar
+        uses: actions/cache@v4
+        with:
+          path: datastore-image.tar
+          key: datastore-${{ github.sha }}
+          fail-on-cache-miss: true
+
+      - name: Restore solr image tar
+        uses: actions/cache@v4
+        with:
+          path: solr-image.tar
+          key: solr-${{ github.sha }}
+          fail-on-cache-miss: true
+
+      - name: Create the .ssh directory and set the private key from the secret
+        run: |
+          mkdir -p ~/.ssh && echo "${{ secrets.VPS_KEY }}" > ~/.ssh/key
+          chmod 600 ~/.ssh/key
+
+      - name: Copy tars and index.yaml to the VPS
+        env:
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+        run: |
+          ssh -i ~/.ssh/key -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST "mkdir -p ~/dependencies"
+          scp -i ~/.ssh/key -o StrictHostKeyChecking=no datastore-image.tar solr-image.tar $VPS_USER@$VPS_HOST:~/dependencies/
+          scp -i ~/.ssh/key -o StrictHostKeyChecking=no ./src/main/appengine/index.yaml $VPS_USER@$VPS_HOST:~/dependencies/
+
+  deploy-datastore:
+    runs-on: ubuntu-latest
+    needs: [copy-dependencies]
+
+    steps:
+      - name: Deploy datastore on VPS via SSH
+        env:
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+        run: |
+          # Connect to the VPS using SSH and execute the deployment script
+          ssh -i ~/.ssh/key -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST bash <<'EOF'
+            # Delete old datastore container
+            sudo docker ps -q --filter "publish=8484" | xargs -r sudo docker stop | xargs -r sudo docker rm
+
+            # Delete the old images if they exist
+            sudo docker images -q datastore:gha-cache | xargs -r sudo docker rmi -f
+
+            # Load the new datastore image and run it
+            sudo docker load -i ~/dependencies/datastore-image.tar
+            sudo docker run -d \
+              -v ~/dependencies/index.yaml:/root/.config/gcloud/emulators/datastore/WEB-INF/index.yaml \
+              -p 8484:8484 \
+              --name datastore datastore:gha-cache
+          EOF
+
+  deploy-solr:
+    runs-on: ubuntu-latest
+    needs: [copy-dependencies]
+
+    steps:
+      - name: Deploy solr on VPS via SSH
+        env:
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+        run: |
+          # Connect to the VPS using SSH and execute the deployment script
+          ssh -i ~/.ssh/key -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST bash <<'EOF'
+            # Delete old solr container
+            sudo docker ps -q --filter "publish=8983" | xargs -r sudo docker stop | xargs -r sudo docker rm
+
+            # Delete the old images if they exist
+            sudo docker images -q solr:gha-cache | xargs -r sudo docker rmi -f
+
+            # Load the new solr image and run it
+            sudo docker load -i ~/dependencies/solr-image.tar
+            sudo docker run -d -p 8983:8983 --name solr solr:gha-cache
+          EOF
