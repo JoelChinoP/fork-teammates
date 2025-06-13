@@ -37,13 +37,13 @@ jobs:
         uses: actions/cache@v4
         with:
           path: datastore-image.tar
-          key: datastore-image-${{ github.sha }}
+          key: datastore-${{ github.sha }}
 
       - name: Restore solr image tar
         uses: actions/cache@v4
         with:
           path: solr-image.tar
-          key: solr-image-${{ github.sha }}
+          key: solr-${{ github.sha }}
 
       - name: Connect to VPS with SSH
         run: |
@@ -63,7 +63,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: backend-image.tar
-          key: backend-image-${{ github.sha }}
+          key: backend-${{ github.sha }}
 
       - name: Connect to VPS with SSH
         run: |
@@ -83,7 +83,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: frontend-image.tar
-          key: frontend-image-${{ github.sha }}
+          key: frontend-${{ github.sha }}
 
       - name: Deploy frontend on VPS via SSH
         env:
