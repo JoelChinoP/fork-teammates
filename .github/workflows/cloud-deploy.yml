@@ -85,35 +85,27 @@ jobs:
           path: frontend-image.tar
           key: frontend-${{ github.sha }}
 
+      - name: Create the .ssh directory and set the private key from the secret
+        run: |
+          mkdir -p ~/.ssh && echo "${{ secrets.VPS_KEY }}" > ~/.ssh/key
+          chmod 600 ~/.ssh/key
+
       - name: Deploy frontend on VPS via SSH
         env:
-          VPS_KEY: ${{ secrets.VPS_KEY }}
           VPS_USER: ${{ secrets.VPS_USER }}
           VPS_HOST: ${{ secrets.VPS_HOST }}
         run: |
-          # Create the .ssh directory if it doesn't exist and set the private key from the secret
-          mkdir -p ~/.ssh/
-          echo "$VPS_KEY" > ~/.ssh/private
-          chmod 600 ~/.ssh/private
-
           # Copy the frontend image tar to the VPS
-          scp -i ~/.ssh/private -o "StrictHostKeyChecking no" frontend-image.tar $VPS_USER@$VPS_HOST:~/frontend-image.tar
+          scp -i ~/.ssh/key -o StrictHostKeyChecking=no frontend-image.tar $VPS_USER@$VPS_HOST:~
 
           # Connect to the VPS using SSH and execute the deployment script
-          ssh -i ~/.ssh/private -o "StrictHostKeyChecking no" $VPS_USER@$VPS_HOST << 'ENDSSH'
+          ssh -i ~/.ssh/key -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST bash <<'EOF'
 
             # Delete the old container if it exists
-            CONTAINER_ID=$(sudo docker ps -q --filter "publish=4200")
-            if [ ! -z "$CONTAINER_ID" ]; then
-              sudo docker stop $CONTAINER_ID
-              sudo docker rm $CONTAINER_ID
-            fi
+            sudo docker ps -q --filter "publish=4200" | xargs -r sudo docker stop | xargs -r sudo docker rm
 
             # Delete the old image if it exists
-            IMAGE_ID=$(sudo docker images -q teammates-frontend:gha-cache)
-            if [ ! -z "$IMAGE_ID" ]; then
-              sudo docker rmi -f $IMAGE_ID
-            fi
+            sudo docker images -q teammates-frontend:gha-cache | xargs -r sudo docker rmi -f
 
             # Load the new frontend image and run it
             sudo docker load -i ~/frontend-image.tar
