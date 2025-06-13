@@ -14,6 +14,8 @@ jobs:
   copy-datastore:
     runs-on: ubuntu-latest
     environment: google-vps
+    outputs:
+      already: ${{ steps.check_datastore.outputs.already }}
 
     steps:
       - uses: actions/checkout@v4
@@ -55,6 +57,8 @@ jobs:
   copy-solr:
     runs-on: ubuntu-latest
     environment: google-vps
+    outputs:
+      already: ${{ steps.check_solr.outputs.already }}
 
     steps:
       - uses: actions/checkout@v4
@@ -98,7 +102,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: google-vps
     needs: [copy-datastore]
-    if: needs.copy-datastore.result == 'success'
+    if: needs.copy-datastore.outputs.already == 'false'
 
     steps:
       - name: Create the .ssh directory and set the private key from the secret
@@ -131,7 +135,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: google-vps
     needs: [copy-solr]
-    if: needs.copy-solr.result == 'success'
+    if: needs.copy-solr.outputs.already == 'false'
 
     steps:
       - name: Create the .ssh directory and set the private key from the secret
