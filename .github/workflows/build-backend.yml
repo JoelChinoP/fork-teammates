@@ -51,6 +51,5 @@ jobs:
           echo "Container running: $CONTAINER_ID"
           sleep 10
           docker logs $CONTAINER_ID
+          curl http://localhost:8080
           docker stop $CONTAINER_ID
-
-      - run: curl http://localhost:8080
