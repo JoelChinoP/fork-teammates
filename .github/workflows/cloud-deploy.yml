@@ -1,4 +1,4 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# This workflow will do a clean installation of node deps, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 # *** Needs docker to be installed on the VPS to run the containers ***
 
@@ -14,8 +14,8 @@ on:
       - ".github/workflows/cloud-deploy.yml"
       - ".github/workflows/build-backend.yml"
       - ".github/workflows/build-frontend.yml"
-      - ".github/workflows/build-dependencies.yml"
-      - ".github/workflows/deploy-dependencies.yml"
+      - ".github/workflows/build-deps.yml"
+      - ".github/workflows/deploy-deps.yml"
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -28,17 +28,18 @@ jobs:
   build-frontend:
     uses: ./.github/workflows/build-frontend.yml
 
-  build-dependencies:
-    uses: ./.github/workflows/build-dependencies.yml
+  build-deps:
+    uses: ./.github/workflows/build-deps.yml
 
-  deploy-dependencies:
-    needs: [build-dependencies]
-    uses: ./.github/workflows/deploy-dependencies.yml
+  deploy-deps:
+    needs: build-deps
+    uses: ./.github/workflows/deploy-deps.yml
+    secrets: inherit
 
   deploy-backend:
     runs-on: ubuntu-latest
     environment: google-vps
-    needs: [build-backend, deploy-dependencies]
+    needs: [build-backend, deploy-deps]
 
     steps:
       - name: Restore backend image tar

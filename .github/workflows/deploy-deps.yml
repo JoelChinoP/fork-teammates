@@ -2,6 +2,10 @@ name: Deploy dependencies
 
 on:
   workflow_call:
+    secrets:
+      VPS_KEY: { required: true }
+      VPS_USER: { required: true }
+      VPS_HOST: { required: true }
 
 jobs:
   copy-tars:
@@ -45,6 +49,11 @@ jobs:
     needs: [copy-tars]
 
     steps:
+      - name: Create the .ssh directory and set the private key from the secret
+        run: |
+          mkdir -p ~/.ssh && echo "${{ secrets.VPS_KEY }}" > ~/.ssh/key
+          chmod 600 ~/.ssh/key
+
       - name: Deploy datastore on VPS via SSH
         env:
           VPS_USER: ${{ secrets.VPS_USER }}
@@ -72,6 +81,11 @@ jobs:
     needs: [copy-tars]
 
     steps:
+      - name: Create the .ssh directory and set the private key from the secret
+        run: |
+          mkdir -p ~/.ssh && echo "${{ secrets.VPS_KEY }}" > ~/.ssh/key
+          chmod 600 ~/.ssh/key
+
       - name: Deploy solr on VPS via SSH
         env:
           VPS_USER: ${{ secrets.VPS_USER }}
