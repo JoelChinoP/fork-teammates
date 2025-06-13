@@ -4,8 +4,10 @@ on:
   workflow_call:
 
 jobs:
-  copy-dependencies:
+  copy-tars:
     runs-on: ubuntu-latest
+    environment: google-vps
+
     steps:
       - uses: actions/checkout@v4
 
@@ -39,7 +41,8 @@ jobs:
 
   deploy-datastore:
     runs-on: ubuntu-latest
-    needs: [copy-dependencies]
+    environment: google-vps
+    needs: [copy-tars]
 
     steps:
       - name: Deploy datastore on VPS via SSH
@@ -65,7 +68,8 @@ jobs:
 
   deploy-solr:
     runs-on: ubuntu-latest
-    needs: [copy-dependencies]
+    environment: google-vps
+    needs: [copy-tars]
 
     steps:
       - name: Deploy solr on VPS via SSH
