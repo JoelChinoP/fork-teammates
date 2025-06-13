@@ -33,13 +33,19 @@ jobs:
     needs: build-dependencies
 
     steps:
-      - name: Restore datastore and solr image tars
+      - name: Restore datastore image tar
         uses: actions/cache@v4
         with:
-          path: |
-            datastore-image.tar
-            solr-image.tar
-          key: deps-${{ github.sha }}
+          path: datastore-image.tar
+          key: datastore-${{ github.sha }}
+          fail-on-cache-miss: true
+
+      - name: Restore solr image tar
+        uses: actions/cache@v4
+        with:
+          path: solr-image.tar
+          key: solr-${{ github.sha }}
+          fail-on-cache-miss: true
 
       - name: Create the .ssh directory and set the private key from the secret
         run: |
@@ -75,7 +81,6 @@ jobs:
               -v ~/src/main/appengine/index.yaml:/root/.config/gcloud/emulators/datastore/WEB-INF/index.yaml \
               -p 8484:8484 \
               --name datastore datastore:gha-cache
-
             sudo docker run -d -p 8983:8983 --name solr solr:gha-cache
           EOF
 
@@ -90,14 +95,34 @@ jobs:
         with:
           path: backend-image.tar
           key: backend-${{ github.sha }}
+          fail-on-cache-miss: true
 
-      - name: Connect to VPS with SSH
+      - name: Create the .ssh directory and set the private key from the secret
         run: |
-          mkdir -p ~/.ssh/
-          echo "${{ secrets.VPS_KEY }}" > ~/.ssh/private
-          chmod 600 ~/.ssh/private
-          ssh -i ~/.ssh/private -o "StrictHostKeyChecking no" "${{secrets.VPS_USER}}"@$"${{secrets.VPS_HOST}}"
-      - run: exit
+          mkdir -p ~/.ssh && echo "${{ secrets.VPS_KEY }}" > ~/.ssh/key
+          chmod 600 ~/.ssh/key
+
+      - name: Deploy backend on VPS via SSH
+        env:
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+        run: |
+          # Copy the backend image tar to the VPS
+          scp -i ~/.ssh/key -o StrictHostKeyChecking=no backend-image.tar $VPS_USER@$VPS_HOST:~
+
+          # Connect to the VPS using SSH and execute the deployment script
+          ssh -i ~/.ssh/key -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST bash <<'EOF'
+
+            # Delete the old container if it exists
+            sudo docker ps -q --filter "publish=8080" | xargs -r sudo docker stop | xargs -r sudo docker rm
+
+            # Delete the old image if it exists
+            sudo docker images -q teammates-backend:gha-cache | xargs -r sudo docker rmi -f
+
+            # Load the new backend image and run it
+            sudo docker load -i ~/backend-image.tar
+            sudo docker run -d -p 8080:8080 --name backend teammates-backend:gha-cache
+          EOF
 
   deploy-frontend:
     runs-on: ubuntu-latest
@@ -110,6 +135,7 @@ jobs:
         with:
           path: frontend-image.tar
           key: frontend-${{ github.sha }}
+          fail-on-cache-miss: true
 
       - name: Create the .ssh directory and set the private key from the secret
         run: |
