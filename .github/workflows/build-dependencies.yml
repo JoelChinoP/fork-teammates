@@ -26,7 +26,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: datastore-image.tar
-          key: datastore-${{ github.sha }}
+          key: deps-${{ github.sha }}
 
       #- name: Test datastore image
       #  run: |
@@ -59,7 +59,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: solr-image.tar
-          key: solr-${{ github.sha }}
+          key: deps-${{ github.sha }}
 
       #- name: Test solr image
       #  run: |

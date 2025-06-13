@@ -33,25 +33,51 @@ jobs:
     needs: build-dependencies
 
     steps:
-      - name: Restore datastore image tar
+      - name: Restore datastore and solr image tars
         uses: actions/cache@v4
         with:
-          path: datastore-image.tar
-          key: datastore-${{ github.sha }}
+          path: |
+            datastore-image.tar
+            solr-image.tar
+          key: deps-${{ github.sha }}
 
-      - name: Restore solr image tar
-        uses: actions/cache@v4
-        with:
-          path: solr-image.tar
-          key: solr-${{ github.sha }}
-
-      - name: Connect to VPS with SSH
+      - name: Create the .ssh directory and set the private key from the secret
         run: |
-          mkdir -p ~/.ssh/
-          echo "${{ secrets.VPS_KEY }}" > ~/.ssh/private
-          chmod 600 ~/.ssh/private
-          ssh -i ~/.ssh/private -o "StrictHostKeyChecking no" "${{secrets.VPS_USER}}"@$"${{secrets.VPS_HOST}}"
-      - run: exit
+          mkdir -p ~/.ssh && echo "${{ secrets.VPS_KEY }}" > ~/.ssh/key
+          chmod 600 ~/.ssh/key
+
+      - name: Deploy dependencies on VPS via SSH
+        env:
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+        run: |
+          # Copy tars and index.yaml to the VPS
+          scp -i ~/.ssh/key -o StrictHostKeyChecking=no datastore-image.tar solr-image.tar $VPS_USER@$VPS_HOST:~
+          scp -i ~/.ssh/key -o StrictHostKeyChecking=no ./src/main/appengine/index.yaml $VPS_USER@$VPS_HOST:~/index.yaml
+
+          # Connect to the VPS using SSH and execute the deployment script
+          ssh -i ~/.ssh/key -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST bash <<'EOF'
+
+            # Delete the old containers if they exist
+            sudo docker ps -q --filter "publish=8484" | xargs -r sudo docker stop | xargs -r sudo docker rm
+            sudo docker ps -q --filter "publish=8983" | xargs -r sudo docker stop | xargs -r sudo docker rm
+
+            # Delete the old images if they exist
+            sudo docker images -q datastore:gha-cache | xargs -r sudo docker rmi -f
+            sudo docker images -q solr:gha-cache | xargs -r sudo docker rmi -f
+
+            # Load the new datastore and solr images
+            sudo docker load -i ~/datastore-image.tar
+            sudo docker load -i ~/solr-image.tar
+
+            # Run the datastore and solr containers
+            sudo docker run -d \
+              -v ~/src/main/appengine/index.yaml:/root/.config/gcloud/emulators/datastore/WEB-INF/index.yaml \
+              -p 8484:8484 \
+              --name datastore datastore:gha-cache
+
+            sudo docker run -d -p 8983:8983 --name solr solr:gha-cache
+          EOF
 
   deploy-backend:
     runs-on: ubuntu-latest
@@ -110,5 +136,4 @@ jobs:
             # Load the new frontend image and run it
             sudo docker load -i ~/frontend-image.tar
             sudo docker run -d -p 4200:4200 --name frontend teammates-frontend:gha-cache
-          ENDSSH
-      - run: exit
+          EOF
