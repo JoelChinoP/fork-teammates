@@ -99,6 +99,8 @@ venv/
 env/
 .venv/
 .env/
+.env.*
+.env
 
 # Archivos del sistema operativo
 .DS_Store
