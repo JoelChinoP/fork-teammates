@@ -6,7 +6,7 @@ import { config } from './config';
 export const environment: any = {
   ...config,
   production: true,
-  backendUrl: '',
-  frontendUrl: '',
+  backendUrl: 'https://cigarra-teammates.appspot.com',
+  frontendUrl: 'https://cigarra-teammates.appspot.com',
   withCredentials: false,
 };
