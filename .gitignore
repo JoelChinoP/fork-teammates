@@ -90,3 +90,62 @@ docs/_site/*
 docs/_markbind/logs/*
 .stylelintcache
 .eslintcache
+
+
+# Python
+
+# Entornos virtuales
+venv/
+env/
+.venv/
+.env/
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de Python compilados
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Archivos de logs
+*.log
+
+# Archivos de dependencias
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Configuración de editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Archivos de test / cobertura
+htmlcov/
+.tox/
+.nox/
+.coverage
+coverage.xml
+.cache
+.pytest_cache/
+nosetests.xml
+test-results/
+
+# Documentación
+/build/
+dist/
+*.egg-info/
+.eggs/
+
+# Bases de datos locales o temporales
+*.sqlite3
+*.db
+
+# Archivos de Jupyter Notebook
+.ipynb_checkpoints/
+
+# Otros archivos que no deberían subirse
+*.bak
+*.swp
