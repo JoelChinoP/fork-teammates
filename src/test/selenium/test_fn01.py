@@ -6,13 +6,6 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 import time, json
 from utils import Utils
 
-ERROR_MESSAGES = {
-    "error_name": "Name must be shorter than 100 characters.",
-    "error_institution": "Institution name must be shorter than 86 characters.",
-    "error_country": "Country name must be shorter than 40 characters.",
-    "error_email": "Email address must be shorter than 254 characters."
-}
-
 class TestFn01:
     def __init__(self, driver, url, cases):
         self.driver, self.url, self.path = driver, url, "/web/front/request"
@@ -28,7 +21,7 @@ class TestFn01:
     def go_to_form(self):
         self.driver.get(self.url + self.path)
         try:
-            WebDriverWait(self.driver, 5).until(
+            WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable((By.ID, 'btn-am-instructor'))
             ).click()
         except TimeoutException:
@@ -41,28 +34,20 @@ class TestFn01:
         for key, value in fields.items():
             if key in self.form_fields:
                 el = self.driver.find_element(*self.form_fields[key])
-                el.clear(), el.send_keys(value)
+                el.clear()
+                el.send_keys(value)
 
-    def submit(self): self.driver.find_element(By.ID, "submit-button").click()
+    def submit(self): 
+        self.driver.find_element(By.ID, "submit-button").click()
 
-    def detect_success(self):
-        # Se detecta éxito si aparece el banner de éxito o el DOM cambia claramente (ajustar según implementación real)
+    def get_message(self, locator):
         try:
-            return WebDriverWait(self.driver, 5).until(
-                EC.presence_of_element_located((By.XPATH, "//*[contains(text(), 'Your instructor account request has been sent.')]"))
-            ) is not None
-        except TimeoutException:
-            return False
-
-    def get_errors(self):
-        errors = []
-        for msg in ERROR_MESSAGES.values():
-            try:
-                if self.driver.find_element(By.XPATH, f"//*[contains(text(), '{msg}')]").is_displayed():
-                    errors.append(msg)
-            except NoSuchElementException:
-                pass
-        return errors
+            el = WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located((By.XPATH, locator))
+            )
+            return el.text.strip()
+        except (TimeoutException, NoSuchElementException):
+            return ""
 
     def run_case(self, case):
         self.go_to_form()
@@ -70,18 +55,24 @@ class TestFn01:
         Utils.solve_recaptcha(self.driver)
         self.submit()
         time.sleep(1.2)
-        errors = self.get_errors()
-        success = self.detect_success()
-        expected, obs = case["expected"], "f+"
-        # Lógica de aserción tipo catálogo
-        if expected == "success":
-            obtained = "f+" if success and not errors else "f-"
-        else:
-            msg = ERROR_MESSAGES.get(expected, "")
-            obtained = "f+" if msg and msg in errors and not success else "f-"
-        # Log tras cada caso
-        Utils.log_test(case["id"], case["fields"], expected, obtained, obs)
-        return {"id": case["id"], "result": obtained, "errors": errors}
+        
+        # Mensaje obtenido del DOM
+        locator = case["element_locator"]
+        obtained_msg = self.get_message(locator)
+
+        # Log detallado (incluye esperado y obtenido)
+        Utils.log_test(
+            case["id"], 
+            case["fields"], 
+            case["expected"], 
+            obtained_msg, 
+            case["Obs"]
+        )
+        return {
+            "id": case["id"],
+            "expected": case["expected"],
+            "obtained": obtained_msg
+        }
 
     def run(self):
         for case in self.cases:

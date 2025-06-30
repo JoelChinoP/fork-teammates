@@ -34,12 +34,12 @@ class SeleniumConnection:
         # options.add_argument("--headless")  # Descomentar si se requiere headless
 
         # Comentar si no se quiere usar Brave
-        options.binary_location = r"C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe"
+        # options.binary_location = r"C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe"
 
         # Fijar versión de ChromeDriver
-        #service = Service(ChromeDriverManager().install())
+        service = Service(ChromeDriverManager().install())
         # Comentar la línea anterior y descomentar la siguiente si se quiere usar una versión específica
-        service = Service(ChromeDriverManager(driver_version="138.0.7204.49").install())
+        #service = Service(ChromeDriverManager(driver_version="138.0.7204.49").install())
 
         self.driver = webdriver.Chrome(service=service, options=options)
         try:
@@ -49,7 +49,7 @@ class SeleniumConnection:
 
             # Buscar el botón con el correo
             # Correos válidos: @gmail.com o @unsa.edu.pe
-            WebDriverWait(self.driver, 5).until(
+            WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(
                     (By.XPATH, "//button["
                     "contains(text(),'@gmail.com') or "

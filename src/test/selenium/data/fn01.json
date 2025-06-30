@@ -8,7 +8,9 @@
       "email": "jperez@unsa.pe",
       "comments": "N/A"
     },
-    "expected": "success"
+    "expected": "Your request has been submitted successfully",
+    "element_locator": "//p[contains(text(), 'Your request has been submitted successfully')]",
+    "Obs": "f+"
   },
   {
     "id": "FN01-CP-002",
@@ -19,7 +21,9 @@
       "email": "jperez@unsa.pe",
       "comments": "N/A"
     },
-    "expected": "error_name"
+    "expected": "Name must be shorter than 100 characters.",
+    "element_locator": "//div[@role='alert' and @aria-describedby='name-label']",
+    "Obs": "f-"
   },
   {
     "id": "FN01-CP-003",
@@ -30,7 +34,9 @@
       "email": "jperez@unsa.pe",
       "comments": "N/A"
     },
-    "expected": "error_name"
+    "expected": "Name must be shorter than 100 characters.",
+    "element_locator": "//div[@role='alert' and @aria-describedby='name-label']",
+    "Obs": "f-"
   },
   {
     "id": "FN01-CP-004",
@@ -41,7 +47,9 @@
       "email": "jperez@unsa.pe",
       "comments": "N/A"
     },
-    "expected": "error_institution"
+    "expected": "Institution name must be shorter than 86 characters.",
+    "element_locator": "//div[@role='alert' and @aria-describedby='institution-label']",
+    "Obs": "f-"
   },
   {
     "id": "FN01-CP-005",
@@ -52,7 +60,9 @@
       "email": "jperez@unsa.pe",
       "comments": "N/A"
     },
-    "expected": "error_institution"
+    "expected": "Institution name must be shorter than 86 characters.",
+    "element_locator": "//div[@role='alert' and @aria-describedby='institution-label']",
+    "Obs": "f-"
   },
   {
     "id": "FN01-CP-006",
@@ -63,7 +73,9 @@
       "email": "jperez@unsa.pe",
       "comments": "N/A"
     },
-    "expected": "error_country"
+    "expected": "Country name must be shorter than 40 characters.",
+    "element_locator": "//div[@role='alert' and @aria-describedby='country-label']",
+    "Obs": "f-"
   },
   {
     "id": "FN01-CP-007",
@@ -74,7 +86,9 @@
       "email": "jperez@unsa.pe",
       "comments": "N/A"
     },
-    "expected": "error_country"
+    "expected": "Country name must be shorter than 40 characters.",
+    "element_locator": "//div[@role='alert' and @aria-describedby='country-label']",
+    "Obs": "f-"
   },
   {
     "id": "FN01-CP-008",
@@ -85,7 +99,9 @@
       "email": "",
       "comments": "N/A"
     },
-    "expected": "error_email"
+    "expected": "Email address must be shorter than 254 characters.",
+    "element_locator": "//div[@role='alert' and @aria-describedby='email-label']",
+    "Obs": "f-"
   },
   {
     "id": "FN01-CP-009",
@@ -96,7 +112,9 @@
       "email": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
       "comments": "N/A"
     },
-    "expected": "error_email"
+    "expected": "Email address must be shorter than 254 characters.",
+    "element_locator": "//div[@role='alert' and @aria-describedby='email-label']",
+    "Obs": "f-"
   },
   {
     "id": "FN01-CP-010",
@@ -107,6 +125,8 @@
       "email": "jperez@unsa.pe",
       "comments": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     },
-    "expected": "success"
+    "expected": "Your request has been submitted successfully",
+    "element_locator": "//p[contains(text(), 'Your request has been submitted successfully')]",
+    "Obs": "f+"
   }
 ]
