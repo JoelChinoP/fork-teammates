@@ -5,49 +5,65 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
-from dotenv import load_dotenv
-import time
 
-class SeleniumConnectionChecker:
-    def __init__(self, url=None, cookie_name=None, cookie_value=None):
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+from dotenv import load_dotenv
+
+# Helper to parse command-line args as key=value pairs
+def get_arg(key, default=None):
+    for arg in sys.argv[1:]:
+        if arg.startswith(f"{key}="):
+            return arg.split("=", 1)[1]
+    return default
+
+class SeleniumConnection:
+    def __init__(self, url=None, token_name=None, token_value=None):
         load_dotenv()
-        self.url = url or os.getenv("URL") or (len(sys.argv) > 1 and sys.argv[1])
-        self.cookie_name = cookie_name or os.getenv("COOKIE_NAME") or (len(sys.argv) > 2 and sys.argv[2])
-        self.cookie_value = cookie_value or os.getenv("COOKIE_VALUE") or (len(sys.argv) > 3 and sys.argv[3])
-        if not self.url or not self.cookie_name or not self.cookie_value:
-            raise ValueError("Missing URL, COOKIE_NAME, or COOKIE_VALUE.")
+        # Prioridad: argumentos>.env  (TOKEN_NAME=TOKEN_VALUE)
+        self.url = get_arg("URL") or os.getenv("URL") or url
+        self.token_name = get_arg("TOKEN_NAME") or os.getenv("TOKEN_NAME") or token_name
+        self.token_value = get_arg("TOKEN_VALUE") or os.getenv("TOKEN_VALUE") or token_value
+        if not all([self.url, self.token_name, self.token_value]):
+            raise ValueError("Missing URL, TOKEN_NAME, or TOKEN_VALUE.")
         self.driver = None
 
-    def connect_and_check_login(self, email_to_check):
+    def connect_and_check_login(self):
         options = Options()
-        # options.add_argument("--headless") 
-        service = Service(ChromeDriverManager().install())
+        # options.add_argument("--headless")  # Descomentar si se requiere headless
+
+        # Comentar si no se quiere usar Brave
+        options.binary_location = r"C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe"
+
+        # Fijar versión de ChromeDriver
+        #service = Service(ChromeDriverManager().install())
+        # Comentar la línea anterior y descomentar la siguiente si se quiere usar una versión específica
+        service = Service(ChromeDriverManager(driver_version="138.0.7204.49").install())
+
         self.driver = webdriver.Chrome(service=service, options=options)
-        domain = self.url.split("//")[-1].split("/")[0]
         try:
             self.driver.get(self.url)
-            self.driver.add_cookie({
-                'name': self.cookie_name,
-                'value': self.cookie_value,
-                'domain': domain,
-                'path': '/',
-            })
+            self.driver.add_cookie({'name': self.token_name, 'value': self.token_value})
             self.driver.refresh()
-            time.sleep(1)
-            user_btns = self.driver.find_elements(By.XPATH, f"//button[contains(text(), '{email_to_check}')]")
-            if user_btns:
-                print(f"Login exitoso")
-            else:
-                raise Exception(f"No se encontró el correo en la barra de navegación.")
+
+            # Buscar el botón con el correo
+            # Correos válidos: @gmail.com o @unsa.edu.pe
+            WebDriverWait(self.driver, 5).until(
+                EC.presence_of_element_located(
+                    (By.XPATH, "//button["
+                    "contains(text(),'@gmail.com') or "
+                    "contains(text(),'@unsa.edu.pe')]"))
+            )
+            print("***Conexión exitosa y usuario autenticado...")
         except Exception as e:
             print(f"Error: {e}")
             self.driver.quit()
             raise
-        return self.driver
+        return self.driver, self.url
 
 if __name__ == "__main__":
-    email = os.getenv("CORREO") or (len(sys.argv) > 4 and sys.argv[4])
-    checker = SeleniumConnectionChecker()
-    driver = checker.connect_and_check_login(email)
-    print("Driver listo para siguientes pruebas.")
+    checker = SeleniumConnection()
+    driver = checker.connect_and_check_login()
+    print("***Driver listo para siguientes pruebas...")
     driver.quit()

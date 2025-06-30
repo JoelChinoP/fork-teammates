@@ -1,0 +1,112 @@
+[
+  {
+    "id": "FN01-CP-001",
+    "fields": {
+      "name": "Juan Perez",
+      "institution": "UNSA",
+      "country": "Perú",
+      "email": "jperez@unsa.pe",
+      "comments": "N/A"
+    },
+    "expected": "success"
+  },
+  {
+    "id": "FN01-CP-002",
+    "fields": {
+      "name": "",
+      "institution": "UNSA",
+      "country": "Perú",
+      "email": "jperez@unsa.pe",
+      "comments": "N/A"
+    },
+    "expected": "error_name"
+  },
+  {
+    "id": "FN01-CP-003",
+    "fields": {
+      "name": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "institution": "UNSA",
+      "country": "Perú",
+      "email": "jperez@unsa.pe",
+      "comments": "N/A"
+    },
+    "expected": "error_name"
+  },
+  {
+    "id": "FN01-CP-004",
+    "fields": {
+      "name": "Juan Perez",
+      "institution": "",
+      "country": "Perú",
+      "email": "jperez@unsa.pe",
+      "comments": "N/A"
+    },
+    "expected": "error_institution"
+  },
+  {
+    "id": "FN01-CP-005",
+    "fields": {
+      "name": "Juan Perez",
+      "institution": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "country": "Perú",
+      "email": "jperez@unsa.pe",
+      "comments": "N/A"
+    },
+    "expected": "error_institution"
+  },
+  {
+    "id": "FN01-CP-006",
+    "fields": {
+      "name": "Juan Perez",
+      "institution": "UNSA",
+      "country": "",
+      "email": "jperez@unsa.pe",
+      "comments": "N/A"
+    },
+    "expected": "error_country"
+  },
+  {
+    "id": "FN01-CP-007",
+    "fields": {
+      "name": "Juan Perez",
+      "institution": "UNSA",
+      "country": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "email": "jperez@unsa.pe",
+      "comments": "N/A"
+    },
+    "expected": "error_country"
+  },
+  {
+    "id": "FN01-CP-008",
+    "fields": {
+      "name": "Juan Perez",
+      "institution": "UNSA",
+      "country": "Perú",
+      "email": "",
+      "comments": "N/A"
+    },
+    "expected": "error_email"
+  },
+  {
+    "id": "FN01-CP-009",
+    "fields": {
+      "name": "Juan Perez",
+      "institution": "UNSA",
+      "country": "Perú",
+      "email": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "comments": "N/A"
+    },
+    "expected": "error_email"
+  },
+  {
+    "id": "FN01-CP-010",
+    "fields": {
+      "name": "Juan Perez",
+      "institution": "UNSA",
+      "country": "Perú",
+      "email": "jperez@unsa.pe",
+      "comments": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "expected": "success"
+  }
+]
