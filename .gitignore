@@ -149,3 +149,10 @@ dist/
 # Otros archivos que no deberían subirse
 *.bak
 *.swp
+
+# venv python virtual environment
+venv/
+env/
+.venv/
+
+
