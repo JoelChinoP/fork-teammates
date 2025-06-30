@@ -154,5 +154,5 @@ dist/
 venv/
 env/
 .venv/
-
+.env/
 
