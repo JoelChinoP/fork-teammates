@@ -23,7 +23,7 @@ class Utils:
 
   @staticmethod
   def log_test(test_code, input_data, expected, obtained, obs):
-    status = "PASSED" if obtained.contains(expected) else "FAILED"
+    status = "PASSED" if obtained == expected else "FAILED"
     print(f"::group::[{status}] TEST-{test_code.upper()}")
 
     print(f"\tInput:\n\t\t{input_data}")
