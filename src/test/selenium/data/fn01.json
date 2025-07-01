@@ -21,20 +21,20 @@
       "email": "jperez@unsa.pe",
       "comments": "N/A"
     },
-    "expected": "Name must be shorter than 100 characters.",
+    "expected": "Please enter your name",
     "element_locator": "//div[@role='alert' and @aria-describedby='name-label']",
     "Obs": "f-"
   },
   {
     "id": "FN01-CP-003",
     "fields": {
-      "name": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "name": "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVW",
       "institution": "UNSA",
       "country": "Perú",
       "email": "jperez@unsa.pe",
       "comments": "N/A"
     },
-    "expected": "Name must be shorter than 100 characters.",
+    "expected": "Name must be shorter than 100 characters",
     "element_locator": "//div[@role='alert' and @aria-describedby='name-label']",
     "Obs": "f-"
   },
@@ -47,7 +47,7 @@
       "email": "jperez@unsa.pe",
       "comments": "N/A"
     },
-    "expected": "Institution name must be shorter than 86 characters.",
+    "expected": "Please enter your institution name",
     "element_locator": "//div[@role='alert' and @aria-describedby='institution-label']",
     "Obs": "f-"
   },
@@ -55,12 +55,12 @@
     "id": "FN01-CP-005",
     "fields": {
       "name": "Juan Perez",
-      "institution": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "institution": "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHJ",
       "country": "Perú",
       "email": "jperez@unsa.pe",
       "comments": "N/A"
     },
-    "expected": "Institution name must be shorter than 86 characters.",
+    "expected": "Institution name must be shorter than 86 characters",
     "element_locator": "//div[@role='alert' and @aria-describedby='institution-label']",
     "Obs": "f-"
   },
@@ -73,7 +73,7 @@
       "email": "jperez@unsa.pe",
       "comments": "N/A"
     },
-    "expected": "Country name must be shorter than 40 characters.",
+    "expected": "Please enter your institution's country",
     "element_locator": "//div[@role='alert' and @aria-describedby='country-label']",
     "Obs": "f-"
   },
@@ -82,11 +82,11 @@
     "fields": {
       "name": "Juan Perez",
       "institution": "UNSA",
-      "country": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "country": "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNO",
       "email": "jperez@unsa.pe",
       "comments": "N/A"
     },
-    "expected": "Country name must be shorter than 40 characters.",
+    "expected": "Country name must be shorter than 40 characters",
     "element_locator": "//div[@role='alert' and @aria-describedby='country-label']",
     "Obs": "f-"
   },
@@ -99,7 +99,7 @@
       "email": "",
       "comments": "N/A"
     },
-    "expected": "Email address must be shorter than 254 characters.",
+    "expected": "Please enter your email address",
     "element_locator": "//div[@role='alert' and @aria-describedby='email-label']",
     "Obs": "f-"
   },
@@ -109,10 +109,10 @@
       "name": "Juan Perez",
       "institution": "UNSA",
       "country": "Perú",
-      "email": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "email": "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJK",
       "comments": "N/A"
     },
-    "expected": "Email address must be shorter than 254 characters.",
+    "expected": "Email address must be shorter than 254 characters",
     "element_locator": "//div[@role='alert' and @aria-describedby='email-label']",
     "Obs": "f-"
   },
@@ -123,7 +123,7 @@
       "institution": "UNSA",
       "country": "Perú",
       "email": "jperez@unsa.pe",
-      "comments": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      "comments": "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
     },
     "expected": "Your request has been submitted successfully",
     "element_locator": "//p[contains(text(), 'Your request has been submitted successfully')]",

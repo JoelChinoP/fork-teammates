@@ -34,12 +34,12 @@ class SeleniumConnection:
         # options.add_argument("--headless")  # Descomentar si se requiere headless
 
         # Comentar si no se quiere usar Brave
-        # options.binary_location = r"C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe"
+        options.binary_location = r"C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe"
 
         # Fijar versión de ChromeDriver
-        service = Service(ChromeDriverManager().install())
+        #service = Service(ChromeDriverManager().install())
         # Comentar la línea anterior y descomentar la siguiente si se quiere usar una versión específica
-        #service = Service(ChromeDriverManager(driver_version="138.0.7204.49").install())
+        service = Service(ChromeDriverManager(driver_version="138.0.7204.49").install())
 
         self.driver = webdriver.Chrome(service=service, options=options)
         try:
@@ -55,7 +55,7 @@ class SeleniumConnection:
                     "contains(text(),'@gmail.com') or "
                     "contains(text(),'@unsa.edu.pe')]"))
             )
-            print("***Conexión exitosa y usuario autenticado...")
+            print("***Conexión exitosa y usuario autenticado...\n")
         except Exception as e:
             print(f"Error: {e}")
             self.driver.quit()
