@@ -10,7 +10,7 @@ class TestFn02:
     def __init__(self, driver, url):
         self.driver, self.url, self.path = driver, url, "/web/front/help/session-links-recovery"
         self.form_fields = {
-            "email": (By.ID, "email"),
+            "email": (By.XPATH, "//input[@type='email']"),
         }
         with open("data/fn02.json") as f:
             self.cases = json.load(f)
