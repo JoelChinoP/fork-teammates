@@ -43,7 +43,9 @@ jobs:
           cache: "pip" # caching pip dependencies
 
       - name: Go to test directory
-        run: cd src/test/selenium
+        run: |
+          cd src/test/selenium
+          ls -l
 
       - name: Install Google Chrome
         run: |
