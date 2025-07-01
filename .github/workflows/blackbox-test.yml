@@ -23,7 +23,7 @@ concurrency:
 
 jobs:
   run-selected-test:
-    name: Run Selected Blackbox Test
+    name: Blackbox Test - ${{ github.event.inputs.test_target }} by ${{ github.actor }}
     runs-on: ubuntu-latest
 
     environment:
