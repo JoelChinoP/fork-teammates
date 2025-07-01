@@ -1,6 +1,9 @@
 name: Blackbox Automated Test Runner
 
 on:
+  push:
+    branches:
+      - test/black-box
   workflow_dispatch:
     inputs:
       test_target:
