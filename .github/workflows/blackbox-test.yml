@@ -1,9 +1,6 @@
 name: Blackbox Automated Test Runner
 
 on:
-  push:
-    branches:
-      - test/black-box
   workflow_dispatch:
     inputs:
       test_target:
@@ -40,6 +37,9 @@ jobs:
         with:
           python-version: "3.11"
           cache: "pip" # caching pip dependencies
+
+      - name: Go to test directory
+        run: cd src/test/selenium
 
       - name: Install dependencies
         run: pip install -r requirements.txt
