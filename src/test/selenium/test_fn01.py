@@ -80,6 +80,7 @@ class TestFn01:
         for case in self.cases:
             self.run_case(case)
         print(f"******************** **************** ********************")
+        print("")
 
 if __name__ == "__main__":
     checker = SeleniumConnection()

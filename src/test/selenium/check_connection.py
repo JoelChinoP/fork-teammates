@@ -61,7 +61,8 @@ class SeleniumConnection:
                     "contains(text(),'@gmail.com') or "
                     "contains(text(),'@unsa.edu.pe')]"))
             )
-            print("***Conexión exitosa y usuario autenticado...\n")
+            print("***Conexión exitosa y usuario autenticado...")
+            print("")
         except Exception as e:
             print(f"Error: {e}")
             self.driver.quit()
