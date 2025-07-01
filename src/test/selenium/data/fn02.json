@@ -1,0 +1,38 @@
+[
+  {
+    "id": "FN2-CP-001",
+    "fields": {
+      "email": "jperez@unsa.pe"
+    },
+    "expected": "The recovery links for your feedback sessions have been sent to the specified email address: jperez@unsa.pe",
+    "element_locator": "//div[contains(@class,'toast-body') and contains(text(),'The recovery links for your feedback sessions have been sent to the specified email address: jperez@unsa.pe')]",
+    "Obs": "f+"
+  },
+  {
+    "id": "FN2-CP-002",
+    "fields": {
+      "email": ""
+    },
+    "expected": "Please enter a valid email address and click the reCAPTCHA before submitting.",
+    "element_locator": "//div[contains(@class,'toast-body') and contains(text(),'Please enter a valid email address and click the reCAPTCHA before submitting.')]",
+    "Obs": "f-"
+  },
+  {
+    "id": "FN2-CP-003",
+    "fields": {
+      "email": "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQ"
+    },
+    "expected": "Please enter a valid email address and click the reCAPTCHA before submitting.",
+    "element_locator": "//div[contains(@class,'toast-body') and contains(text(),'Please enter a valid email address and click the reCAPTCHA before submitting.')]",
+    "Obs": "f-"
+  },
+  {
+    "id": "FN2-CP-004",
+    "fields": {
+      "email": "jperez.unsa.pe"
+    },
+    "expected": "Please enter a valid email address and click the reCAPTCHA before submitting.",
+    "element_locator": "//div[contains(@class,'toast-body') and contains(text(),'Please enter a valid email address and click the reCAPTCHA before submitting.')]",
+    "Obs": "f-"
+  }
+]
