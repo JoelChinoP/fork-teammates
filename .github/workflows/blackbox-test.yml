@@ -56,6 +56,7 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements.txt
+        working-directory: src/test/selenium
 
       - name: Run selected test
         id: run_test
@@ -82,6 +83,7 @@ jobs:
               ;;
           esac
 
+        working-directory: src/test/selenium
         shell: bash
 
     # Opcional: añadir salida del job
