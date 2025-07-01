@@ -7,7 +7,7 @@ import time, json
 from utils import Utils
 
 class TestFn01:
-    def __init__(self, driver, url, cases):
+    def __init__(self, driver, url):
         self.driver, self.url, self.path = driver, url, "/web/front/request"
         self.form_fields = {
             "name": (By.ID, "name"),
@@ -16,7 +16,8 @@ class TestFn01:
             "email": (By.ID, "email"),
             "comments": (By.ID, "comments"),
         }
-        self.cases = cases
+        with open("data/fn01.json") as f:
+            self.cases = json.load(f)
 
     def go_to_form(self):
         self.driver.get(self.url + self.path)
@@ -81,8 +82,6 @@ class TestFn01:
         print(f"******************** **************** ********************")
 
 if __name__ == "__main__":
-    with open("data/fn01.json") as f:
-        cases = json.load(f)
     checker = SeleniumConnection()
     driver, url = checker.connect_and_check_login()
-    TestFn01(driver, url, cases).run()
+    TestFn01(driver, url).run()
