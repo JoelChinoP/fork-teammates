@@ -6,11 +6,11 @@ on:
       test_target:
         description: "Select the test to run"
         required: true
-        default: "test_fn01"
+        default: "Test All"
         type: choice
         options:
-          - test_fn01
-          - test_all
+          - Test All
+          - Test RNF01
           # Añadir más aquí: test_fn02, test_fn03, etc.
       session_token:
         description: "Session token for authentication"
@@ -62,10 +62,10 @@ jobs:
 
         run: |
           case "${{ github.event.inputs.test_target }}" in
-            test_fn01)
+            "Test RNF01")
               python test_fn01.py
               ;;
-            test_all)
+            "Test All")
               python test_all.py
               ;;
             # Añade más casos aquí para nuevos tests, ejemplo:
