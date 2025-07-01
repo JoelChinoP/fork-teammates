@@ -3,7 +3,6 @@ name: Accessibility Tests
 on:
   push:
     branches:
-      - master
       - release
   pull_request:
     branches:

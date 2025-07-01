@@ -3,7 +3,6 @@ name: E2E Sql Tests
 on:
   push:
     branches:
-      - master
       - release
   pull_request:
     branches:
