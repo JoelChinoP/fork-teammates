@@ -1,0 +1,73 @@
+name: Blackbox Automated Test Runner
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_target:
+        description: "Select the test to run"
+        required: true
+        default: "test_fn01"
+        type: choice
+        options:
+          - test_fn01
+          - test_all
+          # Añadir más aquí: test_fn02, test_fn03, etc.
+      session_token:
+        description: "Session token for authentication"
+        required: true
+        type: string
+
+jobs:
+  run-selected-test:
+    name: Run Selected Blackbox Test
+    runs-on: ubuntu-latest
+
+    environment:
+      test-backbox
+      # URL: ${{ vars.URL }}
+      # TOKEN_NAME: ${{ vars.TOKEN_NAME }}
+      # TOKEN_VALUE pasado por input del usuario
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip" # caching pip dependencies
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run selected test
+        id: run_test
+        env:
+          URL: ${{ vars.URL }}
+          TOKEN_NAME: ${{ vars.TOKEN_NAME }}
+          TOKEN_VALUE: ${{ github.event.inputs.session_token }} # Valor por defecto, se sobreescribe después
+
+        run: |
+          case "${{ github.event.inputs.test_target }}" in
+            test_fn01)
+              python test_fn01.py
+              ;;
+            test_all)
+              python test_all.py
+              ;;
+            # Añade más casos aquí para nuevos tests, ejemplo:
+            # test_fn02)
+            #   python test_fn02.py
+            #   ;;
+            *)
+              echo "Invalid test selected."
+              exit 1
+              ;;
+          esac
+
+        shell: bash
+
+    # Opcional: añadir salida del job
+    #outputs:
+    #  test_target: ${{ github.event.inputs.test_target }}
