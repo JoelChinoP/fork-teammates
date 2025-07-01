@@ -14,7 +14,7 @@ on:
           # Añadir más aquí: test_fn02, test_fn03, etc.
       session_token:
         description: "Session token for authentication"
-        required: true
+        required: false
         type: string
 
 concurrency:
@@ -58,7 +58,7 @@ jobs:
         env:
           URL: ${{ vars.URL }}
           TOKEN_NAME: ${{ vars.TOKEN_NAME }}
-          TOKEN_VALUE: ${{ github.event.inputs.session_token }} # Valor por defecto, se sobreescribe después
+          TOKEN_VALUE: ${{github.event.inputs.session_token || secrets.TOKEN_VALUE }}
 
         run: |
           case "${{ github.event.inputs.test_target }}" in
