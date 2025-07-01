@@ -31,7 +31,13 @@ class SeleniumConnection:
 
     def connect_and_check_login(self):
         options = Options()
-        options.add_argument("--headless")  # Descomentar si se requiere headless
+        options.add_argument("--headless=new")  # Descomentar si se requiere headless
+
+        # Configuración de Chrome
+        options.add_argument("--verbose")
+        options.add_argument("--disable-gpu")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
 
         # Comentar si no se quiere usar Brave
         #options.binary_location = r"C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe"
