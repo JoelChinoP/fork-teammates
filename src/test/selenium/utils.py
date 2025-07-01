@@ -35,5 +35,6 @@ class Utils:
 
     print(f"\tExpected:\n\t\t{expected}")
     print(f"\tObtained:\n\t\t{obtained}")
-    print(f"\tObs:\n\t\t{obs}\n")
+    print(f"\tObs:\n\t\t{obs}")
+    print("") # Agregar un salto de línea para mejorar la legibilidad
     print("::endgroup::")
