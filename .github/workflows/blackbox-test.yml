@@ -42,11 +42,6 @@ jobs:
           python-version: "3.11"
           cache: "pip" # caching pip dependencies
 
-      - name: Go to test directory
-        run: |
-          cd src/test/selenium
-          ls -l
-
       #- name: Install Google Chrome
       #  run: |
       #    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
