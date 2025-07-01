@@ -17,6 +17,10 @@ on:
         required: true
         type: string
 
+concurrency:
+  group: blackbox-test-runner
+  cancel-in-progress: true
+
 jobs:
   run-selected-test:
     name: Run Selected Blackbox Test
