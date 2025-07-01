@@ -75,8 +75,10 @@ class TestFn01:
         }
 
     def run(self):
+        print(f"******************** RUN TEST-FN01 IN ********************")
         for case in self.cases:
             self.run_case(case)
+        print(f"******************** **************** ********************")
 
 if __name__ == "__main__":
     with open("data/fn01.json") as f:
