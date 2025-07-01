@@ -23,11 +23,17 @@ class Utils:
 
   @staticmethod
   def log_test(test_code, input_data, expected, obtained, obs):
-    status = "PASSED" if expected in obtained else "FAILED" # Si el resultado esperado está contenido en el obtenido
+    status = "PASSED" if expected in obtained else "FAILED"
     print(f"::group::[{status}] TEST-{test_code.upper()}")
 
-    print(f"\tInput:\n\t\t{input_data}")
+    print(f"\tInput:")
+    if isinstance(input_data, dict):
+        for k, v in input_data.items():
+            print(f"\t\t{k}: {v}")
+    else:
+        print(f"\t\t{input_data}")
+
     print(f"\tExpected:\n\t\t{expected}")
     print(f"\tObtained:\n\t\t{obtained}")
-    print(f"\tObs:\n\t\t{obs}") #f- or f+
+    print(f"\tObs:\n\t\t{obs}")
     print("::endgroup::")
