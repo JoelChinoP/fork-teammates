@@ -18,5 +18,5 @@ class TestFn05:
     def go_to_form(self):
         self.driver.get(self.url + self.path)
         WebDriverWait(self.driver, 5).until(
-            EC.presence_of_element_located((By.ID, "search-box"))
+            EC.presence_of_element_located((By.ID, "search-button"))
         )
