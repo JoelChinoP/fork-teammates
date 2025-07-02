@@ -1,0 +1,24 @@
+[
+  {
+    "id": "FN4-CP-001",
+    "fields": {
+      "name": "Ana Torres",
+      "email": "ana@unsa.edu.pe",
+      "institution": "UNSA"
+    },
+    "expected": "[{'name': 'Ana Torres', 'email': 'ana@unsa.edu.pe', 'institution': 'UNSA', 'status': 'PENDING'}]",
+    "element_locator": "//table//tbody/tr",
+    "Obs": "f+"
+  },
+  {
+    "id": "FN4-CP-002",
+    "fields": {
+      "name": "",
+      "email": "ana@unsa.edu.pe",
+      "institution": "UNSA"
+    },
+    "expected": "[]",
+    "element_locator": "//table//tbody/tr",
+    "Obs": "f-"
+  }
+]
