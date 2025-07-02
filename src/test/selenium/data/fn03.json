@@ -1,0 +1,38 @@
+[
+  {
+    "id": "FN3-CP-001",
+    "fields": {
+      "input_line": "Juan Perez | juan@unsa.pe | UNSA"
+    },
+    "expected": "[{\"name\": \"Juan Perez\", \"email\": \"juan@unsa.pe\", \"institution\": \"UNSA\", \"status\": \"PENDING\"}]",
+    "element_locator": "//table//tbody/tr",
+    "Obs": "f+"
+  },
+  {
+    "id": "FN3-CP-002",
+    "fields": {
+      "input_line": ""
+    },
+    "expected": "[]",
+    "element_locator": "//table//tbody/tr",
+    "Obs": "f-"
+  },
+  {
+    "id": "FN3-CP-003",
+    "fields": {
+      "input_line": "juan@unsa.pe | UNSA"
+    },
+    "expected": "[]",
+    "element_locator": "//table//tbody/tr",
+    "Obs": "f-"
+  },
+  {
+    "id": "FN3-CP-004",
+    "fields": {
+      "input_line": "Juan Perez | juan@unsa.pe | UNSA\nJoel Antonio | joel@unsa.pe | UNSA"
+    },
+    "expected": "[{\"name\": \"Juan Perez\", \"email\": \"juan@unsa.pe\", \"institution\": \"UNSA\", \"status\": \"PENDING\"}, {\"name\": \"Joel Antonio\", \"email\": \"joel@unsa.pe\", \"institution\": \"UNSA\", \"status\": \"PENDING\"}]",
+    "element_locator": "//table//tbody/tr",
+    "Obs": "f+"
+  }
+]
