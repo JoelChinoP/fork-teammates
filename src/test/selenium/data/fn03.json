@@ -4,7 +4,7 @@
     "fields": {
       "input_line": "Juan Perez | juan@unsa.pe | UNSA"
     },
-    "expected": "[{\"name\": \"Juan Perez\", \"email\": \"juan@unsa.pe\", \"institution\": \"UNSA\", \"status\": \"PENDING\"}]",
+    "expected": "[{'name': 'Juan Perez', 'email': 'juan@unsa.pe', 'institution': 'UNSA', 'status': 'PENDING'}]",
     "element_locator": "//table//tbody/tr",
     "Obs": "f+"
   },
@@ -31,7 +31,7 @@
     "fields": {
       "input_line": "Juan Perez | juan@unsa.pe | UNSA\nJoel Antonio | joel@unsa.pe | UNSA"
     },
-    "expected": "[{\"name\": \"Juan Perez\", \"email\": \"juan@unsa.pe\", \"institution\": \"UNSA\", \"status\": \"PENDING\"}, {\"name\": \"Joel Antonio\", \"email\": \"joel@unsa.pe\", \"institution\": \"UNSA\", \"status\": \"PENDING\"}]",
+    "expected": "[{'name': 'Juan Perez', 'email': 'juan@unsa.pe', 'institution': 'UNSA', 'status': 'PENDING'}, {'name': 'Joel Antonio', 'email': 'joel@unsa.pe', 'institution': 'UNSA', 'status': 'PENDING'}]",
     "element_locator": "//table//tbody/tr",
     "Obs": "f+"
   }
