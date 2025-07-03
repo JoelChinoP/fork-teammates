@@ -1,0 +1,42 @@
+name: SonarQube Manual Analysis
+
+on:
+  workflow_dispatch: # Permite ejecutar el workflow manualmente desde la UI de GitHub
+
+concurrency:
+  group: sonarqube-analysis
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build and analyze
+    runs-on: ubuntu-latest
+
+    environment: sonarqube
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Clonado completo para mejor análisis
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: "zulu"
+      - name: Cache SonarQube packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
+      - name: Build and analyze
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        run: ./gradlew build sonar --info
