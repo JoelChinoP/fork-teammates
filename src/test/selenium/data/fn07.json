@@ -1,0 +1,82 @@
+[
+  {
+    "id": "FN7-CP-001",
+    "fields": {
+      "title": "A",
+      "message": "Hola",
+      "group": "Students",
+      "style": "Primary (blue)",
+      "start_date": "2025-07-03",
+      "start_time": "10:00H",
+      "end_date": "2025-07-03",
+      "end_time": "11:00H"
+    },
+    "expected": "Notification created successfully",
+    "element_locator": "//div[contains(@class, 'alert-success') and contains(., 'Notification created successfully')]",
+    "Obs": "f+"
+  },
+  {
+    "id": "FN7-CP-002",
+    "fields": {
+      "title": "",
+      "message": "Mensaje válido",
+      "group": "Teachers",
+      "style": "Primary (blue)",
+      "start_date": "2025-07-03",
+      "start_time": "10:00H",
+      "end_date": "2025-07-03",
+      "end_time": "11:00H"
+    },
+    "expected": "Notification title cannot be empty",
+    "element_locator": "//div[@role='alert' and contains(., 'title cannot be empty')]",
+    "Obs": "f-"
+  },
+  {
+    "id": "FN7-CP-003",
+    "fields": {
+      "title": "Título válido",
+      "message": "",
+      "group": "General",
+      "style": "Primary (blue)",
+      "start_date": "2025-07-03",
+      "start_time": "10:00H",
+      "end_date": "2025-07-03",
+      "end_time": "11:00H"
+    },
+    "expected": "The field 'notification message' is empty.",
+    "element_locator": "//div[@role='alert' and contains(., 'notification message')]",
+    "Obs": "f-"
+  },
+  {
+    "id": "FN7-CP-004",
+    "fields": {
+      "title": "Notificación",
+      "message": "Contenido cualquiera",
+      "group": "Students",
+      "style": "Primary (blue)",
+      "start_date": "2025-07-03",
+      "start_time": "11:00H",
+      "end_date": "2025-07-03",
+      "end_time": "10:00H"
+    },
+    "expected": "The time when the notification will expire for this notification cannot be earlier than the time when the notification will be visible.",
+    "element_locator": "//div[@role='alert' and contains(., 'expire for this notification cannot be earlier')]",
+    "Obs": "f-"
+  },
+  {
+    "id": "FN7-CP-005",
+    "fields": {
+      "title": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "message": "Contenido",
+      "group": "Students",
+      "style": "Primary (blue)",
+      "start_date": "2025-07-03",
+      "start_time": "10:00H",
+      "end_date": "2025-07-03",
+      "end_time": "11:00H"
+    },
+    "expected": "Notification title cannot be 80 characters larger",
+    "element_locator": "//div[@role='alert' and contains(., 'title cannot be 80 characters larger')]",
+    "Obs": "f-"
+  }
+]
