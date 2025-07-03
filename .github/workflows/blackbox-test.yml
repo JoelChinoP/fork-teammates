@@ -22,6 +22,15 @@ on:
           - Test RNF10
           - Test RNF11
           - Test RNF12
+          - Test RNF13
+          - Test RNF14
+          - Test RNF15
+          - Test RNF16
+          - Test RNF17
+          - Test RNF18
+          - Test RNF19
+          - Test RNF20
+          - Test RNF21
           # Añadir más aquí: test_fn02, test_fn03, etc.
       session_token:
         description: "Session token for authentication"
