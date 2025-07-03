@@ -73,7 +73,7 @@ jobs:
         run: pip install -r requirements.txt
         working-directory: src/test/selenium
 
-      - name: Run selected test
+      - name: Run ${{ github.event.inputs.test_target }}
         id: run_test
         env:
           URL: ${{ vars.URL }}
