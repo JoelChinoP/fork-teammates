@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - release
-  schedule:
-    - cron: "0 0 * * *" # end of every day
 jobs:
   LnP-testing:
     runs-on: ubuntu-latest
