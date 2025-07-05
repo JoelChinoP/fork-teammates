@@ -7,7 +7,6 @@ apply plugin: "com.github.spotbugs"
 apply plugin: "jacoco"
 apply plugin: "cz.habarta.typescript-generator"
 apply plugin: "org.liquibase.gradle"
-apply plugin: "org.sonarqube"
 
 def checkstyleVersion = "10.15.0"
 def pmdVersion = "7.0.0"
@@ -29,14 +28,6 @@ buildscript {
         }
         classpath "com.google.guava:guava:33.1.0-jre"
         classpath "org.liquibase:liquibase-gradle-plugin:2.2.1"
-        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:4.4.1.3373"
-    }
-}
-
-sonarqube {
-    properties {
-        property "sonar.projectKey", "Teammates-Cigarra"
-        property "sonar.projectName", "Teammates-Cigarra"
     }
 }
 
