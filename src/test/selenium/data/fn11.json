@@ -1,0 +1,42 @@
+[
+  {
+    "id": "FN11-CP-001",
+    "from": "2024-01-01",
+    "to": "2024-07-03",
+    "expected": "Success: busqueda realizada",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
+    "Obs": "Busqueda con fechas validas"
+  },
+  {
+    "id": "FN11-CP-002",
+    "from": "2015-12-31",
+    "to": "2016-01-01",
+    "expected": "Invalid startTime parameter.",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
+    "Obs": "Fecha inicial fuera del rango permitido (Anterior a 2016)"
+  },
+  {
+    "id": "FN11-CP-003",
+    "from": "2025-01-01",
+    "to": "2025-09-21",
+    "expected": "The end time must not exceed the current time.",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
+    "Obs": "Fecha final mayor a la fecha actual"
+  },
+  {
+    "id": "FN11-CP-004",
+    "from": "2024-01-01",
+    "to": "2024-07-05",
+    "expected": "The search window must not exceed 184 full days.",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
+    "Obs": "Rango mayor a 184 dias"
+  },
+  {
+    "id": "FN11-CP-005",
+    "from": "2024-05-01",
+    "to": "2024-04-01",
+    "expected": "The end time should be after the start time.",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
+    "Obs": "Fecha inicial mayor que la final"
+  }
+]
