@@ -5,7 +5,7 @@
       "name": "Lucía Gómez",
       "institution": "UNSA",
       "email": "lucia@unsa.edu.pe",
-      "comments": "Actualizar datos"
+      "comments": ""
     },
     "expected": "Account request was successfully updated.",
     "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'Account request')]",
@@ -17,7 +17,7 @@
       "name": " ",
       "institution": "UNSA",
       "email": "lucia@unsa.edu.pe",
-      "comments": "Actualizar datos"
+      "comments": ""
     },
     "expected": "The field 'person name' is empty. The value of a/an person name should be no longer than 100 characters. It should not be empty.",
     "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
@@ -29,7 +29,7 @@
       "name": "L",
       "institution": "UNSA",
       "email": "lucia@unsa.edu.pe",
-      "comments": "Actualizar datos"
+      "comments": ""
     },
     "expected": "Account request was successfully updated.",
     "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'Account request')]",
