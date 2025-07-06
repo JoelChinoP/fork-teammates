@@ -1,0 +1,29 @@
+[
+  {
+    "id": "FN21-CP-001",
+    "fields": {
+      "text": ""
+    },
+    "expected": "Response to question 1 submitted successfully!",
+    "element_locator": "//div[contains(@class,'modal-title')]",
+    "Obs": "f+"
+  },
+  {
+    "id": "FN21-CP-002",
+    "fields": {
+      "text": "Esta respuesta contiene exactamente cincuenta palabras para cumplir con el requerimiento de la prueba automatizada. Cada oración ha sido cuidadosamente diseñada para asegurar que el número total de palabras sea el esperado. Así, el sistema debe aceptar esta respuesta y mostrar el mensaje satisfactorio esperado."
+    },
+    "expected": "Response to question 1 submitted successfully!",
+    "element_locator": "//div[contains(@class,'modal-title')]",
+    "Obs": "f+"
+  },
+  {
+    "id": "FN21-CP-003",
+    "fields": {
+      "text": "Esta es una respuesta de tamaño medio para probar el funcionamiento del sistema cuando el estudiante ingresa una cantidad razonable de texto, pero menor a cincuenta palabras. El objetivo es verificar que el mensaje de éxito también aparece en este caso."
+    },
+    "expected": "Response to question 1 submitted successfully!",
+    "element_locator": "//div[contains(@class,'modal-title')]",
+    "Obs": "f+"
+  }
+]
