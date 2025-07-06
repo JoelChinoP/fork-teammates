@@ -11,7 +11,7 @@
   {
     "id": "FN21-CP-002",
     "fields": {
-      "text": "Esta respuesta contiene exactamente cincuenta palabras para cumplir con el requerimiento de la prueba automatizada. Cada oración ha sido cuidadosamente diseñada para asegurar que el número total de palabras sea el esperado. Así, el sistema debe aceptar esta respuesta y mostrar el mensaje satisfactorio esperado."
+      "text": "Esta respuesta contiene exactamente cincuenta palabras para cumplir con el requerimiento de la prueba automatizada. Cada oracion ha sido cuidadosamente disenada para asegurar que el numero total de palabras sea el esperado. Asi, el sistema debe aceptar esta respuesta y mostrar el mensaje satisfactorio esperado que deberia salir."
     },
     "expected": "Response to question 1 submitted successfully!",
     "element_locator": "//div[contains(@class,'modal-title')]",
@@ -20,7 +20,7 @@
   {
     "id": "FN21-CP-003",
     "fields": {
-      "text": "Esta es una respuesta de tamaño medio para probar el funcionamiento del sistema cuando el estudiante ingresa una cantidad razonable de texto, pero menor a cincuenta palabras. El objetivo es verificar que el mensaje de éxito también aparece en este caso."
+      "text": "Esta es una respuesta de tamano medio para probar el funcionamiento del sistema cuando el estudiante ingresa una cantidad razonable de texto, pero menor a cincuenta palabras"
     },
     "expected": "Response to question 1 submitted successfully!",
     "element_locator": "//div[contains(@class,'modal-title')]",

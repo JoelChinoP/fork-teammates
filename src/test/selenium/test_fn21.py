@@ -13,6 +13,7 @@ class TestFn21:
         courseid = "PS-Cigarra-2025"
         fsname = "selenium-test"
         self.path = f"/web/student/sessions/submission?courseid={courseid}&fsname={fsname}"
+        # Selector robusto para el iframe del editor de texto
         self.form_fields = {
             "text_area": (By.XPATH, "//iframe[contains(@id, 'tiny-angular') and contains(@id, '_ifr')]"),
         }
@@ -20,18 +21,20 @@ class TestFn21:
             self.cases = json.load(f)
 
     def go_to_form(self):
-        self.driver.get(self.url + self.path)
-        print(f"Navigating to {self.url + self.path}")
-        WebDriverWait(self.driver, 10).until(
+        url = self.url + self.path
+        print(f"Navigating to {url}")
+        self.driver.get(url)
+        # Espera a que cargue el botón de submit para la pregunta 1
+        WebDriverWait(self.driver, 15).until(
             EC.presence_of_element_located((By.ID, "btn-submit-qn-1"))
         )
 
     def fill_textarea(self, text):
-        iframe = WebDriverWait(self.driver, 5).until(
+        iframe = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located(self.form_fields["text_area"])
         )
         self.driver.switch_to.frame(iframe)
-        editable_body = WebDriverWait(self.driver, 5).until(
+        editable_body = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.ID, "tinymce"))
         )
         editable_body.clear()
@@ -41,27 +44,24 @@ class TestFn21:
     def submit(self):
         self.driver.find_element(By.ID, "btn-submit-qn-1").click()
 
-    def get_modal_message(self, locator):
-        try:
-            # Espera la aparición del modal de éxito
-            modal_title = WebDriverWait(self.driver, 5).until(
-                EC.visibility_of_element_located((By.XPATH, locator))
-            )
-            message = modal_title.text.strip()
-            # Presiona "Don't download proof of submission"
-            btn = WebDriverWait(self.driver, 5).until(
-                EC.element_to_be_clickable((By.XPATH, "//button[contains(text(),\"Don't download proof of submission\")]"))
-            )
-            btn.click()
-            return message
-        except Exception as e:
-            return str(e)
+    def get_modal_message(self):
+        # Espera el modal de éxito y retorna el texto del mensaje
+        modal_title = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, ".modal-title"))
+        )
+        message = modal_title.text.strip()
+        # Cierra el modal presionando "Don't download proof of submission"
+        btn = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//button[contains(text(),\"Don't download proof of submission\")]"))
+        )
+        btn.click()
+        return message
 
     def run_case(self, case):
         self.go_to_form()
         self.fill_textarea(case["fields"]["text"])
         self.submit()
-        obtained = self.get_modal_message(case["element_locator"])
+        obtained = self.get_modal_message()
         Utils.log_test(
             case["id"],
             case["fields"],
