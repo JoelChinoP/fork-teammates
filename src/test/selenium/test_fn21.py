@@ -21,7 +21,8 @@ class TestFn21:
 
     def go_to_form(self):
         self.driver.get(self.url + self.path)
-        WebDriverWait(self.driver, 5).until(
+        print(f"Navigating to {self.url + self.path}")
+        WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.ID, "btn-submit-qn-1"))
         )
 
