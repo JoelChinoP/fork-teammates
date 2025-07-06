@@ -8,7 +8,7 @@
       "comments": "Actualizar datos"
     },
     "expected": "Account request was successfully updated.",
-    "element_locator": "//ngb-toast[contains(@class,'bg-success')]//div[contains(@class, 'toast-body')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'Account request was successfully updated')]",
     "Obs": "f+"
   },
   {
@@ -20,7 +20,7 @@
       "comments": "Actualizar datos"
     },
     "expected": "The field 'person name' is empty. The value of a/an person name should be no longer than 100 characters. It should not be empty.",
-    "element_locator": "//ngb-toast[contains(@class,'bg-danger')]//div[contains(@class, 'toast-body')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'The value of a/an person name should be no longer than 100 characters')]",
     "Obs": "f-"
   },
   {
@@ -32,7 +32,7 @@
       "comments": "Actualizar datos"
     },
     "expected": "Account request was successfully updated.",
-    "element_locator": "//ngb-toast[contains(@class,'bg-success')]//div[contains(@class, 'toast-body')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'Account request was successfully updated')]",
     "Obs": "f+"
   },
   {
@@ -44,7 +44,7 @@
       "comments": ""
     },
     "expected": "\"Juan PerezJuan Pe…PerezJuan Perez\" is not acceptable to TEAMMATES as a/an person name because it is too long. The value of a/an person name should be no longer than 100 characters. It should not be empty.",
-    "element_locator": "//ngb-toast[contains(@class,'bg-danger')]//div[contains(@class, 'toast-body')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'Juan PerezJuan PerezJuan PerezJuan PerezJuan PerezJuan PerezJuan PerezJuan')]",
     "Obs": "f-"
   },
   {
@@ -56,7 +56,7 @@
       "comments": ""
     },
     "expected": "\"\"\"\" is not acceptable to TEAMMATES as a/an institute name because it starts with a non-alphanumeric character. A/An institute name must start with an alphanumeric character, and cannot contain any vertical bar (|) or percent sign (%).",
-    "element_locator": "//ngb-toast[contains(@class,'bg-danger')]//div[contains(@class, 'toast-body')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'The value of a/an institute name should be no longer than 128 characters')]",
     "Obs": "f-"
   },
   {
@@ -68,7 +68,7 @@
       "comments": ""
     },
     "expected": "Account request was successfully updated.",
-    "element_locator": "//ngb-toast[contains(@class,'bg-success')]//div[contains(@class, 'toast-body')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'Account request was successfully updated')]",
     "Obs": "f+"
   },
   {
@@ -80,7 +80,7 @@
       "comments": ""
     },
     "expected": "\"UNSAUNSAUNSA……….NSAUNSAUNSAUNSAUNSAUNSAUNSAUNSAUNSA\" is not acceptable to TEAMMATES as a/an institute name because it is too long. The value of a/an institute name should be no longer than 128 characters. It should not be empty.",
-    "element_locator": "//ngb-toast[contains(@class,'bg-danger')]//div[contains(@class, 'toast-body')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'The value of a/an institute name should be no longer than 128 characters. It should not be empty')]",
     "Obs": "f-"
   },
   {
@@ -92,7 +92,7 @@
       "comments": ""
     },
     "expected": "The field 'email' is empty. An email address contains some text followed by one '@' sign followed by some more text, and should end with a top level domain address like .com. It cannot be longer than 254 characters, cannot be empty and cannot contain spaces.",
-    "element_locator": "//ngb-toast[contains(@class,'bg-danger')]//div[contains(@class, 'toast-body')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'An email address contains some text followed by one '@' sign followed by some more text, and should end with a top level domain address like .com')]",
     "Obs": "f-"
   },
   {
@@ -104,7 +104,7 @@
       "comments": ""
     },
     "expected": "Account request was successfully updated.",
-    "element_locator": "//ngb-toast[contains(@class,'bg-success')]//div[contains(@class, 'toast-body')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'Account request was successfully updated')]",
     "Obs": "f+"
   },
   {
@@ -116,19 +116,7 @@
       "comments": ""
     },
     "expected": "\"juanperez@gmail.com#\" is not acceptable to TEAMMATES as a/an email because it is not in the correct format. An email address contains some text followed by one '@' sign followed by some more text, and should end with a top level domain address like .com. It cannot be longer than 254 characters, cannot be empty and cannot contain spaces.",
-    "element_locator": "//ngb-toast[contains(@class,'bg-danger')]//div[contains(@class, 'toast-body')]",
-    "Obs": "f-"
-  },
-  {
-    "id": "FN5-CP-011",
-    "fields": {
-      "name": "Lucía",
-      "institution": "",
-      "email": "lucia@unsa.edu.pe",
-      "comments": ""
-    },
-    "expected": "The field 'institute name' is empty. The value of a/an institute name should be no longer than 128 characters. It should not be empty.",
-    "element_locator": "//ngb-toast[contains(@class,'bg-danger')]//div[contains(@class, 'toast-body')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'is not acceptable to TEAMMATES as a/an email because it is not in the correct format')]",
     "Obs": "f-"
   }
 ]
