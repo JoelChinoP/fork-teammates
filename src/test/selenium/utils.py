@@ -20,9 +20,17 @@ class Utils:
     except Exception as e:
         print("Error reCAPTCHA:", e)
         driver.switch_to.default_content()
-
+  
+  @staticmethod
+  def shorten(text, maxlen=1000):
+    if len(text) <= maxlen:
+        return text
+    half = maxlen // 2
+    return f"{text[:half]} ... {text[-half:]}"
+  
   @staticmethod
   def log_test(test_code, input_data, expected, obtained, obs):
+    MAX_LEN = 1000
     status = "PASSED" if expected in obtained else "FAILED"
     print(f"::group::[{status}] TEST-{test_code.upper()}")
 
@@ -33,8 +41,8 @@ class Utils:
     else:
         print(f"\t\t{input_data}")
 
-    print(f"\tExpected:\n\t\t{expected}")
-    print(f"\tObtained:\n\t\t{obtained}")
+    print(f"\tExpected:\n\t\t{Utils.shorten(str(expected), MAX_LEN)}")
+    print(f"\tObtained:\n\t\t{Utils.shorten(str(obtained), MAX_LEN)}")
     print(f"\tObs:\n\t\t{obs}")
-    print("") # Agregar un salto de línea para mejorar la legibilidad
+    print("")  # Agregar un salto de línea para mejorar la legibilidad
     print("::endgroup::")
