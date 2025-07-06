@@ -1,0 +1,82 @@
+[
+  {
+    "id": "FN8-CP-001",
+    "fields": {
+      "title": "A",
+      "message": "Hola",
+      "group": "Students",
+      "style": "SUCCESS",
+      "start_date": "2025-07-06",
+      "start_time": "10:00 AM",
+      "end_date": "2025-07-06",
+      "end_time": "11:00 AM"
+    },
+    "expected": "Notification updated successfully.",
+    "element_locator": "//div[@class='toast-body' and contains(text(), 'Notification updated successfully')]",
+    "Obs": "FN8-PE-001, FN8-PE-002, FN8-PE-003, FN8-VL-001, FN8-VL-002, FN8-VL-003, FN8-TD-001"
+  },
+  {
+    "id": "FN8-CP-002",
+    "fields": {
+      "title": "",
+      "message": "Mensaje válido",
+      "group": "Students",
+      "style": "SUCCESS",
+      "start_date": "2025-07-06",
+      "start_time": "10:00 AM",
+      "end_date": "2025-07-06",
+      "end_time": "11:00 AM"
+    },
+    "expected": "Notification title cannot be empty",
+    "element_locator": "//div[@class='toast-body' and contains(text(), 'Notification title cannot be empty')]",
+    "Obs": "FN8-PE-001, FN8-VL-001"
+  },
+  {
+    "id": "FN8-CP-003",
+    "fields": {
+      "title": "A",
+      "message": "",
+      "group": "Students",
+      "style": "SUCCESS",
+      "start_date": "2025-07-06",
+      "start_time": "10:00 AM",
+      "end_date": "2025-07-06",
+      "end_time": "11:00 AM"
+    },
+    "expected": "The time when the notification will expire for this notification cannot be earlier than the time when the notification will be visible.\nThe field 'notification message' is empty.",
+    "element_locator": "//div[@class='toast-body' and contains(text(), 'notification will expire') and contains(text(), 'notification message')]",
+    "Obs": "FN8-PE-002, FN8-VL-002"
+  },
+  {
+    "id": "FN8-CP-004",
+    "fields": {
+      "title": "A",
+      "message": "Contenido",
+      "group": "Students",
+      "style": "SUCCESS",
+      "start_date": "2025-07-06",
+      "start_time": "10:00 AM",
+      "end_date": "2025-07-06",
+      "end_time": "09:00 AM"
+    },
+    "expected": "cannot be earlier than the time when the notification will be visible",
+    "element_locator": "//div[@class='toast-body' and contains(text(), 'cannot be earlier than the time when the notification will be visible')]",
+    "Obs": "FN8-PE-003"
+  },
+  {
+    "id": "FN8-CP-006",
+    "fields": {
+      "title": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "message": "Este es un mensaje largo para verificar que el límite se respeta correctamente sin errores.",
+      "group": "Students",
+      "style": "SUCCESS",
+      "start_date": "2025-07-06",
+      "start_time": "10:00 AM",
+      "end_date": "2025-07-06",
+      "end_time": "11:00 AM"
+    },
+    "expected": "Notification updated successfully.",
+    "element_locator": "//div[@class='toast-body' and contains(text(), 'Notification updated successfully')]",
+    "Obs": "FN8-VL-001, FN8-VL-002"
+  }
+]

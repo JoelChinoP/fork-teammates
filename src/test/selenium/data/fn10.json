@@ -1,0 +1,131 @@
+[
+  {
+    "id": "FN10-CP-001",
+    "fields": {},
+    "action": "query",
+    "expected": "Timestamp Severity Trace ID Summary",
+    "element_locator": "//div[contains(@class,'overflow-x-scroll')]",
+    "Obs": "Estado: Filtrado (Query sin filtros) "
+  },
+  {
+    "id": "FN10-CP-002",
+    "fields": {
+      "trace-id": "Prueba2"
+    },
+    "action": null,
+    "expected": "",
+    "element_locator": "//input[@id='trace-id']",
+    "Obs": "Estado: no filtrado (Solo se llena filtro)"
+  },
+  {
+    "id": "FN10-CP-003",
+    "fields": {
+      "trace-id": "38b795adfc8fcb038e81b0a02b26a7ee"
+    },
+    "action": "query",
+    "expected": "There are no logs in this time period.",
+    "element_locator": "//div[contains(@class,'overflow-x-scroll')]",
+    "Obs": "Estado: Filtrado (Se filtra por trace-id, si no encuentra resultados se muestra un mensaje de indicacion)"
+  },
+  {
+    "id": "FN10-CP-004",
+    "fields": {
+      "trace-id": "38b795adfc8fcb038e81b0a02b26a7ee",
+      "email": "jcharaco@unsa.edu.pe"
+    },
+    "action": "query",
+    "expected": "There are no logs in this time period.",
+    "element_locator": "//div[contains(@class,'overflow-x-scroll')]",
+    "Obs": "Estado: FiltroAplicado (Si no encuentra resultados se muestra un mensaje de indicacion)"
+  },
+  {
+    "id": "FN10-CP-005",
+    "fields": {
+      "trace-id": "38b795adfc8fcb038e81b0a02b26a7ee",
+      "email": "mmarronl@unsa.edu.pe"
+    },
+    "action": "clear",
+    "expected": "",
+    "element_locator": "//input[@id='trace-id']",
+    "Obs": "Estado: Restablecido (Se limpian los campos de filtros)"
+  },
+  {
+    "id": "FN10-CP-006",
+    "pre": {
+      "fields": {
+        "trace-id": "38b795adfc8fcb038e81b0a02b26a7ee"
+      },
+      "action": "query"
+    },
+    "fields": {},
+    "action": "clear",
+    "expected": "",
+    "element_locator": "//input[@id='trace-id']",
+    "Obs": "Estado: Restablecido (Limpiar despues de filtrar)"
+  },
+  {
+    "id": "FN10-CP-007",
+    "pre": {
+      "fields": {
+        "trace-id": "38b795adfc8fcb038e81b0a02b26a7ee"
+      },
+      "action": "clear"
+    },
+    "fields": {},
+    "action": null,
+    "expected": "",
+    "element_locator": "//input[@id='trace-id']",
+    "Obs": "Estado: Inicio (Se verifica si se limpian los campos de filtros)"
+  },
+  {
+    "id": "FN10-CP-008",
+    "pre": {
+      "fields": {
+        "action-class": "BinCourseAction"
+      },
+      "action": "query"
+    },
+    "fields": {
+      "action-class": "SearchStudentsAction"
+    },
+    "action": "query",
+    "expected": "There are no logs in this time period.",
+    "element_locator": "//div[contains(@class,'overflow-x-scroll')]",
+    "Obs": "Estado: FiltroAplicado  (Modifcacion luego de filtrar. De no haber resultados se muestra un mensaje de indicacion)"
+  },
+  {
+    "id": "FN10-CP-009",
+    "fields": {
+        "trace-id": "22bb64076b227c8b9c5b62e9e33fa4a3",
+        "google-id": "mmarronl@unsa.edu.pe",
+        "source-file": "teammates.ui.servlets.WebApiServlet",
+        "regkey": "5b62e9e33fa4a3", 
+        "source-function": "invokeServlet",
+        "email": "mmarronl@unsa.edu.pe",
+        "action-class": "SearchStudentsAction",
+        "exception-class": "0",
+        "latency": ">120",
+        "status": "200",
+        "version": "1"
+    },
+    "action": "query",
+    "expected": "There are no logs in this time period.",
+    "element_locator": "//div[contains(@class,'overflow-x-scroll')]",
+    "Obs": "Estado: Filtrado (Si no encuentra resultados se muestra un mensaje de indicacion)"
+  },
+  {
+    "id": "FN10-CP-010",
+    "pre": {
+      "fields": {
+        "trace-id": "38b795adfc8fcb038e81b0a02b26a7ee",
+        "email": "jcharaco@unsa.edu.pe"      
+      },
+      "action": "query"
+    },
+    "fields": {},
+    "action": "clear",
+    "expected": "",
+    "element_locator": "//input[@id='email']",
+    "Obs": "Estado: Inicio (Se limpian los campos de filtros)"
+  }
+]
