@@ -20,7 +20,7 @@
       "comments": "Actualizar datos"
     },
     "expected": "The field 'person name' is empty. The value of a/an person name should be no longer than 100 characters. It should not be empty.",
-    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'person name')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
     "Obs": "f-"
   },
   {
@@ -56,7 +56,7 @@
       "comments": ""
     },
     "expected": "The field 'institute name' is empty. The value of a/an institute name should be no longer than 128 characters. It should not be empty.",
-    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'institute name')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
     "Obs": "f-"
   },
   {
@@ -92,7 +92,7 @@
       "comments": ""
     },
     "expected": "The field 'email' is empty. An email address contains some text followed by one '@' sign followed by some more text, and should end with a top level domain address like .com. It cannot be longer than 254 characters, cannot be empty and cannot contain spaces.",
-    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'email')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
     "Obs": "f-"
   },
   {
