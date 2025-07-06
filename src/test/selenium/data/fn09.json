@@ -1,0 +1,131 @@
+[
+  {
+    "id": "FN9-CP-001",
+    "fields": {
+      "logs-from-datepicker": "2025-07-05",
+      "from-hour": "08",
+      "from-minute": "00",
+      "logs-to-datepicker": "2025-07-05",
+      "to-hour": "10",
+      "to-minute": "00",
+      "severity-select": "INFO",
+      "severity-radio": "on"
+    },
+    "action": "query",
+    "element_locator": "//div[contains(@class,'overflow-x-scroll')]",
+    "expected": "",
+    "Obs": "f+"
+  },
+  {
+    "id": "FN9-CP-002",
+    "fields": {
+      "logs-from-datepicker": "2025-07-05",
+      "from-hour": "09",
+      "from-minute": "30",
+      "logs-to-datepicker": "2025-07-06",
+      "to-hour": "11",
+      "to-minute": "45",
+      "severity-select": "INFO",
+      "min-severity-radio": "on"
+    },
+    "action": "query",
+    "element_locator": "//div[contains(@class,'overflow-x-scroll')]",
+    "expected": "",
+    "Obs": "f+"
+  },
+  {
+    "id": "FN9-CP-003",
+    "fields": {
+      "logs-from-datepicker": "2025-07-04",
+      "from-hour": "13",
+      "from-minute": "00",
+      "logs-to-datepicker": "2025-07-05",
+      "to-hour": "15",
+      "to-minute": "00",
+      "severity-select": "ERROR",
+      "severity-radio": "on"
+    },
+    "action": "query",
+    "element_locator": "//div[contains(@class,'overflow-x-scroll')]",
+    "expected": "There are no logs in this time period.",
+    "Obs": "f+"
+  },
+  {
+    "id": "FN9-CP-004",
+    "fields": {
+      "logs-from-datepicker": "2025-07-03",
+      "from-hour": "07",
+      "from-minute": "15",
+      "logs-to-datepicker": "2025-07-03",
+      "to-hour": "07",
+      "to-minute": "45",
+      "severity-select": "ERROR",
+      "min-severity-radio": "on"
+    },
+    "action": "query",
+    "element_locator": "//div[contains(@class,'overflow-x-scroll')]",
+    "expected": "There are no logs in this time period.",
+    "Obs": "f+"
+  },
+  {
+    "id": "FN9-CP-005",
+    "fields": {
+      "logs-from-datepicker": "2025-07-05",
+      "from-hour": "25",
+      "from-minute": "00",
+      "logs-to-datepicker": "2025-07-05",
+      "to-hour": "10",
+      "to-minute": "00",
+      "severity-select": "INFO",
+      "severity-radio": "on"
+    },
+    "action": "query",
+    "element_locator": "//div[contains(text(),'The end time should be after the start time')]",
+    "expected": "The end time should be after the start time.",
+    "Obs": "f-"
+  },
+  {
+    "id": "FN9-CP-006",
+    "fields": {
+      "logs-from-datepicker": "2025-07-05",
+      "from-hour": "15",
+      "from-minute": "00",
+      "logs-to-datepicker": "2025-07-05",
+      "to-hour": "14",
+      "to-minute": "30",
+      "severity-select": "INFO",
+      "severity-radio": "on"
+    },
+    "action": "query",
+    "element_locator": "//div[contains(text(),'The end time should be after the start time')]",
+    "expected": "The end time should be after the start time.",
+    "Obs": "f-"
+  },
+  {
+    "id": "FN9-CP-007",
+    "fields": {
+      "logs-from-datepicker": "2025-07-06",
+      "from-hour": "08",
+      "from-minute": "00",
+      "logs-to-datepicker": "2025-07-05",
+      "to-hour": "08",
+      "to-minute": "00",
+      "severity-select": "INFO",
+      "severity-radio": "on"
+    },
+    "action": "query",
+    "element_locator": "//div[contains(text(),'The end time should be after the start time')]",
+    "expected": "",
+    "Obs": "f+"
+  },
+  {
+    "id": "FN9-CP-008",
+    "fields": {
+      "log-type": "REQUEST_LOG"
+    },
+    "action": "query",
+    "element_locator": "//td[contains(text(), 'REQUEST_LOG')]",
+    "expected": "",
+    "Obs": "f+"
+  }
+]
