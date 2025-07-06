@@ -20,8 +20,8 @@ class TestFn08:
         with open("data/fn08.json") as f:
             self.cases = json.load(f)
 
-    def go_to_form(self, title=None):
-        self.driver.get(self.url)  # /web/admin/notifications
+    def go_to_form(self):
+        self.driver.get(self.url)
 
         try:
             WebDriverWait(self.driver, 10).until(
@@ -31,32 +31,19 @@ class TestFn08:
             print("No se cargó la tabla de notificaciones")
             return
 
-        if title:
-            try:
-                # Buscar la fila con el título específico
-                rows = self.driver.find_elements(By.XPATH, "//table[@id='notifications-table']//tbody/tr")
-                for row in rows:
-                    cell = row.find_element(By.XPATH, "./td[1]")  # Primera celda = título
-                    if cell.text.strip() == title.strip():
-                        row.find_element(By.XPATH, ".//button[contains(text(), 'Edit')]").click()
-                        break
-                else:
-                    print(f"No se encontró ninguna notificación con título '{title}'")
-                    return
-            except Exception as e:
-                print(f"Error al intentar hacer clic en el botón Edit: {str(e)}")
-                return
-        else:
-            # Si no se especifica título, hacer clic en el primer botón Edit disponible
-            try:
-                self.driver.find_elements(By.XPATH, "//button[contains(text(), 'Edit')]")[0].click()
-            except Exception:
-                print("No se encontró ningún botón Edit")
+        try:
+            first_edit_btn = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Edit')]"))
+            )
+            first_edit_btn.click()
 
-        # Esperar a que cargue el formulario
-        WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.ID, "btn-edit-notification"))
-        )
+            # Esperar el campo title (para asegurar que se abrió bien el formulario)
+            WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.ID, "notification-title"))
+            )
+
+        except Exception as e:
+            print(f"Error al hacer clic en Edit: {e}")
 
     def fill_form(self, fields):
         for key, value in fields.items():

@@ -34,7 +34,7 @@
   {
     "id": "FN8-CP-003",
     "fields": {
-      "title": "Título válido",
+      "title": "A",
       "message": "",
       "group": "Students",
       "style": "SUCCESS",
@@ -50,7 +50,7 @@
   {
     "id": "FN8-CP-004",
     "fields": {
-      "title": "Notificación",
+      "title": "A",
       "message": "Contenido",
       "group": "Students",
       "style": "SUCCESS",
