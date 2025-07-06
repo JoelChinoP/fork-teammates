@@ -14,7 +14,7 @@
   {
     "id": "FN5-CP-002",
     "fields": {
-      "name": "",
+      "name": " ",
       "institution": "UNSA",
       "email": "lucia@unsa.edu.pe",
       "comments": "Actualizar datos"
@@ -51,7 +51,7 @@
     "id": "FN5-CP-005",
     "fields": {
       "name": "Lucía",
-      "institution": "",
+      "institution": " ",
       "email": "lucia@unsa.edu.pe",
       "comments": ""
     },
@@ -88,7 +88,7 @@
     "fields": {
       "name": "Lucía",
       "institution": "UNSA",
-      "email": "",
+      "email": " ",
       "comments": ""
     },
     "expected": "The field 'email' is empty. An email address contains some text followed by one '@' sign followed by some more text, and should end with a top level domain address like .com. It cannot be longer than 254 characters, cannot be empty and cannot contain spaces.",
