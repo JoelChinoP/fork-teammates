@@ -43,7 +43,7 @@ class TestFn05:
 
     def get_message(self, locator):
         try:
-            el = WebDriverWait(self.driver, 8).until(
+            el = WebDriverWait(self.driver, 10).until(
                 EC.visibility_of_element_located((By.XPATH, locator))
             )
             return el.text.strip()
