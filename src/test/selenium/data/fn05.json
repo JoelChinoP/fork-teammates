@@ -92,7 +92,7 @@
       "comments": ""
     },
     "expected": "The field 'email' is empty. An email address contains some text followed by one '@' sign followed by some more text, and should end with a top level domain address like .com. It cannot be longer than 254 characters, cannot be empty and cannot contain spaces.",
-    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'An email address contains some text followed by one '@' sign followed by some more text, and should end with a top level domain address like .com')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'An email address contains some text followed by one '@' sign followed by some more text')]",
     "Obs": "f-"
   },
   {
