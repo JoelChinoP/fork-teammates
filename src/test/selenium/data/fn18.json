@@ -1,0 +1,158 @@
+[
+  {
+    "id": "FN18-CP-001",
+    "fields": {
+      "student-name": "Carlos Paredes",
+      "section-name": "Grupo 1",
+      "team-name": "Team A",
+      "new-student-email": "carlos@example.com",
+      "comments": ""
+    },
+    "expected": "Student has been updated",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'Student has been updated')]",
+    "Obs": "RF-008.2"
+  },
+  {
+    "id": "FN18-CP-002",
+    "fields": {
+      "student-name": "",
+      "section-name": "Grupo 1",
+      "team-name": "Team A",
+      "new-student-email": "carlos@example.com",
+      "comments": ""
+    },
+    "expected": "The field 'Student Name' should not be empty.",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'The field \\'Student Name\\' should not be empty.')]",
+    "Obs": "RF-008.2"
+  },
+  {
+    "id": "FN18-CP-003",
+    "fields": {
+      "student-name": "Carlos Paredes",
+      "section-name": "Este es un nombre de seccion que excede los sesenta caracteres para la prueba",
+      "team-name": "Team A",
+      "new-student-email": "carlos@example.com",
+      "comments": ""
+    },
+    "expected": "The field 'Section Name' should not exceed 60 characters.",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'The field \\'Section Name\\' should not exceed 60 characters.')]",
+    "Obs": "RF-008.2"
+  },
+  {
+    "id": "FN18-CP-004",
+    "fields": {
+      "student-name": "Carlos Paredes",
+      "section-name": "Grupo 1",
+      "team-name": "Este es un nombre de equipo que excede los sesenta caracteres para la prueba",
+      "new-student-email": "carlos@example.com",
+      "comments": ""
+    },
+    "expected": "The field 'Team Name' should not exceed 60 characters.",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'The field \\'Team Name\\' should not exceed 60 characters.')]",
+    "Obs": "RF-008.2"
+  },
+  {
+    "id": "FN18-CP-005",
+    "fields": {
+      "student-name": "Pedrito Suarez",
+      "section-name": "A1",
+      "team-name": "Grupo1",
+      "new-student-email": "juan.com",
+      "comments": ""
+    },
+    "expected": "\"juan.com\" is not acceptable to TEAMMATES as a/an email because it is not in the correct format",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., '\"juan.com\" is not acceptable to TEAMMATES as a/an email because it is not in the correct format')]",
+    "Obs": "RF-008.2"
+  },
+  {
+    "id": "FN18-CP-006",
+    "fields": {
+      "student-name": "Pedrito Suarez",
+      "section-name": "A1",
+      "team-name": "Grupo1",
+      "new-student-email": "carlos@example.com",
+      "comments": ""
+    },
+    "expected": "Trying to update to an email that is already in use",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'Trying to update to an email that is already in use')]",
+    "Obs": "RF-008.2"
+  },
+  {
+    "id": "FN18-CP-007",
+    "fields": {
+      "student-name": "A",
+      "section-name": "S",
+      "team-name": "T",
+      "new-student-email": "c@b.co",
+      "comments": ""
+    },
+    "expected": "Student has been updated and email sent",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'Student has been updated and email sent')]",
+    "Obs": "RF-008.2"
+  },
+  {
+    "id": "FN18-CP-008",
+    "fields": {
+      "student-name": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "section-name": "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",
+      "team-name": "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+      "new-student-email": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@b.com",
+      "comments": ""
+    },
+    "expected": "Student has been updated and email sent",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'Student has been updated and email sent')]",
+    "Obs": "RF-008.2"
+  },
+  {
+    "id": "FN18-CP-009",
+    "fields": {
+      "student-name": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "section-name": "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",
+      "team-name": "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+      "new-student-email": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@b.com@",
+      "comments": ""
+    },
+    "expected": "The field 'Student Name' should not exceed 100 characters.",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
+    "Obs": "RF-008.2"
+  },
+  {
+    "id": "FN18-CP-010",
+    "fields": {
+      "student-name": "Soy un nombre normal",
+      "section-name": "Una seccion normal",
+      "team-name": "Un equipo normal",
+      "new-student-email": "un_correo@normal.com",
+      "comments": ""
+    },
+    "expected": "Student has been updated and email sent",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'Student has been updated and email sent')]",
+    "Obs": "RF-008.2"
+  },
+  {
+    "id": "FN18-CP-011",
+    "fields": {
+      "student-name": "Soy un nombre normal",
+      "section-name": "Una seccion normal",
+      "team-name": "Un equipo normal",
+      "new-student-email": "un_correo@normal.com",
+      "comments": "Participa con frecuencia en clase"
+    },
+    "expected": "Student has been updated and email sent",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'Student has been updated and email sent')]",
+    "Obs": "RF-008.2"
+  },
+  {
+    "id": "FN18-CP-012",
+    "fields": {
+      "student-name": "ORIGINAL_NAME",
+      "section-name": "ORIGINAL_SECTION",
+      "team-name": "ORIGINAL_TEAM",
+      "new-student-email": "ORIGINAL_EMAIL",
+      "comments": "ORIGINAL_COMMENTS"
+    },
+    "expected": "Student has been updated",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'Student has been updated')]",
+    "Obs": "RF-008.2"
+  }
+]
