@@ -12,19 +12,20 @@
     "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
     "Obs": "RF-008.2"
   },
-  {
-    "id": "FN18-CP-002",
-    "input": {
-      "student-name": "",
-      "section-name": "Grupo 1",
-      "team-name": "Team A",
-      "new-student-email": "carlos@example.com",
-      "comments": ""
-    },
-    "expected": "The field 'Student Name' should not be empty.",
-    "element_locator": "//*[contains(text(), \"The field 'Student Name' should not be empty.\")]",
-    "Obs": "RF-008.2"
+ {
+  "id": "FN18-CP-002",
+  "input": {
+    "student-name": "",
+    "section-name": "Grupo 1",
+    "team-name": "Team A",
+    "new-student-email": "carlos@example.com",
+    "comments": ""
   },
+  "expected": "Botón deshabilitado",
+  "element_locator": "//button[@id='btn-submit' and @disabled]",
+  "check_button_disabled": true,
+  "Obs": "RF-008.2"
+},
   {
     "id": "FN18-CP-003",
     "input": {
@@ -104,18 +105,19 @@
     "Obs": "RF-008.2"
   },
   {
-    "id": "FN18-CP-009",
-    "input": {
-      "student-name": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-      "section-name": "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",
-      "team-name": "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
-      "new-student-email": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz@toolong.com",
-      "comments": ""
-    },
-    "expected": "Multiple validation errors",
-    "element_locator": "//*[contains(text(), 'Multiple validation errors')]",
-    "Obs": "RF-008.2"
+  "id": "FN18-CP-009",
+  "input": {
+    "student-name": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "section-name": "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",
+    "team-name": "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "new-student-email": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz@toolong.com",
+    "comments": ""
   },
+  "expected": "Botón deshabilitado",
+  "element_locator": "//button[@id='btn-submit' and @disabled]",
+  "check_button_disabled": true,
+  "Obs": "RF-008.2"
+},
   {
     "id": "FN18-CP-010",
     "input": {
