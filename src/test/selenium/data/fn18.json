@@ -9,8 +9,8 @@
       "comments": ""
     },
     "expected": "Student has been updated",
-    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'Student has been updated')]",
-    "Obs": "RF-008.2"
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
+    "Obs": "RF-008.1 (Mensaje de éxito global)"
   },
   {
     "id": "FN18-CP-002",
@@ -22,8 +22,8 @@
       "comments": ""
     },
     "expected": "The field 'Student Name' should not be empty.",
-    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., concat('The field ', \"'\", 'Student Name', \"'\", ' should not be empty.'))]",
-    "Obs": "RF-008.2"
+    "element_locator": "//*[@id='instructor-student-edit-form']//div[contains(text(), 'The field 'Student Name' should not be empty.')]",
+    "Obs": "RF-008.2 (Mensaje de validación en formulario - Nombre vacío)"
   },
   {
     "id": "FN18-CP-003",
@@ -35,8 +35,8 @@
       "comments": ""
     },
     "expected": "The field 'Section Name' should not exceed 60 characters.",
-    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., concat('The field ', \"'\", 'Section Name', \"'\", ' should not exceed 60 characters.'))]",
-    "Obs": "RF-008.2"
+    "element_locator": "//*[@id='instructor-student-edit-form']//div[contains(text(), 'The field 'Section Name' should not exceed 60 characters.')]",
+    "Obs": "RF-008.2 (Mensaje de validación en formulario - Sección larga)"
   },
   {
     "id": "FN18-CP-004",
@@ -48,8 +48,8 @@
       "comments": ""
     },
     "expected": "The field 'Team Name' should not exceed 60 characters.",
-    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., concat('The field ', \"'\", 'Team Name', \"'\", ' should not exceed 60 characters.'))]",
-    "Obs": "RF-008.2"
+    "element_locator": "//*[@id='instructor-student-edit-form']//div[contains(text(), 'The field 'Team Name' should not exceed 60 characters.')]",
+    "Obs": "RF-008.2 (Mensaje de validación en formulario - Equipo largo)"
   },
   {
     "id": "FN18-CP-005",
