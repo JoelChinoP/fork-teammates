@@ -5,71 +5,83 @@
       "course_id": "PS",
       "course_name": "Pruebas de Software",
       "institute": "UNSA",
-      "timezone": "UTC-5"
+      "timezone": "America/Lima"
     },
+    "element_locator": "//div[@class='toast-body']",
     "expected": "The course has been added.",
-    "element_locator": "//div[contains(@class, 'toast-body')]",
-    "Obs": "Creación exitosa de curso"
+    "Obs": "Creación exitosa con datos válidos"
   },
   {
     "id": "FN13-CP-002",
     "fields": {
       "course_id": "",
-      "course_name": "Curso de prueba"
+      "course_name": "Curso de prueba",
+      "institute": "UNSA",
+      "timezone": "America/Lima"
     },
-    "expected": "Course ID inválido",
-    "element_locator": "//input[@id='course-id']/following-sibling::div[contains(@class, 'invalid-field')]",
+    "element_locator": "//small[@id='invalid-field-course-id']",
+    "expected": "Course ID inválido.",
     "Obs": "Course ID vacío"
   },
   {
     "id": "FN13-CP-003",
     "fields": {
       "course_id": "PS",
-      "course_name": ""
+      "course_name": "",
+      "institute": "UNSA",
+      "timezone": "America/Lima"
     },
-    "expected": "Course Name inválido",
-    "element_locator": "//input[@id='course-name']/following-sibling::div[contains(@class, 'invalid-field')]",
+    "element_locator": "//small[@id='invalid-field-course-name']",
+    "expected": "Course Name inválido.",
     "Obs": "Course Name vacío"
   },
   {
     "id": "FN13-CP-004",
     "fields": {
-      "course_id": "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "course_name": "Curso Z"
+      "course_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "course_name": "Curso Z",
+      "institute": "UNSA",
+      "timezone": "America/Lima"
     },
-    "expected": "Course ID inválido",
-    "element_locator": "//input[@id='course-id']/following-sibling::div[contains(@class, 'invalid-field')]",
-    "Obs": "Course ID > 64 caracteres"
+    "element_locator": "//small[@id='invalid-field-course-id']",
+    "expected": "Course ID inválido.",
+    "Obs": "Course ID excede 64 caracteres"
   },
   {
     "id": "FN13-CP-005",
     "fields": {
       "course_id": "PS",
-      "course_name": "Nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
+      "course_name": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "institute": "UNSA",
+      "timezone": "America/Lima"
     },
-    "expected": "Course Name inválido",
-    "element_locator": "//input[@id='course-name']/following-sibling::div[contains(@class, 'invalid-field')]",
-    "Obs": "Course Name > 80 caracteres"
+    "element_locator": "//small[@id='invalid-field-course-name']",
+    "expected": "Course Name inválido.",
+    "Obs": "Course Name excede 80 caracteres"
   },
   {
     "id": "FN13-CP-006",
     "fields": {
       "course_id": "PS",
-      "course_name": "Duplicado"
+      "course_name": "Name",
+      "institute": "UNSA",
+      "timezone": "America/Lima"
     },
+    "element_locator": "//div[@class='toast-body']",
     "expected": "The course ID PS has been used by another course",
-    "element_locator": "//div[contains(@class, 'toast-body')]",
     "Obs": "Course ID duplicado"
   },
   {
     "id": "FN13-CP-007",
     "fields": {
       "course_id": "PS@",
-      "course_name": "Name"
+      "course_name": "Name",
+      "institute": "UNSA",
+      "timezone": "America/Lima"
     },
-    "expected": "Course ID inválido",
-    "element_locator": "//input[@id='course-id']/following-sibling::div[contains(@class, 'invalid-field')]",
-    "Obs": "Course ID con caracter inválido"
+    "element_locator": "//small[@id='invalid-field-course-id']",
+    "expected": "Course ID inválido.",
+    "Obs": "Course ID con caracteres no permitidos"
   },
   {
     "id": "FN13-CP-008",
@@ -77,10 +89,10 @@
       "course_id": "D",
       "course_name": "C",
       "institute": "UNSA",
-      "timezone": "UTC-5"
+      "timezone": "America/Lima"
     },
+    "element_locator": "//div[@class='toast-body']",
     "expected": "The course has been added.",
-    "element_locator": "//div[contains(@class, 'toast-body')]",
-    "Obs": "Course ID y Name de 1 caracter"
+    "Obs": "Valores mínimos aceptados"
   }
 ]

@@ -2,7 +2,7 @@ from check_connection import SeleniumConnection
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException, InvalidElementStateException
 import time, json
 from utils import Utils
 
@@ -35,10 +35,29 @@ class TestFn13:
 
     def fill_form(self, fields):
         for key, value in fields.items():
-            if key in self.locators:
-                el = self.driver.find_element(*self.locators[key])
-                el.clear()
-                el.send_keys(value)
+            if key in ["course_id", "course_name"]:
+                try:
+                    el = self.driver.find_element(*self.locators[key])
+                    el.clear()
+                    el.send_keys(value)
+                except InvalidElementStateException:
+                    print(f"No se pudo editar el campo {key}")
+
+            elif key in ["institute", "timezone"]:
+                try:
+                    el = WebDriverWait(self.driver, 5).until(
+                        EC.presence_of_element_located(self.locators[key])
+                    )
+                    matched = False
+                    for option in el.find_elements(By.TAG_NAME, "option"):
+                        if option.get_attribute("value") == value.strip():
+                            option.click()
+                            matched = True
+                            break
+                    if not matched and fields.get("strict_select", False):
+                        print(f"Valor no encontrado para {key}: {value}")
+                except Exception as e:
+                    print(f"Error al seleccionar {key}: {e}")
 
     def submit(self):
         self.driver.find_element(*self.locators["submit_btn"]).click()
