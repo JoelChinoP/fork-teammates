@@ -74,28 +74,29 @@ class TestFn18:
             if btn.is_enabled():
                 btn.click()
             else:
-                print("El botón de guardar está deshabilitado.")
+                pass
         except NoSuchElementException:
             print("Botón de submit no encontrado.")
         except Exception as e:
             print(f"No se pudo hacer clic en el botón de guardar: {e}")
 
-    def get_message(self, case_element_locator, expected_message_part):
+    def get_message_or_check_button(self, case):
         time.sleep(1) 
         
-        if "ngb-toast" in case_element_locator:
+        if case["validation_type"] == "alert":
             try:
+                alert_locator = (By.XPATH, case["element_locator"])
                 el = WebDriverWait(self.driver, 15).until( 
-                    EC.visibility_of_element_located((By.XPATH, case_element_locator))
+                    EC.visibility_of_element_located(alert_locator)
                 )
                 
                 WebDriverWait(self.driver, 5).until(
-                    EC.text_to_be_present_in_element((By.XPATH, case_element_locator), expected_message_part)
+                    EC.text_to_be_present_in_element(alert_locator, case["expected"])
                 )
                 return el.text.strip()
             except TimeoutException:
                 try:
-                    any_toast = self.driver.find_element(By.XPATH, "//ngb-toast//div[contains(@class, 'toast-body')]")
+                    any_toast = self.driver.find_element(By.XPATH, "//div[@class='toast-body']")
                     return any_toast.text.strip()
                 except NoSuchElementException:
                     return ""
@@ -104,16 +105,17 @@ class TestFn18:
             except Exception as e:
                 return ""
         
-        elif "instructor-student-edit-form" in case_element_locator:
+        elif case["validation_type"] == "button_disabled":
             try:
-                el = WebDriverWait(self.driver, 10).until(
-                    EC.visibility_of_element_located((By.XPATH, case_element_locator))
-                )
-                return el.text.strip()
-            except (TimeoutException, NoSuchElementException):
-                return ""
+                btn = self.driver.find_element(*self.submit_button)
+                if not btn.is_enabled():
+                    return "Button is disabled"
+                else:
+                    return "Button is enabled"
+            except NoSuchElementException:
+                return "Button not found"
             except Exception as e:
-                return ""
+                return f"Error checking button state: {e}"
         
         return ""
 
@@ -121,11 +123,13 @@ class TestFn18:
         self.go_to_form()
         
         self.fill_form(case["fields"])
-        self.submit_form()
+
+        if case["validation_type"] != "button_disabled":
+            self.submit_form()
         
         course_id_for_redirect = "CS123" 
 
-        if "Student has been updated" in case["expected"]:
+        if "Student has been updated" in case["expected"] or "Student has been updated and email sent" in case["expected"]:
             try:
                 WebDriverWait(self.driver, 10).until(
                     EC.url_contains(f"/web/instructor/courses/details?courseid={course_id_for_redirect}")
@@ -135,7 +139,13 @@ class TestFn18:
         
         self.driver.save_screenshot(f"screenshot_after_action_{case['id']}.png")
         
-        obtained_msg = self.get_message(case["element_locator"], case["expected"]) 
+        obtained_msg = self.get_message_or_check_button(case) 
+
+        if case["validation_type"] == "button_disabled" and obtained_msg == "Button is disabled":
+            obtained_msg = case["expected"]
+        elif case["validation_type"] == "button_disabled" and obtained_msg == "Button is enabled":
+            obtained_msg = "Button remained enabled (expected disabled)"
+
 
         Utils.log_test(
             case["id"],
