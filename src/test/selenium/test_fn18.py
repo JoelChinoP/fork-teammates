@@ -31,13 +31,17 @@ class TestFn18:
             f"{self.url}{self.form_path}"
             f"?courseid={self.course_id}&studentemail={self.student_email}"
         )
+        print("Navegando a:", full_url)
         self.driver.get(full_url)
+
         try:
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(self.locators["student-name"])
             )
         except TimeoutException:
-            print("No se cargó el formulario de edición de estudiante")
+            print("❌ No se cargó el formulario de edición de estudiante")
+            print("📄 Título de página:", self.driver.title)
+            print("📄 Contenido parcial:", self.driver.page_source[:500])
 
     def fill_field(self, locator, value):
         try:
@@ -46,7 +50,7 @@ class TestFn18:
             if value.strip():
                 el.send_keys(value)
         except Exception as e:
-            print(f"Error llenando campo {locator}: {e}")
+            print(f"⚠️ Error llenando campo {locator}: {e}")
 
     def fill_form(self, data):
         for field in self.locators:
@@ -59,7 +63,7 @@ class TestFn18:
             if btn.is_enabled():
                 btn.click()
         except Exception as e:
-            print(f"No se pudo hacer clic en 'Save Changes': {e}")
+            print(f"⚠️ No se pudo hacer clic en 'Save Changes': {e}")
 
     def get_message(self, case):
         locator = case.get("element_locator")
@@ -93,8 +97,9 @@ class TestFn18:
             case["input"],
             case["expected"],
             obtained,
-            case["Obs"]
+            case.get("Obs", "")
         )
+
         return {
             "id": case["id"],
             "expected": case["expected"],
