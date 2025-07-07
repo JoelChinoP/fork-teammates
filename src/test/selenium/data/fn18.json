@@ -9,7 +9,7 @@
       "comments": "Edición completa válida"
     },
     "expected": "Student has been updated",
-    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'Student has been updated')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
     "Obs": "RF-008.2"
   },
   {
@@ -87,7 +87,7 @@
       "comments": ""
     },
     "expected": "Student has been updated and email sent",
-    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'Student has been updated and email sent')]",
+    "element_locator": "//div[contains(@class, 'toast-message') and contains(text(), 'Student has been updated and email sent.')]",
     "Obs": "RF-008.2"
   },
   {
@@ -100,7 +100,7 @@
       "comments": ""
     },
     "expected": "Student has been updated and email sent",
-    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'Student has been updated and email sent')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
     "Obs": "RF-008.2"
   },
   {
@@ -126,7 +126,7 @@
       "comments": ""
     },
     "expected": "Student has been updated and email sent",
-    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'Student has been updated and email sent')]",
+    "element_locator": "//div[contains(@class, 'toast-message') and contains(text(), 'Student has been updated and email sent.')]",
     "Obs": "RF-008.2"
   },
   {
@@ -139,14 +139,14 @@
       "comments": "Participa con frecuencia en clase"
     },
     "expected": "Student has been updated and email sent",
-    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'Student has been updated and email sent')]",
+    "element_locator": "//div[contains(@class, 'toast-message') and contains(text(), 'Student has been updated and email sent.')]",
     "Obs": "RF-008.2"
   },
   {
     "id": "FN18-CP-012",
     "input": {},
     "expected": "Student has been updated",
-    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'Student has been updated')]",
+    "element_locator": "//div[contains(@class, 'toast-message') and contains(text(), 'Student has been updated and email sent.')]",
     "Obs": "RF-008.2"
   }
 ]
