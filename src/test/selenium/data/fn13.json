@@ -44,7 +44,7 @@
             "timezone": "America/Lima"
         },
         "expected": "A1234567890123456789012345678901234567890123456789012345678901234",
-        "element_locator": "input_course_id",
+        "element_locator": "course_id",
         "assert_input_length": 64,
         "Obs": "Validación UI: Course ID se recorta a 64 caracteres"
     },
@@ -57,7 +57,7 @@
             "timezone": "America/Lima"
         },
         "expected": "Curso con nombre muy largo que excede los ochenta caracteres permitidos en el s",
-        "element_locator": "input_course_name",
+        "element_locator": "course_name",
         "assert_input_length": 80,
         "Obs": "Validación UI: Course Name se recorta a 80 caracteres"
     },
