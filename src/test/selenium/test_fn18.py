@@ -13,7 +13,6 @@ class TestFn18:
         self.course_id = course_id
         self.student_email = student_email
         self.form_path = "/web/instructor/courses/student/edit"
-        self.success_path = f"/web/instructor/courses/details?courseid={self.course_id}"
 
         self.locators = {
             "student-name": (By.ID, "student-name"),
@@ -23,6 +22,7 @@ class TestFn18:
             "comments": (By.ID, "comments"),
             "submit": (By.ID, "btn-submit")
         }
+
         with open("data/fn18.json") as f:
             self.cases = json.load(f)
 
@@ -64,32 +64,29 @@ class TestFn18:
     def get_message(self, case):
         locator = case.get("element_locator")
         try:
-            WebDriverWait(self.driver, 5).until(
-                EC.url_contains(self.success_path)
-            )
-            toast = WebDriverWait(self.driver, 5).until(
+            el = WebDriverWait(self.driver, 5).until(
                 EC.presence_of_element_located((By.XPATH, locator))
             )
-            return toast.text.strip()
-        except TimeoutException:
-            try:
-                el = WebDriverWait(self.driver, 5).until(
-                    EC.presence_of_element_located((By.XPATH, locator))
-                )
-                return el.text.strip()
-            except (TimeoutException, NoSuchElementException):
-                return "Elemento no encontrado"
-        except NoSuchElementException:
+            return el.text.strip()
+        except (TimeoutException, NoSuchElementException):
             return "Elemento no encontrado"
 
     def run_case(self, case):
         self.go_to_form()
         self.fill_form(case["input"])
         time.sleep(1.2)
-        self.click_submit()
-        time.sleep(1.5)
 
-        obtained = self.get_message(case)
+        if case.get("check_button_disabled"):
+            try:
+                btn = self.driver.find_element(By.ID, "btn-submit")
+                disabled = not btn.is_enabled()
+                obtained = "Botón deshabilitado" if disabled else "Botón habilitado"
+            except Exception as e:
+                obtained = f"Error al verificar botón: {e}"
+        else:
+            self.click_submit()
+            time.sleep(1.5)
+            obtained = self.get_message(case)
 
         Utils.log_test(
             case["id"],
