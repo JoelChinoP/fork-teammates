@@ -65,8 +65,12 @@ class TestFn12:
                 return "Resultado parcial visible"
 
             if "Resultado exacto" in expected:
+                names = case["input"].replace('"', '').split()
+                xpath = "//table//td" + ''.join(
+                    [f"[.//span[@class='highlighted-text' and text()='{n}']]" for n in names]
+                )
                 el = WebDriverWait(self.driver, 5).until(
-                    EC.presence_of_element_located(self.locators["result_exact"])
+                    EC.presence_of_element_located((By.XPATH, xpath))
                 )
                 return "Resultado exacto visible"
 
@@ -76,15 +80,6 @@ class TestFn12:
                     EC.presence_of_element_located(self.locators["toast"])
                 )
                 return toast.text.strip()
-            if "Resultado exacto" in expected:
-                names = case["input"].replace('"', '').split()
-                xpath = "//table//td" + ''.join(
-                    [f"[.//span[@class='highlighted-text' and text()='{n}']]" for n in names]
-                )
-                el = WebDriverWait(self.driver, 5).until(
-                    EC.presence_of_element_located((By.XPATH, xpath))
-                )
-                return "Resultado exacto visible"
 
             # Fallback: usar locator definido por el caso
             el = WebDriverWait(self.driver, 5).until(
