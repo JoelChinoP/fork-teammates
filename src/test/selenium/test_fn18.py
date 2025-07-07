@@ -9,9 +9,12 @@ from utils import Utils
 
 class TestFn18:
     def __init__(self, driver, url, course_id, student_email):
-        self.driver, self.url, self.path = driver, url, "/web/instructor/courses/student/edit"
+        self.driver, self.url = driver, url
         self.course_id = course_id
         self.student_email = student_email
+        self.form_path = "/web/instructor/courses/student/edit"
+        self.success_path = f"/web/instructor/courses/details?courseid={self.course_id}"
+
         self.locators = {
             "student-name": (By.ID, "student-name"),
             "section-name": (By.ID, "section-name"),
@@ -25,7 +28,7 @@ class TestFn18:
 
     def go_to_form(self):
         full_url = (
-            f"{self.url}{self.path}"
+            f"{self.url}{self.form_path}"
             f"?courseid={self.course_id}&studentemail={self.student_email}"
         )
         self.driver.get(full_url)
@@ -59,15 +62,20 @@ class TestFn18:
             print(f"No se pudo hacer clic en 'Save Changes': {e}")
 
     def get_message(self, case):
+        locator = case.get("element_locator")
         try:
-            locator = case.get("element_locator")
-            if locator:
+            if "courses/details" in self.driver.current_url:
+                # Esperar a que aparezca el toast
+                toast = WebDriverWait(self.driver, 5).until(
+                    EC.presence_of_element_located((By.XPATH, locator))
+                )
+                return toast.text.strip()
+            else:
+                # Validaciones mostradas en la misma página
                 el = WebDriverWait(self.driver, 5).until(
                     EC.presence_of_element_located((By.XPATH, locator))
                 )
                 return el.text.strip()
-            else:
-                return "No se especificó un element_locator"
         except (TimeoutException, NoSuchElementException):
             return "Elemento no encontrado"
 
@@ -104,7 +112,6 @@ if __name__ == "__main__":
     checker = SeleniumConnection()
     driver, url = checker.connect_and_check_login()
 
-    # Puedes cambiar estos parámetros aquí:
     course_id = "CS123"
     student_email = "jean@example.com"
 
