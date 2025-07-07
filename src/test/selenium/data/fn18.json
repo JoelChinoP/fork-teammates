@@ -22,7 +22,7 @@
       "comments": ""
     },
     "expected": "The field 'Student Name' should not be empty.",
-    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'The field \\'Student Name\\' should not be empty.')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., concat('The field ', \"'\", 'Student Name', \"'\", ' should not be empty.'))]",
     "Obs": "RF-008.2"
   },
   {
@@ -35,7 +35,7 @@
       "comments": ""
     },
     "expected": "The field 'Section Name' should not exceed 60 characters.",
-    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'The field \\'Section Name\\' should not exceed 60 characters.')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., concat('The field ', \"'\", 'Section Name', \"'\", ' should not exceed 60 characters.'))]",
     "Obs": "RF-008.2"
   },
   {
@@ -48,7 +48,7 @@
       "comments": ""
     },
     "expected": "The field 'Team Name' should not exceed 60 characters.",
-    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'The field \\'Team Name\\' should not exceed 60 characters.')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., concat('The field ', \"'\", 'Team Name', \"'\", ' should not exceed 60 characters.'))]",
     "Obs": "RF-008.2"
   },
   {
@@ -94,9 +94,9 @@
     "id": "FN18-CP-008",
     "fields": {
       "student-name": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-      "section-name": "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",
-      "team-name": "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
-      "new-student-email": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@b.com",
+      "section-name": "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",
+      "team-name": "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+      "new-student-email": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@b.com",
       "comments": ""
     },
     "expected": "Student has been updated and email sent",
@@ -107,13 +107,13 @@
     "id": "FN18-CP-009",
     "fields": {
       "student-name": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-      "section-name": "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",
-      "team-name": "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
-      "new-student-email": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@b.com@",
+      "section-name": "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",
+      "team-name": "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+      "new-student-email": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@b.com@",
       "comments": ""
     },
     "expected": "The field 'Student Name' should not exceed 100 characters.",
-    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., concat('The field ', \"'\", 'Student Name', \"'\", ' should not exceed 100 characters.'))]",
     "Obs": "RF-008.2"
   },
   {
