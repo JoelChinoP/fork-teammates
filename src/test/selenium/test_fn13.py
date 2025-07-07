@@ -15,7 +15,10 @@ class TestFn13:
             "institute": (By.ID, "course-institute"),
             "timezone": (By.ID, "time-zone"),
             "add_course_btn": (By.ID, "btn-add-course"),
-            "submit_btn": (By.ID, "btn-submit-course")
+            "submit_btn": (By.ID, "btn-submit-course"),
+            "invalid_course_id": (By.XPATH, "//div[contains(text(),'The field Course ID should not be empty.')]"),
+            "invalid_course_name": (By.XPATH, "//div[contains(text(),'The field Course Name should not be empty.')]"),
+            "toast": (By.CLASS_NAME, "toast-body")
         }
         with open("data/fn13.json") as f:
             self.cases = json.load(f)
@@ -60,7 +63,13 @@ class TestFn13:
                     print(f"Error al seleccionar {key}: {e}")
 
     def submit(self):
-        self.driver.find_element(*self.locators["submit_btn"]).click()
+        btn = self.driver.find_element(*self.locators["submit_btn"])
+        if btn.get_attribute("disabled"):
+            print("El botón está deshabilitado, no se puede enviar el formulario")
+        else:
+            WebDriverWait(self.driver, 5).until(
+                EC.element_to_be_clickable(self.locators["submit_btn"])
+            ).click()
 
     def get_message(self, locator):
         try:
