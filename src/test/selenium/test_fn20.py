@@ -10,13 +10,9 @@ class TestFn20:
     def __init__(self, driver, url):
         self.driver, self.url, self.path = driver, url, "/web/student/home"
         self.form_fields = {
-            "name": (By.ID, "name"),
-            "institution": (By.ID, "institution"),
-            "country": (By.ID, "country"),
-            "email": (By.ID, "email"),
-            "comments": (By.ID, "comments"),
+            "answer": (By.ID, "tinymce"),
         }
-        with open("data/fn01.json") as f:
+        with open("data/fn20.json") as f:
             self.cases = json.load(f)
 
     def go_to_form(self):
@@ -25,55 +21,56 @@ class TestFn20:
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable((By.ID, 'start-submit-btn-3'))
             ).click()
+            print("Start button found.")
         except TimeoutException:
+            print("Warning: start-submit-btn-3 not found, continuing...")
             pass
         WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//button[@type='submit']"))
+            EC.presence_of_element_located((By.ID, "btn-submit-qn-1"))
         )
 
     def fill_form(self, fields):
-        for key, value in fields.items():
-            if key in self.form_fields:
-                el = self.driver.find_element(*self.form_fields[key])
-                el.clear()
-                el.send_keys(value)
+        el = self.driver.find_element(*self.form_fields["answer"])
+        el.clear()
+        el.send_keys(fields.get("answer", ""))
 
     def submit(self): 
-        self.driver.find_element(By.ID, "submit-button").click()
+        self.driver.find_element(By.ID, "btn-submit-qn-1").click()
 
-    def get_message(self, locator):
+    def check_modal(self):
         try:
-            el = WebDriverWait(self.driver, 10).until(
-                EC.visibility_of_element_located((By.XPATH, locator))
+            WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located((By.XPATH, "//div[@role='document' and @class='modal-dialog']"))
             )
-            return el.text.strip()
-        except (TimeoutException, NoSuchElementException):
-            return ""
+            return True
+        except Exception:
+            return False
 
     def run_case(self, case):
         self.go_to_form()
         self.fill_form(case["fields"])
-        Utils.solve_recaptcha(self.driver)
+        # Utils.solve_recaptcha(self.driver)
         self.submit()
-        time.sleep(1.2)
-        
-        # Mensaje obtenido del DOM
-        locator = case["element_locator"]
-        obtained_msg = self.get_message(locator)
-
-        # Log detallado (incluye esperado y obtenido)
+        # Mejor usar un wait para la modal, si es posible
+        time.sleep(2.2)
+        modal_visible = self.check_modal()
+        if case["Obs"] == "f+":
+            if modal_visible:
+                print(f"Test {case['id']} passed: Modal displayed successfully.")
+            else:
+                print(f"Test {case['id']} failed: Modal not displayed.")
+        else:
+            if not modal_visible:
+                print(f"Test {case['id']} passed: No modal displayed as expected.")
+            else:
+                print(f"Test {case['id']} failed: Modal displayed unexpectedly.")
         Utils.log_test(
-            case["id"], 
-            case["fields"], 
-            case["expected"], 
-            obtained_msg, 
+            case["id"],
+            case["fields"],
+            case["expected"],
+            "Modal displayed" if modal_visible else "No modal displayed",
             case["Obs"]
         )
-        return {
-            "id": case["id"],
-            "expected": case["expected"],
-            "obtained": obtained_msg
-        }
 
     def run(self):
         print(f"******************** RUN TEST-FN01 IN ********************")
@@ -85,4 +82,4 @@ class TestFn20:
 if __name__ == "__main__":
     checker = SeleniumConnection()
     driver, url = checker.connect_and_check_login()
-    TestFn01(driver, url).run()
+    TestFn20(driver, url).run()

@@ -1,0 +1,11 @@
+[
+    {
+        "id": "FN20-CP-01",
+        "fields": {
+            "answer":"F"
+        },
+        "expected": "Response to question 1 submitted successfully!",
+        "element_locator": "//div[@role='document' and @class='modal-dialog']",
+        "Obs": "f+"
+    }
+]
