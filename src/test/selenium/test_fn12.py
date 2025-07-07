@@ -16,7 +16,7 @@ class TestFn12:
             self.cases = json.load(f)
 
     def go_to_form(self):
-        self.driver.get(self.url)
+        self.driver.get(self.url + self.path)
         try:
             WebDriverWait(self.driver, 20).until(
                 EC.presence_of_element_located(self.input_locator)
