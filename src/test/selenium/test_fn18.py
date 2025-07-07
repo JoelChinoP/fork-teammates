@@ -82,29 +82,27 @@ class TestFn18:
 
     def get_message(self, locator, expected_message_part):
         time.sleep(1) 
+        general_toast_locator = (By.XPATH, "//ngb-toast//div[contains(@class, 'toast-body')]")
+        
         try:
-            el = WebDriverWait(self.driver, 5).until(
-                EC.visibility_of_element_located((By.XPATH, locator))
+            el = WebDriverWait(self.driver, 15).until( 
+                EC.visibility_of_element_located(general_toast_locator)
             )
-            return el.text.strip()
-        except (TimeoutException, NoSuchElementException):
-            general_toast_locator = (By.XPATH, "//ngb-toast//div[contains(@class, 'toast-body')]")
             
+            WebDriverWait(self.driver, 5).until(
+                EC.text_to_be_present_in_element(general_toast_locator, expected_message_part)
+            )
+            
+            return el.text.strip()
+        except TimeoutException:
             try:
-                el = WebDriverWait(self.driver, 10).until(
-                    EC.and_(
-                        EC.visibility_of_element_located(general_toast_locator),
-                        EC.text_to_be_present_in_element(general_toast_locator, expected_message_part)
-                    )
-                )
-                return el.text.strip()
-            except (TimeoutException, NoSuchElementException):
-                try:
-                    any_toast = self.driver.find_element(*general_toast_locator)
-                    return any_toast.text.strip()
-                except NoSuchElementException:
-                    return ""
+                any_toast = self.driver.find_element(*general_toast_locator)
+                return any_toast.text.strip()
+            except NoSuchElementException:
+                return ""
                 
+        except NoSuchElementException:
+            return "" 
         except Exception as e:
             return ""
 
