@@ -9,7 +9,7 @@
       "comments": "Edición completa válida"
     },
     "expected": "Student has been updated",
-    "element_locator": "//ngb-toast[contains(@class, 'toast') and contains(., 'Student has been updated')]",
+    "element_locator": "//div[contains(@class, 'toast') and contains(., 'Student has been updated')]",
     "Obs": "RF-008.2"
   },
   {
@@ -22,7 +22,7 @@
       "comments": ""
     },
     "expected": "The field 'Student Name' should not be empty.",
-    "element_locator": "//*[contains(text(), \"The field 'Student Name' should not be empty.\")]",
+    "element_locator": "//div[contains(@class, 'invalid-field')]//span[not(@hidden) and contains(text(), \"The field 'Student Name' should not be empty.\")]",
     "Obs": "RF-008.2"
   },
   {
@@ -70,7 +70,7 @@
       "student-name": "Pedrito Suarez",
       "section-name": "A1",
       "team-name": "Grupo1",
-      "new-student-email": "carlos@example.com",
+      "new-student-email": "ravi@example.com",
       "comments": ""
     },
     "expected": "Trying to update to an email that is already in use",
@@ -87,7 +87,7 @@
       "comments": ""
     },
     "expected": "Student has been updated and email sent",
-    "element_locator": "//ngb-toast[contains(@class, 'toast') and contains(., 'Student has been updated')]",
+    "element_locator": "//div[contains(@class, 'toast') and contains(., 'Student has been updated')]",
     "Obs": "RF-008.2"
   },
   {
@@ -100,7 +100,7 @@
       "comments": ""
     },
     "expected": "Student has been updated and email sent",
-    "element_locator": "//ngb-toast[contains(@class, 'toast') and contains(., 'Student has been updated')]",
+    "element_locator": "//div[contains(@class, 'toast') and contains(., 'Student has been updated')]",
     "Obs": "RF-008.2"
   },
   {
@@ -126,7 +126,7 @@
       "comments": ""
     },
     "expected": "Student has been updated and email sent",
-    "element_locator": "//ngb-toast[contains(@class, 'toast') and contains(., 'Student has been updated')]",
+    "element_locator": "//div[contains(@class, 'toast') and contains(., 'Student has been updated')]",
     "Obs": "RF-008.2"
   },
   {
@@ -139,14 +139,14 @@
       "comments": "Participa con frecuencia en clase"
     },
     "expected": "Student has been updated and email sent",
-    "element_locator": "//ngb-toast[contains(@class, 'toast') and contains(., 'Student has been updated')]",
+    "element_locator": "//div[contains(@class, 'toast') and contains(., 'Student has been updated')]",
     "Obs": "RF-008.2"
   },
   {
     "id": "FN18-CP-012",
     "input": {},
     "expected": "Student has been updated",
-    "element_locator": "//ngb-toast[contains(@class, 'toast') and contains(., 'Student has been updated')]",
+    "element_locator": "//div[contains(@class, 'toast') and contains(., 'Student has been updated')]",
     "Obs": "RF-008.2"
   }
 ]
