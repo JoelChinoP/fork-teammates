@@ -80,50 +80,62 @@ class TestFn18:
         except Exception as e:
             print(f"No se pudo hacer clic en el botón de guardar: {e}")
 
-    def get_message(self, expected_message_part):
+    def get_message(self, case_element_locator, expected_message_part):
         time.sleep(1) 
-        general_toast_locator = (By.XPATH, "//ngb-toast//div[contains(@class, 'toast-body')]")
         
-        try:
-            el = WebDriverWait(self.driver, 15).until( 
-                EC.visibility_of_element_located(general_toast_locator)
-            )
-            
-            WebDriverWait(self.driver, 5).until(
-                EC.text_to_be_present_in_element(general_toast_locator, expected_message_part)
-            )
-            
-            return el.text.strip()
-        except TimeoutException:
+        if "ngb-toast" in case_element_locator:
             try:
-                any_toast = self.driver.find_element(*general_toast_locator)
-                return any_toast.text.strip()
-            except NoSuchElementException:
-                return ""
+                el = WebDriverWait(self.driver, 15).until( 
+                    EC.visibility_of_element_located((By.XPATH, case_element_locator))
+                )
                 
-        except NoSuchElementException:
-            return "" 
-        except Exception as e:
-            return ""
+                WebDriverWait(self.driver, 5).until(
+                    EC.text_to_be_present_in_element((By.XPATH, case_element_locator), expected_message_part)
+                )
+                return el.text.strip()
+            except TimeoutException:
+                try:
+                    any_toast = self.driver.find_element(By.XPATH, "//ngb-toast//div[contains(@class, 'toast-body')]")
+                    return any_toast.text.strip()
+                except NoSuchElementException:
+                    return ""
+            except NoSuchElementException:
+                return "" 
+            except Exception as e:
+                return ""
+        
+        elif "instructor-student-edit-form" in case_element_locator:
+            try:
+                el = WebDriverWait(self.driver, 10).until(
+                    EC.visibility_of_element_located((By.XPATH, case_element_locator))
+                )
+                return el.text.strip()
+            except (TimeoutException, NoSuchElementException):
+                return ""
+            except Exception as e:
+                return ""
+        
+        return ""
 
     def run_case(self, case):
-        initial_url = self.driver.current_url
-
         self.go_to_form()
+        
         self.fill_form(case["fields"])
         self.submit_form()
         
+        course_id_for_redirect = "CS123" 
+
         if "Student has been updated" in case["expected"]:
             try:
                 WebDriverWait(self.driver, 10).until(
-                    EC.url_contains("/web/instructor/courses/details")
+                    EC.url_contains(f"/web/instructor/courses/details?courseid={course_id_for_redirect}")
                 )
             except TimeoutException:
-                pass
+                print(f"No hubo redirección esperada a /details?courseid={course_id_for_redirect} o tardó demasiado para el caso {case['id']}.")
         
         self.driver.save_screenshot(f"screenshot_after_action_{case['id']}.png")
         
-        obtained_msg = self.get_message(case["expected"]) 
+        obtained_msg = self.get_message(case["element_locator"], case["expected"]) 
 
         Utils.log_test(
             case["id"],
