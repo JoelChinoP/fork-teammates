@@ -22,7 +22,7 @@
       "comments": ""
     },
     "expected": "The field 'Student Name' should not be empty.",
-    "element_locator": "//div[contains(text(), 'The field 'Student Name' should not be empty.')]",
+    "element_locator": "//*[contains(text(), \"The field 'Student Name' should not be empty.\")]",
     "Obs": "RF-008.2"
   },
   {
