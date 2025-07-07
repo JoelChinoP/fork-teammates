@@ -64,19 +64,26 @@ class TestFn18:
     def get_message(self, case):
         locator = case.get("element_locator")
         try:
-            if "courses/details" in self.driver.current_url:
-                # Esperar a que aparezca el toast
-                toast = WebDriverWait(self.driver, 5).until(
-                    EC.presence_of_element_located((By.XPATH, locator))
-                )
-                return toast.text.strip()
-            else:
-                # Validaciones mostradas en la misma página
+            # Esperar a que la URL cambie a la ruta de éxito
+            WebDriverWait(self.driver, 5).until(
+                EC.url_contains(self.success_path)
+            )
+
+            # Luego buscar el mensaje toast en esa vista
+            toast = WebDriverWait(self.driver, 5).until(
+                EC.presence_of_element_located((By.XPATH, locator))
+            )
+            return toast.text.strip()
+        except TimeoutException:
+            # Si no redirige, asumimos que sigue en la vista del formulario
+            try:
                 el = WebDriverWait(self.driver, 5).until(
                     EC.presence_of_element_located((By.XPATH, locator))
                 )
                 return el.text.strip()
-        except (TimeoutException, NoSuchElementException):
+            except (TimeoutException, NoSuchElementException):
+                return "Elemento no encontrado"
+        except NoSuchElementException:
             return "Elemento no encontrado"
 
     def run_case(self, case):
