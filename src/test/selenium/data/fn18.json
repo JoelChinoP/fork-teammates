@@ -1,64 +1,59 @@
 [
   {
     "id": "FN18-CP-001",
-    "fields": {
+    "input": {
       "student-name": "Carlos Paredes",
+      "section-name": "Grupo 1",
+      "team-name": "Team A",
+      "new-student-email": "carlos@example.com",
+      "comments": "Edición completa válida"
+    },
+    "expected": "Student has been updated",
+    "element_locator": "//*[contains(text(), 'Student has been updated')]",
+    "Obs": "RF-008.2"
+  },
+  {
+    "id": "FN18-CP-002",
+    "input": {
+      "student-name": "",
       "section-name": "Grupo 1",
       "team-name": "Team A",
       "new-student-email": "carlos@example.com",
       "comments": ""
     },
-    "expected": "Student has been updated",
-    "element_locator": "//div[@class='toast-body']",
-    "validation_type": "alert",
-    "Obs": "RF-008.2: Verifica que se puedan editar todos los campos válidamente."
+    "expected": "The field 'Student Name' should not be empty.",
+    "element_locator": "//*[contains(text(), \"The field 'Student Name' should not be empty.\")]",
+    "Obs": "RF-008.2"
   },
-  {
-  "id": "FN18-CP-002",
-  "fields": {
-    "student-name": "",
-    "section-name": "Grupo 1",
-    "team-name": "Team A",
-    "new-student-email": "carlos@example.com",
-    "comments": ""
-  },
-  "expected": "Botón deshabilitado",
-  "element_locator": "//button[@id='btn-submit' and @disabled]",
-  "validation_type": "button_disabled",
-  "Obs": "RF-008.2: Verifica que el botón de envío esté deshabilitado si el campo obligatorio 'student-name' está vacío."
-  },
-
   {
     "id": "FN18-CP-003",
-    "fields": {
+    "input": {
       "student-name": "Carlos Paredes",
-      "section-name": "Este es un nombre de seccion que excede los sesenta caracteres para la prueba",
+      "section-name": "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS1",
       "team-name": "Team A",
       "new-student-email": "carlos@example.com",
       "comments": ""
     },
     "expected": "The field 'Section Name' should not exceed 60 characters.",
-    "element_locator": "btn-submit",
-    "validation_type": "button_disabled",
-    "Obs": "RF-008.2: Verifica validación de longitud máxima en el campo sección."
+    "element_locator": "//*[contains(text(), \"The field 'Section Name' should not exceed 60 characters.\")]",
+    "Obs": "RF-008.2"
   },
   {
     "id": "FN18-CP-004",
-    "fields": {
+    "input": {
       "student-name": "Carlos Paredes",
       "section-name": "Grupo 1",
-      "team-name": "Este es un nombre de equipo que excede los sesenta caracteres para la prueba",
+      "team-name": "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT1",
       "new-student-email": "carlos@example.com",
       "comments": ""
     },
     "expected": "The field 'Team Name' should not exceed 60 characters.",
-    "element_locator": "btn-submit",
-    "validation_type": "button_disabled",
-    "Obs": "RF-008.2: Verifica validación de longitud máxima en el campo equipo."
+    "element_locator": "//*[contains(text(), \"The field 'Team Name' should not exceed 60 characters.\")]",
+    "Obs": "RF-008.2"
   },
   {
     "id": "FN18-CP-005",
-    "fields": {
+    "input": {
       "student-name": "Pedrito Suarez",
       "section-name": "A1",
       "team-name": "Grupo1",
@@ -66,13 +61,12 @@
       "comments": ""
     },
     "expected": "\"juan.com\" is not acceptable to TEAMMATES as a/an email because it is not in the correct format",
-    "element_locator": "btn-submit",
-    "validation_type": "button_disabled",
-    "Obs": "RF-008.2: Verifica que el sistema detecte un email con formato incorrecto."
+    "element_locator": "//*[contains(text(), 'not in the correct format')]",
+    "Obs": "RF-008.2"
   },
   {
     "id": "FN18-CP-006",
-    "fields": {
+    "input": {
       "student-name": "Pedrito Suarez",
       "section-name": "A1",
       "team-name": "Grupo1",
@@ -80,13 +74,12 @@
       "comments": ""
     },
     "expected": "Trying to update to an email that is already in use",
-    "element_locator": "//div[@class='toast-body']",
-    "validation_type": "alert",
-    "Obs": "RF-008.2: Verifica la lógica del sistema al editar con un email ya existente en otro estudiante."
+    "element_locator": "//*[contains(text(), 'already in use')]",
+    "Obs": "RF-008.2"
   },
   {
     "id": "FN18-CP-007",
-    "fields": {
+    "input": {
       "student-name": "A",
       "section-name": "S",
       "team-name": "T",
@@ -94,78 +87,66 @@
       "comments": ""
     },
     "expected": "Student has been updated and email sent",
-    "element_locator": "//div[@class='toast-body']",
-    "validation_type": "alert",
-    "Obs": "RF-008.2: Verifica edición con valores mínimos aceptables."
+    "element_locator": "//*[contains(text(), 'Student has been updated')]",
+    "Obs": "RF-008.2"
   },
   {
     "id": "FN18-CP-008",
-    "fields": {
-      "student-name": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "section-name": "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
-      "team-name": "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-      "new-student-email": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@example.com",
+    "input": {
+      "student-name": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "section-name": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "team-name": "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+      "new-student-email": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx@example.com",
       "comments": ""
     },
     "expected": "Student has been updated and email sent",
-    "element_locator": "//div[@class='toast-body']",
-    "validation_type": "alert",
-    "Obs": "RF-008.2: Verifica edición con valores máximos válidos."
+    "element_locator": "//*[contains(text(), 'Student has been updated')]",
+    "Obs": "RF-008.2"
   },
   {
     "id": "FN18-CP-009",
-    "fields": {
-      "student-name": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "section-name": "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
-      "team-name": "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-      "new-student-email": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@example.com",
+    "input": {
+      "student-name": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "section-name": "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",
+      "team-name": "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+      "new-student-email": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz@toolong.com",
       "comments": ""
     },
-    "expected": "The field 'Student Name' should not exceed 100 characters.",
-    "element_locator": "btn-submit",
-    "validation_type": "button_disabled",
-    "Obs": "RF-008.2: Verifica que el sistema rechace datos que exceden los límites establecidos (se espera deshabilitación del botón)."
+    "expected": "Multiple validation errors",
+    "element_locator": "//*[contains(text(), 'Multiple validation errors')]",
+    "Obs": "RF-008.2"
   },
   {
     "id": "FN18-CP-010",
-    "fields": {
+    "input": {
       "student-name": "Soy un nombre normal",
       "section-name": "Una seccion normal",
       "team-name": "Un equipo normal",
-      "new-student-email": "Un_correo@normal.com",
+      "new-student-email": "un_correo@normal.com",
       "comments": ""
     },
     "expected": "Student has been updated and email sent",
-    "element_locator": "//div[@class='toast-body']",
-    "validation_type": "alert",
-    "Obs": "RF-008.2: Verifica que el campo opcional Comentario pueda quedar vacío sin generar error."
+    "element_locator": "//*[contains(text(), 'Student has been updated')]",
+    "Obs": "RF-008.2"
   },
   {
     "id": "FN18-CP-011",
-    "fields": {
+    "input": {
       "student-name": "Soy un nombre normal",
       "section-name": "Una seccion normal",
       "team-name": "Un equipo normal",
-      "new-student-email": "Un_correo@normal.com",
+      "new-student-email": "un_correo@normal.com",
       "comments": "Participa con frecuencia en clase"
     },
     "expected": "Student has been updated and email sent",
-    "element_locator": "//div[@class='toast-body']",
-    "validation_type": "alert",
-    "Obs": "RF-008.2: Verifica que el campo opcional Comentario acepte cualquier texto."
+    "element_locator": "//*[contains(text(), 'Student has been updated')]",
+    "Obs": "RF-008.2"
   },
   {
     "id": "FN18-CP-012",
-    "fields": {
-      "student-name": "Jean Dupont",
-      "section-name": "Section A",
-      "team-name": "Team Beta",
-      "new-student-email": "jean@example.com",
-      "comments": "Initial comments for Jean."
-    },
+    "input": {},
     "expected": "Student has been updated",
-    "element_locator": "//div[@class='toast-body']",
-    "validation_type": "alert",
-    "Obs": "RF-008.2: Verifica el comportamiento del sistema al guardar sin modificar ningún campo."
+    "element_locator": "//*[contains(text(), 'Student has been updated')]",
+    "Obs": "RF-008.2"
   }
 ]
