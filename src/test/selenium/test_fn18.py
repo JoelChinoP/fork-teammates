@@ -80,7 +80,7 @@ class TestFn18:
         except Exception as e:
             print(f"No se pudo hacer clic en el botón de guardar: {e}")
 
-    def get_message(self, locator, expected_message_part):
+    def get_message(self, expected_message_part):
         time.sleep(1) 
         general_toast_locator = (By.XPATH, "//ngb-toast//div[contains(@class, 'toast-body')]")
         
@@ -107,11 +107,23 @@ class TestFn18:
             return ""
 
     def run_case(self, case):
+        initial_url = self.driver.current_url
+
         self.go_to_form()
         self.fill_form(case["fields"])
         self.submit_form()
         
-        obtained_msg = self.get_message(case["element_locator"], case["expected"])
+        if "Student has been updated" in case["expected"]:
+            try:
+                WebDriverWait(self.driver, 10).until(
+                    EC.url_contains("/web/instructor/courses/details")
+                )
+            except TimeoutException:
+                pass
+        
+        self.driver.save_screenshot(f"screenshot_after_action_{case['id']}.png")
+        
+        obtained_msg = self.get_message(case["expected"]) 
 
         Utils.log_test(
             case["id"],
