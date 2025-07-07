@@ -9,7 +9,7 @@ from utils import Utils
 class TestFn18:
     def __init__(self, driver, url):
         self.driver, self.url = driver, url
-        self.path = "/web/instructor/courses/student/edit" 
+        self.path = "/web/instructor/courses/student/edit"
         self.form_fields = {
             "student-name": (By.ID, "student-name"),
             "section-name": (By.ID, "section-name"),
@@ -25,9 +25,9 @@ class TestFn18:
     def go_to_form(self):
         course_id_test = "CS123"
         student_email_test = "jean@example.com"
-        
+
         self.driver.get(f"{self.url}{self.path}?courseid={course_id_test}&studentemail={student_email_test}")
-        
+
         try:
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(self.form_fields["student-name"])
@@ -47,9 +47,9 @@ class TestFn18:
                         case["fields"]["new-student-email"] = original_email
                         case["fields"]["comments"] = original_comments
                     except NoSuchElementException:
-                        print(f"Advertencia: No se encontraron todos los campos originales para FN18-CP-012. Usando valores por defecto del JSON.")
+                        print("Advertencia: No se encontraron todos los campos originales para FN18-CP-012.")
                     break
-            
+
         except TimeoutException:
             print("No se cargó la página de edición de estudiante.")
             self.driver.quit()
@@ -76,27 +76,24 @@ class TestFn18:
             btn = self.driver.find_element(*self.submit_button)
             if btn.is_enabled():
                 btn.click()
-            else:
-                pass
         except NoSuchElementException:
             print("Botón de submit no encontrado.")
         except Exception as e:
             print(f"No se pudo hacer clic en el botón de guardar: {e}")
 
     def get_message_or_check_button(self, case):
-        time.sleep(1) 
-        
+        time.sleep(1)
+
         if case["validation_type"] == "alert":
             try:
                 WebDriverWait(self.driver, 5).until(
                     EC.presence_of_element_located((By.TAG_NAME, "tm-toast"))
                 )
-                
+
                 alert_locator = (By.XPATH, case["element_locator"])
-                el = WebDriverWait(self.driver, 15).until( 
+                el = WebDriverWait(self.driver, 15).until(
                     EC.visibility_of_element_located(alert_locator)
                 )
-                
                 WebDriverWait(self.driver, 5).until(
                     EC.text_to_be_present_in_element(alert_locator, case["expected"])
                 )
@@ -108,63 +105,41 @@ class TestFn18:
                 except NoSuchElementException:
                     return ""
             except NoSuchElementException:
-                return "" 
+                return ""
             except Exception as e:
                 return f"Error al buscar alerta: {e}"
-        
+
         elif case["validation_type"] == "button_disabled":
             try:
-                WebDriverWait(self.driver, 2).until(
-                    EC.element_to_be_clickable(self.submit_button)
+                locator = (By.XPATH, case["element_locator"])
+                WebDriverWait(self.driver, 3).until(
+                    EC.presence_of_element_located(locator)
                 )
-                btn = self.driver.find_element(*self.submit_button)
-                if not btn.is_enabled():
-                    return "Button is disabled"
-                else:
-                    return "Button is enabled"
+                return "Botón deshabilitado"
             except TimeoutException:
-                try:
-                    btn = self.driver.find_element(*self.submit_button)
-                    if not btn.is_enabled():
-                        return "Button is disabled"
-                    else:
-                        return "Button is enabled"
-                except NoSuchElementException:
-                    return "Button not found"
-            except NoSuchElementException:
-                return "Button not found"
+                return "Botón habilitado cuando no debería"
             except Exception as e:
-                return f"Error checking button state: {e}"
-        
+                return f"Error verificando el botón: {e}"
+
         return ""
 
     def run_case(self, case):
         self.go_to_form()
-        
         self.fill_form(case["fields"])
 
         if case["validation_type"] != "button_disabled":
             self.submit_form()
-        
-        course_id_for_redirect = "CS123" 
 
-        if "Student has been updated" in case["expected"] or "Student has been updated and email sent" in case["expected"]:
+        if "Student has been updated" in case["expected"]:
             try:
                 WebDriverWait(self.driver, 15).until(
-                    EC.url_contains(f"/web/instructor/courses/details?courseid={course_id_for_redirect}")
+                    EC.url_contains("/web/instructor/courses/details?courseid=CS123")
                 )
             except TimeoutException:
-                print(f"No hubo redirección esperada a /details?courseid={course_id_for_redirect} o tardó demasiado para el caso {case['id']}.")
-        
+                print(f"Redirección fallida en caso {case['id']}.")
+
         self.driver.save_screenshot(f"screenshot_after_action_{case['id']}.png")
-        
-        obtained_msg = self.get_message_or_check_button(case) 
-
-        if case["validation_type"] == "button_disabled" and obtained_msg == "Button is disabled":
-            obtained_msg = case["expected"]
-        elif case["validation_type"] == "button_disabled" and obtained_msg == "Button is enabled":
-            obtained_msg = "Button remained enabled (expected disabled)"
-
+        obtained_msg = self.get_message_or_check_button(case)
 
         Utils.log_test(
             case["id"],
@@ -173,6 +148,7 @@ class TestFn18:
             obtained_msg,
             case["Obs"]
         )
+
         return {
             "id": case["id"],
             "expected": case["expected"],
@@ -180,15 +156,14 @@ class TestFn18:
         }
 
     def run(self):
-        print(f"******************** RUN TEST-FN18 IN ********************")
+        print("******************** RUN TEST-FN18 ********************")
         for case in self.cases:
             try:
                 self.run_case(case)
             except Exception as e:
                 print(f"Error inesperado en caso {case['id']}: {e}")
                 self.driver.save_screenshot(f"screenshot_error_{case['id']}.png")
-        print(f"******************** **************** ********************")
-        print("")
+        print("******************** END TEST-FN18 ********************\n")
 
 if __name__ == "__main__":
     checker = SeleniumConnection()

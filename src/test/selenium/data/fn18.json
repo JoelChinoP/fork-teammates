@@ -14,19 +14,20 @@
     "Obs": "RF-008.2: Verifica que se puedan editar todos los campos válidamente."
   },
   {
-    "id": "FN18-CP-002",
-    "fields": {
-      "student-name": "",
-      "section-name": "Grupo 1",
-      "team-name": "Team A",
-      "new-student-email": "carlos@example.com",
-      "comments": ""
-    },
-    "expected": "The field 'Student Name' should not be empty.",
-    "element_locator": "btn-submit",
-    "validation_type": "button_disabled",
-    "Obs": "RF-008.2: Verifica que se detecte un campo obligatorio vacío al editar."
+  "id": "FN18-CP-002",
+  "fields": {
+    "student-name": "",
+    "section-name": "Grupo 1",
+    "team-name": "Team A",
+    "new-student-email": "carlos@example.com",
+    "comments": ""
   },
+  "expected": "Botón deshabilitado",
+  "element_locator": "//button[@id='btn-submit' and @disabled]",
+  "validation_type": "button_disabled",
+  "Obs": "RF-008.2: Verifica que el botón de envío esté deshabilitado si el campo obligatorio 'student-name' está vacío."
+  },
+
   {
     "id": "FN18-CP-003",
     "fields": {
