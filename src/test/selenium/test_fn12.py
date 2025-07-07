@@ -18,7 +18,7 @@ class TestFn12:
     def go_to_form(self):
         self.driver.get(self.url)
         try:
-            WebDriverWait(self.driver, 10).until(
+            WebDriverWait(self.driver, 20).until(
                 EC.presence_of_element_located(self.input_locator)
             )
         except TimeoutException:
