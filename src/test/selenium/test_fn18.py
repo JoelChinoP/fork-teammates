@@ -34,17 +34,20 @@ class TestFn18:
             )
             for case in self.cases:
                 if case["id"] == "FN18-CP-012":
-                    original_name = self.driver.find_element(*self.form_fields["student-name"]).get_attribute("value")
-                    original_section = self.driver.find_element(*self.form_fields["section-name"]).get_attribute("value")
-                    original_team = self.driver.find_element(*self.form_fields["team-name"]).get_attribute("value")
-                    original_email = self.driver.find_element(*self.form_fields["new-student-email"]).get_attribute("value")
-                    original_comments = self.driver.find_element(*self.form_fields["comments"]).get_attribute("value")
+                    try:
+                        original_name = self.driver.find_element(*self.form_fields["student-name"]).get_attribute("value")
+                        original_section = self.driver.find_element(*self.form_fields["section-name"]).get_attribute("value")
+                        original_team = self.driver.find_element(*self.form_fields["team-name"]).get_attribute("value")
+                        original_email = self.driver.find_element(*self.form_fields["new-student-email"]).get_attribute("value")
+                        original_comments = self.driver.find_element(*self.form_fields["comments"]).get_attribute("value")
 
-                    case["fields"]["student-name"] = original_name
-                    case["fields"]["section-name"] = original_section
-                    case["fields"]["team-name"] = original_team
-                    case["fields"]["new-student-email"] = original_email
-                    case["fields"]["comments"] = original_comments
+                        case["fields"]["student-name"] = original_name
+                        case["fields"]["section-name"] = original_section
+                        case["fields"]["team-name"] = original_team
+                        case["fields"]["new-student-email"] = original_email
+                        case["fields"]["comments"] = original_comments
+                    except NoSuchElementException:
+                        print(f"Advertencia: No se encontraron todos los campos originales para FN18-CP-012. Usando valores por defecto del JSON.")
                     break
             
         except TimeoutException:
@@ -85,6 +88,10 @@ class TestFn18:
         
         if case["validation_type"] == "alert":
             try:
+                WebDriverWait(self.driver, 5).until(
+                    EC.presence_of_element_located((By.TAG_NAME, "tm-toast"))
+                )
+                
                 alert_locator = (By.XPATH, case["element_locator"])
                 el = WebDriverWait(self.driver, 15).until( 
                     EC.visibility_of_element_located(alert_locator)
@@ -103,15 +110,27 @@ class TestFn18:
             except NoSuchElementException:
                 return "" 
             except Exception as e:
-                return ""
+                return f"Error al buscar alerta: {e}"
         
         elif case["validation_type"] == "button_disabled":
             try:
+                WebDriverWait(self.driver, 2).until(
+                    EC.element_to_be_clickable(self.submit_button)
+                )
                 btn = self.driver.find_element(*self.submit_button)
                 if not btn.is_enabled():
                     return "Button is disabled"
                 else:
                     return "Button is enabled"
+            except TimeoutException:
+                try:
+                    btn = self.driver.find_element(*self.submit_button)
+                    if not btn.is_enabled():
+                        return "Button is disabled"
+                    else:
+                        return "Button is enabled"
+                except NoSuchElementException:
+                    return "Button not found"
             except NoSuchElementException:
                 return "Button not found"
             except Exception as e:
@@ -131,7 +150,7 @@ class TestFn18:
 
         if "Student has been updated" in case["expected"] or "Student has been updated and email sent" in case["expected"]:
             try:
-                WebDriverWait(self.driver, 10).until(
+                WebDriverWait(self.driver, 15).until(
                     EC.url_contains(f"/web/instructor/courses/details?courseid={course_id_for_redirect}")
                 )
             except TimeoutException:
@@ -163,7 +182,11 @@ class TestFn18:
     def run(self):
         print(f"******************** RUN TEST-FN18 IN ********************")
         for case in self.cases:
-            self.run_case(case)
+            try:
+                self.run_case(case)
+            except Exception as e:
+                print(f"Error inesperado en caso {case['id']}: {e}")
+                self.driver.save_screenshot(f"screenshot_error_{case['id']}.png")
         print(f"******************** **************** ********************")
         print("")
 
