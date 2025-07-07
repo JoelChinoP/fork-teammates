@@ -1,0 +1,58 @@
+[
+  {
+    "id": "FN12-CP-001",
+    "input": "",
+    "expected": "Botón deshabilitado",
+    "element_locator": "//button[@id='btn-search' and @disabled]",
+    "Obs": "RF-008.1"
+  },
+  {
+    "id": "FN12-CP-002",
+    "input": "C",
+    "expected": "Botón habilitado",
+    "element_locator": "//button[@id='btn-search' and not(@disabled)]",
+    "Obs": "RF-008.1"
+  },
+  {
+    "id": "FN12-CP-003",
+    "input": "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "expected": "Botón habilitado",
+    "element_locator": "//button[@id='btn-search' and not(@disabled)]",
+    "Obs": "RF-008.1"
+  },
+  {
+    "id": "FN12-CP-004",
+    "input": "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "expected": "Input truncado o bloqueado",
+    "element_locator": "//input[@id='search-keyword' and string-length(@value) <= 100]",
+    "Obs": "RF-008.1"
+  },
+  {
+    "id": "FN12-CP-005",
+    "input": "Benny",
+    "expected": "Resultado parcial visible",
+    "element_locator": "//table//td[contains(text(), 'Benny')]",
+    "Obs": "RF-008.1"
+  },
+  {
+    "id": "FN12-CP-006",
+    "input": "\"Alice Betsy\"",
+    "expected": "Resultado exacto visible",
+    "element_locator": "//table//td[normalize-space(text())='Alice Betsy']",
+    "Obs": "RF-008.1"
+  },
+  {
+    "id": "FN12-CP-007",
+    "input": "Zxywqk",
+    "expected": "No results found",
+    "element_locator": "//*[contains(text(), 'No results found')]",
+    "Obs": "RF-008.1"
+  },
+  {
+    "id": "FN12-CP-008",
+    "input": "!@#$%^",
+    "expected": "No results found",
+    "element_locator": "//*[contains(text(), 'No results found')]",
+    "Obs": "RF-008.1"
+  }
+]
