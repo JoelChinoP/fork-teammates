@@ -160,3 +160,5 @@ env/
 .env.*
 .env
 
+sonar-project.properties
+.scannerwork/
