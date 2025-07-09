@@ -162,6 +162,8 @@ env/
 
 # sonar scanner
 sonar-project.properties
+.scannerwork/
+
 conf/
 jre/
 lib/
