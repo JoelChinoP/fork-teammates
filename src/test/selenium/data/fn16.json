@@ -1,0 +1,42 @@
+[
+  {
+    "id": "FN16-CP-001",
+    "fields": {
+      "question": "Pregunta 1",
+      "description": "Elija alternativa A o B"
+    },
+    "expected": "The question has been added to this feedback session",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'question has been added')]",
+    "Obs": "f+"
+  },
+  {
+    "id": "FN16-CP-002",
+    "fields": {
+      "question": "1",
+      "description": "Elija alternativa A o B"
+    },
+    "expected": "The question has been added to this feedback session",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'question has been added')]",
+    "Obs": "f+"
+  },
+  {
+    "id": "FN16-CP-003",
+    "fields": {
+      "question": "",
+      "description": "Elija alternativa A o B"
+    },
+    "expected": "Question brief cannot be empty",
+    "element_locator": "//div[contains(@class,'toast-body') and contains(.,'cannot be empty')]",
+    "Obs": "f-"
+  },
+  {
+    "id": "FN16-CP-004",
+    "fields": {
+      "question": "Pregunta nueva",
+      "description": ""
+    },
+    "expected": "The question has been added to this feedback session",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')][contains(., 'question has been added')]",
+    "Obs": "f+"
+  }
+]
