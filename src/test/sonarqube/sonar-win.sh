@@ -56,7 +56,7 @@ echo "Proyecto: $SONAR_PROJECT_NAME ($SONAR_PROJECT_KEY)"
 echo "Servidor: $SONAR_HOST_URL"
 
 # Ejecutar scanner
-"$SCANNER_DIR/bin/sonar-scanner" \
+"$SCANNER_DIR/bin/sonar-scanner.bat" \
     -Dproject.settings="$PROJECT_PROPS" \
     -Dsonar.verbose="$SONAR_VERBOSE"
 
