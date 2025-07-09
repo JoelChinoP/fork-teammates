@@ -1,0 +1,100 @@
+[
+    {
+        "id": "TEST-FN13-CP-001",
+        "fields": {
+            "course_id": "PS",
+            "course_name": "Pruebas de Software",
+            "institute": "UNSA",
+            "timezone": "America/Lima"
+        },
+        "expected": "The course has been added.",
+        "element_locator": "//div[@class='toast-body']",
+        "Obs": "Curso exitoso con datos válidos"
+    },
+    {
+        "id": "TEST-FN13-CP-002",
+        "fields": {
+            "course_id": "",
+            "course_name": "Curso de prueba",
+            "institute": "UNSA",
+            "timezone": "America/Lima"
+        },
+        "expected": "The field Course ID should not be empty.",
+        "element_locator": "//div[contains(text(), 'The field Course ID should not be empty.')]",
+        "Obs": "Validación de campo Course ID vacío"
+    },
+    {
+        "id": "TEST-FN13-CP-003",
+        "fields": {
+            "course_id": "PS",
+            "course_name": "",
+            "institute": "UNSA",
+            "timezone": "America/Lima"
+        },
+        "expected": "The field Course Name should not be empty.",
+        "element_locator": "//div[contains(text(), 'The field Course Name should not be empty.')]",
+        "Obs": "Validación de campo Course Name vacío"
+    },
+    {
+        "id": "TEST-FN13-CP-004",
+        "fields": {
+            "course_id": "A123456789012345678901234567890123456789012345678901234567890123456",
+            "course_name": "Curso Z",
+            "institute": "UNSA",
+            "timezone": "America/Lima"
+        },
+        "expected": "A1234567890123456789012345678901234567890123456789012345678901234",
+        "element_locator": "course_id",
+        "assert_input_length": 64,
+        "Obs": "Validación UI: Course ID se recorta a 64 caracteres"
+    },
+    {
+        "id": "TEST-FN13-CP-005",
+        "fields": {
+            "course_id": "PS",
+            "course_name": "Curso con nombre muy largo que excede los ochenta caracteres permitidos en el sistema. Aquí extra.",
+            "institute": "UNSA",
+            "timezone": "America/Lima"
+        },
+        "expected": "Curso con nombre muy largo que excede los ochenta caracteres permitidos en el s",
+        "element_locator": "course_name",
+        "assert_input_length": 80,
+        "Obs": "Validación UI: Course Name se recorta a 80 caracteres"
+    },
+    {
+        "id": "TEST-FN13-CP-006",
+        "fields": {
+            "course_id": "PS",
+            "course_name": "Curso duplicado",
+            "institute": "UNSA",
+            "timezone": "America/Lima"
+        },
+        "expected": "The course ID PS has been used by another course, possibly by some other user. Please try again with a different course ID.",
+        "element_locator": "//div[@class='toast-body']",
+        "Obs": "Course ID duplicado"
+    },
+    {
+        "id": "TEST-FN13-CP-007",
+        "fields": {
+            "course_id": "PS@",
+            "course_name": "Curso inválido",
+            "institute": "UNSA",
+            "timezone": "America/Lima"
+        },
+        "expected": "\"PS@\" is not acceptable to TEAMMATES as a/an course ID because it is not in the correct format.",
+        "element_locator": "//div[@class='toast-body']",
+        "Obs": "Validación de caracteres inválidos en Course ID"
+    },
+    {
+        "id": "TEST-FN13-CP-008",
+        "fields": {
+            "course_id": "D",
+            "course_name": "C",
+            "institute": "UNSA",
+            "timezone": "America/Lima"
+        },
+        "expected": "The course has been added.",
+        "element_locator": "//div[@class='toast-body']",
+        "Obs": "Course ID y Course Name de un solo carácter"
+    }
+]

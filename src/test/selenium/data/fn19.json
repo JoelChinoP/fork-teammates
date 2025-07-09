@@ -1,0 +1,15 @@
+[
+    {
+        "id": "FN19-CP01",
+        "fields": {
+            "section":"New section 1",
+            "team": "Team 4",
+            "name": "Juan Alejandros",
+            "email": "jalejandros@unsa.pe",
+            "comments": "N/A"
+        },
+        "expected": "Enrollment successful. Summary given below.",
+        "element_locator": "//div[contains(@class,'toast-body') and contains(text(),'Enrollment successful. Summary given below.')]",
+        "Obs": "Todos los campos válidos"
+    }
+]

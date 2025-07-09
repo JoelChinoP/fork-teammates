@@ -1,0 +1,47 @@
+[
+  {
+    "id": "FN6-CP-001",
+    "rules": ["FN6-PE-001", "FN6-TD-001", "FN6-TS-001"],
+    "description": "Buscar por valor: 'mezcurra'",
+    "input": "mezcurra",
+    "expected_result": "mezcurra",
+    "expect_found": true,
+    "observation": "f+"
+  },
+  {
+    "id": "FN6-CP-002",
+    "rules": ["FN6-VL-001", "FN6-TS-001"],
+    "description": "Buscar con un solo carácter válido: 'A'",
+    "input": "A",
+    "expected_result": "",
+    "expect_found": false,
+    "observation": "f-/f+"
+  },
+  {
+    "id": "FN6-CP-003",
+    "rules": ["FN6-VL001", "FN6-TS-001"],
+    "description": "Buscar con cadena de 100 caracteres",
+    "input": "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "expected_result": "",
+    "expect_found": false,
+    "observation": "f-/f+"
+  },
+  {
+    "id": "FN6-CP-005",
+    "rules": ["FN6-PE-001", "FN6-TD-002", "FN6-TS-001"],
+    "description": "Búsqueda con valor vacío",
+    "input": "",
+    "expected_result": "The [searchkey] HTTP parameter is null.",
+    "expect_found": false,
+    "observation": "f-"
+  },
+  {
+    "id": "FN6-CP-006",
+    "rules": ["FN6-PE001", "FN6-TS-001"],
+    "description": "Buscar con símbolos sin significado textual",
+    "input": "###$$$%%%^^^",
+    "expected_result": "No results found",
+    "expect_found": false,
+    "observation": "f-"
+  }
+]
