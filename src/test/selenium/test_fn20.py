@@ -10,7 +10,7 @@ class TestFn20:
     def __init__(self, driver, url):
         self.driver, self.url, self.path = driver, url, "/web/student/home"
         self.form_fields = {
-            "answer": (By.ID, "tinymce"),
+            "answer": (By.XPATH, "//body[@id='tinymce' and @contenteditable='true']"),
         }
         with open("data/fn20.json") as f:
             self.cases = json.load(f)
@@ -19,17 +19,22 @@ class TestFn20:
         self.driver.get(self.url + self.path)
         try:
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.ID, 'start-submit-btn-3'))
+                EC.element_to_be_clickable((By.ID, 'start-submit-btn-4'))
             ).click()
-            print("Start button found.")
         except TimeoutException:
             print("Warning: start-submit-btn-3 not found, continuing...")
             pass
+        print("Start button found.")
         WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.ID, "btn-submit-qn-1"))
+            EC.presence_of_element_located((By.XPATH, "//button[@type='submit']"))
         )
 
     def fill_form(self, fields):
+        for key, value in fields.items():
+            if key in self.form_fields:
+                el = self.driver.find_element(*self.form_fields[key])
+                el.clear()
+                el.send_keys(value)
         el = self.driver.find_element(*self.form_fields["answer"])
         el.clear()
         el.send_keys(fields.get("answer", ""))
@@ -52,7 +57,7 @@ class TestFn20:
         # Utils.solve_recaptcha(self.driver)
         self.submit()
         # Mejor usar un wait para la modal, si es posible
-        time.sleep(2.2)
+        time.sleep(1.2)
         modal_visible = self.check_modal()
         if case["Obs"] == "f+":
             if modal_visible:
