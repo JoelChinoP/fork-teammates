@@ -2,8 +2,8 @@ from check_connection import SeleniumConnection
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
-import time, json, random, sys
+from selenium.common.exceptions import TimeoutException
+import time, json, sys
 from utils import Utils
 
 class TestFn06:
@@ -23,7 +23,7 @@ class TestFn06:
     def go_to_form(self):
         self.driver.get(self.url + "/web/admin/home")
         try:
-            search_link = WebDriverWait(self.driver, 10).until(
+            WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.XPATH, '//a[@href="/web/admin/search"]'))
             )
         except TimeoutException:
@@ -49,7 +49,6 @@ class TestFn06:
             input.dispatchEvent(new Event('change', { bubbles: true }));
         """, search_box, value)
 
-        print(f"  > Valor ingresado: {value}")
         time.sleep(1.5)
 
     def submit(self):
@@ -63,36 +62,51 @@ class TestFn06:
         except TimeoutException:
             return "No encontrado"
 
+    def print_result(self, status, code, input_data, expected, obtained, obs):
+        print(f"[{status}] {code}")
+        print(f"\tInput:")
+        print(f"\t\tsearch: {input_data}")
+        print(f"\tExpected:")
+        print(f"\t\t{expected}")
+        print(f"\tObtained:")
+        print(f"\t\t{obtained}")
+        print(f"\tObs:")
+        print(f"\t\t{obs}\n")
 
     def run_case(self, case):
-        print(f"➡ Ejecutando caso: {case['id']}")
+        code = case["id"]
+        input_value = case["input"]
+        expected = case["expected_result"]
+        obs = case["observation"]
+
         try:
             self.go_to_form()
-            self.fill_form(case["input"])
+            self.fill_form(input_value)
             self.submit()
 
-            obtained_text = self.get_result()
-            success = obtained_text == case["expected_result"]
+            obtained = self.get_result()
+            success = obtained == expected
             status = "PASSED" if success == case["expect_found"] else "FAILED"
 
-            Utils.log_test(
-                case["id"],
-                {"input": case["input"]},
-                case["expected_result"],
-                obtained_text,
-                case["observation"],
-            )
-
-            return status
-
         except Exception as e:
-            print(f" {case['id']} - EXCEPTION: {e}")
-            return "FAILED"
+            obtained = str(e).splitlines()[0]
+            status = "FAILED"
 
+        self.print_result(
+            status=status,
+            code=code,
+            input_data=input_value,
+            expected=expected,
+            obtained=obtained,
+            obs=obs
+        )
 
+        return status
 
     def run(self):
-        print("\n******************** RUNNING TEST-FN06 ********************")
+        print("\n***Conexión exitosa y usuario autenticado...\n")
+        print("******************** RUNNING TEST-FN06 ********************")
+
         passed = failed = 0
 
         for case in self.cases:
@@ -102,7 +116,8 @@ class TestFn06:
             else:
                 failed += 1
 
-        print("\n=============== RESUMEN ===============")
+        print("******************** ******************* ******************\n")
+        print("=============== RESUMEN ===============")
         print(f" {passed} PASSED")
         print(f" {failed} FAILED")
         print("=======================================\n")
