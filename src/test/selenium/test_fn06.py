@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
-import time, json, random, sys
+import time, json, random, sys, os
 from utils import Utils
 
 class TestFn06:
@@ -24,10 +24,13 @@ class TestFn06:
         self.driver.get(self.url + "/web/admin/home")
         try:
             WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located((By.LINK_TEXT, "Search"))
+                EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, "Search"))
             ).click()
         except TimeoutException:
-            print(" No se pudo cargar el enlace de búsqueda.")
+            print("\n[ERROR] No se pudo cargar el enlace de búsqueda.")
+            print(">>> URL actual:", self.driver.current_url)
+            print(">>> HTML parcial:")
+            print(self.driver.page_source[:1000])  # Muestra solo los primeros 1000 caracteres
             self.driver.quit()
             sys.exit(1)
 
@@ -63,7 +66,6 @@ class TestFn06:
         except TimeoutException:
             return "No encontrado"
 
-
     def run_case(self, case):
         print(f"➡ Ejecutando caso: {case['id']}")
         try:
@@ -89,8 +91,6 @@ class TestFn06:
             print(f" {case['id']} - EXCEPTION: {e}")
             return "FAILED"
 
-
-
     def run(self):
         print("\n******************** RUNNING TEST-FN06 ********************")
         passed = failed = 0
@@ -107,12 +107,11 @@ class TestFn06:
         print(f" {failed} FAILED")
         print("=======================================\n")
 
-
 if __name__ == "__main__":
     checker = SeleniumConnection(
         url="https://cigarra-teammates.appspot.com",
         token_name="AUTH-TOKEN",
-        token_value="1B1B06046B395211D57F5828006C3610BE17EECB47F8DC12BCEE6A33A37E0DABD81916DAF5FAFCBED27C731B91BB86C9F437287D590E166029F36FFFF21C083F04C5DABCBEA439FDCF03E6855E9CE1C6F4811919562D69514C1BA9B054532985254A23676E229009AE497535A3675AE0E363B0905C7A874AC5454A81DC1D8F07"
+        token_value=os.getenv("AUTH_TOKEN")
     )
     driver, url = checker.connect_and_check_login()
     TestFn06(driver, url).run()
