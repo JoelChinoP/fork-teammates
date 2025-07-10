@@ -23,8 +23,8 @@ class TestFn06:
     def go_to_form(self):
         self.driver.get(self.url + "/web/admin/home")
         try:
-            WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located((By.LINK_TEXT, "Search"))
+            WebDriverWait(self.driver, 20).until(
+                EC.presence_of_element_located((By.ID, "adminSearchLink"))
             ).click()
         except TimeoutException:
             print(" No se pudo cargar el enlace de búsqueda.")
