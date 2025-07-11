@@ -115,7 +115,8 @@ class TestFn07:
             try:
                 Utils.solve_recaptcha(self.driver)
             except Exception:
-    
+            pass
+            
             self.submit()
     
             time.sleep(2)  # tiempo fijo tras submit
