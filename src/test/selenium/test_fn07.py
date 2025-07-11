@@ -33,7 +33,7 @@ class TestFn07:
                 EC.element_to_be_clickable((By.ID, 'btn-add-notification'))
             ).click()
         except TimeoutException:
-            print("❌ No se pudo cargar el botón para agregar notificación.")
+            print(" No se pudo cargar el botón para agregar notificación.")
             self.driver.quit()
             sys.exit(1)
 
@@ -131,7 +131,7 @@ class TestFn07:
                 case["Obs"]
             )
     
-            print(f"{ if status == 'PASSED' else } {case['id']} - {status}")
+            print(f"{ '.' if status == 'PASSED' else '.' } {case['id']} - {status}")
             return status
     
         except Exception as e:
