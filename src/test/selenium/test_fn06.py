@@ -55,25 +55,18 @@ class TestFn06:
         self.driver.find_element(*self.form_fields["submit"]).click()
 
     def get_result(self):
-        selectors = [
-            "div.toast-body",
-            "div.alert",
-            "div.result",
-            "div.error-message",
-            "#search-results"  # puedes ajustar este selector si conoces uno más específico
-        ]
+        time.sleep(1.5)  # dar tiempo a que aparezca algo en la página
+        page_text = self.driver.page_source
     
-        for selector in selectors:
-            try:
-                wait = WebDriverWait(self.driver, 3)
-                element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, selector)))
-                text = element.text.strip()
-                if text:
-                    return text
-            except TimeoutException:
-                continue
-    
-        return "No encontrado"
+        if "No results found." in page_text:
+            return "No results found."
+        elif "Instructors Found" in page_text:
+            return "Instructors Found"
+        elif "The [searchkey] HTTP parameter is null." in page_text:
+            return "The [searchkey] HTTP parameter is null."
+        else:
+            return "No encontrado"
+
 
 
     def print_result(self, status, code, input_data, expected, obtained, obs):
