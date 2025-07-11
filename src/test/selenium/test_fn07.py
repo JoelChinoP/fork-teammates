@@ -3,12 +3,15 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
-import time, json
+import time, json, random, sys
 from utils import Utils
 
 class TestFn07:
     def __init__(self, driver, url):
-        self.driver, self.url, self.path = driver, url, "/web/admin/notifications"
+        self.driver = driver
+        self.url = url
+        self.path = "/web/admin/notifications"
+
         self.form_fields = {
             "title": (By.ID, "notification-title"),
             "message": (By.ID, "notification-message"),
@@ -19,7 +22,8 @@ class TestFn07:
             "end_date": (By.XPATH, "//div[@id='notification-end-date']//input"),
             "end_time": (By.XPATH, "//tm-timepicker[@id='notification-end-time']//select"),
         }
-        with open("data/fn07.json") as f:
+
+        with open("data/fn07.json", encoding="utf-8") as f:
             self.cases = json.load(f)
 
     def go_to_form(self):
@@ -29,7 +33,10 @@ class TestFn07:
                 EC.element_to_be_clickable((By.ID, 'btn-add-notification'))
             ).click()
         except TimeoutException:
-            pass
+            print("❌ No se pudo cargar el botón para agregar notificación.")
+            self.driver.quit()
+            sys.exit(1)
+
         WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable((By.ID, 'btn-create-notification'))
         )
@@ -37,29 +44,43 @@ class TestFn07:
     def fill_form(self, fields):
         for key, value in fields.items():
             if key in ["title", "group", "style"]:
-                el = self.driver.find_element(*self.form_fields[key])
+                el = WebDriverWait(self.driver, 5).until(
+                    EC.presence_of_element_located(self.form_fields[key])
+                )
                 if el.tag_name == "select":
                     for option in el.find_elements(By.TAG_NAME, 'option'):
                         if value.lower() in option.text.lower():
                             option.click()
                             break
                 else:
-                    el.clear()
-                    el.send_keys(value)
+                    if el.is_enabled():
+                        self.driver.execute_script("arguments[0].value = '';", el)
+                        el.send_keys(value)
+
             elif key == "message":
-                # Rich text editor handling (TinyMCE)
-                iframe = self.driver.find_element(By.CSS_SELECTOR, "iframe.tox-edit-area__iframe")
+                iframe = WebDriverWait(self.driver, 10).until(
+                    EC.presence_of_element_located((By.CSS_SELECTOR, "iframe.tox-edit-area__iframe"))
+                )
                 self.driver.switch_to.frame(iframe)
-                body = self.driver.find_element(By.CSS_SELECTOR, "body")
-                body.clear()
+                body = WebDriverWait(self.driver, 5).until(
+                    EC.presence_of_element_located((By.CSS_SELECTOR, "body"))
+                )
+                self.driver.execute_script("arguments[0].innerHTML = '';", body)
                 body.send_keys(value)
                 self.driver.switch_to.default_content()
+
             elif key in ["start_date", "end_date"]:
-                el = self.driver.find_element(*self.form_fields[key])
-                el.clear()
-                el.send_keys(value)
+                el = WebDriverWait(self.driver, 5).until(
+                    EC.presence_of_element_located(self.form_fields[key])
+                )
+                self.driver.execute_script("arguments[0].removeAttribute('readonly')", el)
+                self.driver.execute_script("arguments[0].value = arguments[1];", el, value)
+
+
             elif key in ["start_time", "end_time"]:
-                select = self.driver.find_element(*self.form_fields[key])
+                select = WebDriverWait(self.driver, 5).until(
+                    EC.presence_of_element_located(self.form_fields[key])
+                )
                 for option in select.find_elements(By.TAG_NAME, 'option'):
                     if value in option.text:
                         option.click()
@@ -70,42 +91,71 @@ class TestFn07:
 
     def get_message(self, locator):
         try:
-            el = WebDriverWait(self.driver, 10).until(
-                EC.visibility_of_element_located((By.XPATH, locator))
-            )
-            return el.text.strip()
-        except (TimeoutException, NoSuchElementException):
+            if locator.startswith("//"):
+                msg_element = WebDriverWait(self.driver, 7).until(
+                    EC.visibility_of_element_located((By.XPATH, locator))
+                )
+            else:
+                msg_element = WebDriverWait(self.driver, 7).until(
+                    EC.visibility_of_element_located((By.ID, locator))
+                )
+            return msg_element.text.strip()
+        except Exception as e:
+            print(f"[ERROR] No se pudo obtener el mensaje con locator {locator}: {e}")
             return ""
 
     def run_case(self, case):
-        self.go_to_form()
-        self.fill_form(case["fields"])
-        Utils.solve_recaptcha(self.driver)
-        self.submit()
-        time.sleep(1.2)
-        locator = case["element_locator"]
-        obtained_msg = self.get_message(locator)
-        Utils.log_test(
-            case["id"],
-            case["fields"],
-            case["expected"],
-            obtained_msg,
-            case["Obs"]
-        )
-        return {
-            "id": case["id"],
-            "expected": case["expected"],
-            "obtained": obtained_msg
-        }
+        print(f"➡ Ejecutando caso: {case['id']}")
+        try:
+            self.go_to_form()
+            self.fill_form(case["fields"])
+            time.sleep(random.uniform(2.5, 4.5))
+
+            Utils.solve_recaptcha(self.driver)
+            self.submit()
+
+            time.sleep(2)  # tiempo fijo tras submit
+
+            obtained_msg = self.get_message(case["element_locator"])
+            status = "PASSED" if case["expected"] in obtained_msg else "FAILED"
+
+            Utils.log_test(
+                case["id"],
+                case["fields"],
+                case["expected"],
+                obtained_msg,
+                case["Obs"]
+            )
+
+            print(f" {case['id']} - {status}")
+            return status
+
+        except Exception as e:
+            print(f"❌ {case['id']} - EXCEPTION: {e}")
+            return "FAILED"
 
     def run(self):
-        print(f"******************** RUN TEST-FN07 IN ********************")
+        print("\n******************** RUNNING TEST-FN07 ********************")
+        passed = failed = 0
+
         for case in self.cases:
-            self.run_case(case)
-        print(f"******************** **************** ********************")
-        print("")
+            status = self.run_case(case)
+            if status == "PASSED":
+                passed += 1
+            else:
+                failed += 1
+
+        print("\n=============== RESUMEN ===============")
+        print(f" {passed} PASSED")
+        print(f" {failed} FAILED")
+        print("=======================================\n")
+
 
 if __name__ == "__main__":
-    checker = SeleniumConnection()
+    checker = SeleniumConnection(
+        url="https://cigarra-teammates.appspot.com",
+        token_name="AUTH-TOKEN",
+        token_value="1B1B06046B395211D57F5828006C3610BE17EECB47F8DC12BCEE6A33A37E0DABD81916DAF5FAFCBED27C731B91BB86C9F437287D590E166029F36FFFF21C083F04C5DABCBEA439FDCF03E6855E9CE1C6F4811919562D69514C1BA9B054532985254A23676E229009AE497535A3675AE0E363B0905C7A874AC5454A81DC1D8F07"
+    )
     driver, url = checker.connect_and_check_login()
     TestFn07(driver, url).run()
