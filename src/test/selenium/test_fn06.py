@@ -55,18 +55,25 @@ class TestFn06:
         self.driver.find_element(*self.form_fields["submit"]).click()
 
     def get_result(self):
-        time.sleep(1.5)  # dar tiempo a que aparezca algo en la página
-        page_text = self.driver.page_source
+        try:
+            # Espera hasta que aparezca el toast
+            toast = WebDriverWait(self.driver, 5).until(
+                EC.visibility_of_element_located(
+                    (By.CSS_SELECTOR, "tm-toast ngb-toast .toast-body")
+                )
+            )
+            toast_text = toast.text.strip()
     
-        if "No results found." in page_text:
-            return "No results found."
-        elif "Instructors Found" in page_text:
-            return "Instructors Found"
-        elif "The [searchkey] HTTP parameter is null." in page_text:
-            return "The [searchkey] HTTP parameter is null."
-        else:
+            if "No results found." in toast_text:
+                return "No results found."
+            elif "Instructors Found" in toast_text:
+                return "Instructors Found"
+            elif "The [searchkey] HTTP parameter is null." in toast_text:
+                return "The [searchkey] HTTP parameter is null."
+            else:
+                return toast_text
+        except TimeoutException:
             return "No encontrado"
-
 
 
     def print_result(self, status, code, input_data, expected, obtained, obs):
