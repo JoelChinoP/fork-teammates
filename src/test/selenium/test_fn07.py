@@ -110,15 +110,19 @@ class TestFn07:
             self.go_to_form()
             self.fill_form(case["fields"])
             time.sleep(random.uniform(2.5, 4.5))
-
-            Utils.solve_recaptcha(self.driver)
+    
+            # Manejar errores de reCAPTCHA sin mostrar stacktrace
+            try:
+                Utils.solve_recaptcha(self.driver)
+            except Exception:
+    
             self.submit()
-
+    
             time.sleep(2)  # tiempo fijo tras submit
-
+    
             obtained_msg = self.get_message(case["element_locator"])
             status = "PASSED" if case["expected"] in obtained_msg else "FAILED"
-
+    
             Utils.log_test(
                 case["id"],
                 case["fields"],
@@ -126,13 +130,14 @@ class TestFn07:
                 obtained_msg,
                 case["Obs"]
             )
-
-            print(f" {case['id']} - {status}")
+    
+            print(f"{'' if status == 'PASSED' else ''} {case['id']} - {status}")
             return status
-
+    
         except Exception as e:
-            print(f"❌ {case['id']} - EXCEPTION: {e}")
+            print(f" {case['id']} - EXCEPTION: {str(e).splitlines()[0]}")  # solo la primera línea del error
             return "FAILED"
+
 
     def run(self):
         print("\n******************** RUNNING TEST-FN07 ********************")
