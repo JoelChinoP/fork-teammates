@@ -55,12 +55,26 @@ class TestFn06:
         self.driver.find_element(*self.form_fields["submit"]).click()
 
     def get_result(self):
-        try:
-            wait = WebDriverWait(self.driver, 10)
-            toast = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.toast-body")))
-            return toast.text.strip()
-        except TimeoutException:
-            return "No encontrado"
+        selectors = [
+            "div.toast-body",
+            "div.alert",
+            "div.result",
+            "div.error-message",
+            "#search-results"  # puedes ajustar este selector si conoces uno más específico
+        ]
+    
+        for selector in selectors:
+            try:
+                wait = WebDriverWait(self.driver, 3)
+                element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, selector)))
+                text = element.text.strip()
+                if text:
+                    return text
+            except TimeoutException:
+                continue
+    
+        return "No encontrado"
+
 
     def print_result(self, status, code, input_data, expected, obtained, obs):
         print(f"[{status}] {code}")
