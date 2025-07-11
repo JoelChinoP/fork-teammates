@@ -5,6 +5,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 import time, json, random, sys
 from utils import Utils
+import contextlib
+import io
 
 class TestFn07:
     def __init__(self, driver, url):
@@ -112,12 +114,12 @@ class TestFn07:
             time.sleep(random.uniform(2.5, 4.5))
     
             try:
-                Utils.solve_recaptcha(self.driver)
+                with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+                    Utils.solve_recaptcha(self.driver)
             except Exception:
-                pass  # Silencia el error de reCAPTCHA
+                pass  # Silenciar absolutamente todo
     
             self.submit()
-    
             time.sleep(2)
     
             obtained_msg = self.get_message(case["element_locator"])
@@ -131,7 +133,7 @@ class TestFn07:
                 case["Obs"]
             )
     
-            print(f"{ '.' if status == 'PASSED' else '.' } {case['id']} - {status}")
+            print(f"{'.' if status == 'PASSED' else '.'} {case['id']} - {status}")
             return status
     
         except Exception as e:
