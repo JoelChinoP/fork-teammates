@@ -25,9 +25,9 @@ else
 fi
 
 # Iniciar SonarQube
-#echo "🐳 Iniciando SonarQube..."
-#docker-compose up -d
+echo "🐳 Iniciando SonarQube..."
+docker-compose up -d
 
 echo "🎉 ¡Listo!"
-#echo "📍 SonarQube: http://localhost:9000"
-#echo "👤 Login: admin / admin"
+echo "📍 SonarQube: http://localhost:9000"
+echo "👤 Login: admin / admin"
