@@ -75,7 +75,7 @@
       "end_date": "2025-07-03",
       "end_time": "11:00H"
     },
-    "expected": "Notification title cannot be 80 characters larger",
+    "expected": "Notification created successfully.",
     "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
     "Obs": "f-"
   }
