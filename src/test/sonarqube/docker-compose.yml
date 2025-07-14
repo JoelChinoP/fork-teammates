@@ -26,6 +26,6 @@ services:
       retries: 10
 
 volumes:
-  sonarqube_data:
-#  sonarqube_extensions:
-  sonarqube_logs:
+  data:
+# extensions:
+  logs:
