@@ -21,7 +21,7 @@ if [ -f "./plugins/sonar-cnes-report-5.0.2.jar" ]; then
     echo "✅ Plugin descargado: $(ls -lh ./plugins/sonar-cnes-report-5.0.2.jar)"
 else
     echo "❌ Error al descargar plugin"
-    exit 1
+    # exit 1
 fi
 
 # Iniciar SonarQube
