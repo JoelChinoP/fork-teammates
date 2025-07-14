@@ -3,7 +3,23 @@
     "id": "FN14-CP-001",
     "fields": {
       "course": "PS",
-      "session_name": "Primera Retroalimentación",
+      "session_name": "Feedback de PS",
+      "instructions": "Completa todas las preguntas con sinceridad.",
+      "start_date": "2025-07-15",
+      "start_time": "22:00H",
+      "end_date": "2025-07-20",
+      "end_time": "23:00H",
+      "grace_period": "10 min"
+    },
+    "expected": "The feedback session has been added.Click the \"Add New Question\" button below to begin adding questions for the feedback session.",
+    "element_locator": "//div[@class='toast-body']",
+    "Obs": "f+"
+  },
+  {
+    "id": "FN14-CP-002",
+    "fields": {
+      "course": "PS",
+      "session_name": " ",
       "instructions": "Completa todas las preguntas con sinceridad.",
       "start_date": "2025-07-15",
       "start_time": "20:00H",
@@ -11,8 +27,42 @@
       "end_time": "22:00H",
       "grace_period": "10 min"
     },
-    "expected": "The feedback session has been added.Click the \"Add New Question\" button below to begin adding questions for the feedback session.",
-    "element_locator": "//div[@class='toast-body']",
-    "Obs": "f+"
+    "expected":  "The field 'feedback session name' should not be empty.",
+    "obtained": "",
+    "element_locator": "//div[contains(@class, 'toast-body') and contains(text(), \"The field 'feedback session name' should not be empty.\")]",
+    "Obs": "f-"
+  },
+  {
+    "id": "TEST-FN14-CP-005",
+    "fields": {
+      "course": "PS",
+      "session_name": "Feedback de PS",
+      "instructions": "Por favor responda todo el cuestionario",
+      "start_date": "2025-07-15",
+      "start_time": "20:00H",
+      "end_date": "2025-07-20",
+      "end_time": "22:00H",
+      "grace_period": "5 min"
+    },
+    "expected": "A session named Feedback Test 1 exists already in the course Pruebas de Software (Course ID: PS)",
+    "obtained": "",
+    "element_locator": "//div[contains(@class, 'toast-body') and contains(text(), 'exists already in the course')]",
+    "Obs": "f-"
+  },
+  {
+    "id": "TEST-FN14-CP-006",
+    "fields": {
+      "course": "PS",
+      "session_name": "@@@",
+      "instructions": "Siga las instrucciones.",
+      "start_date": "2025-07-15",
+      "start_time": "20:00H",
+      "end_date": "2025-07-20",
+      "end_time": "22:00H",
+      "grace_period": "10 min"
+      },
+      "expected": "\"@@@\" is not acceptable to TEAMMATES as a/an feedback session name because it starts with a non-alphanumeric character. A/An feedback session name must start with an alphanumeric character, and cannot contain any vertical bar (|) or percent sign (%).",
+      "element_locator": "//div[@class='toast-body']",
+      "Obs": "f-"
   }
 ]
