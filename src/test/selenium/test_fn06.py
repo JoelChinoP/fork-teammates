@@ -56,11 +56,32 @@ class TestFn06:
 
     def get_result(self):
         try:
-            wait = WebDriverWait(self.driver, 10)
-            toast = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.toast-body")))
-            return toast.text.strip()
-        except TimeoutException:
+            # Esperar hasta 5 segundos a que aparezca cualquier toast
+            WebDriverWait(self.driver, 5).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, "tm-toast ngb-toast"))
+            )
+    
+            # Buscar todos los posibles toast-body visibles
+            toasts = self.driver.find_elements(By.CSS_SELECTOR, "tm-toast ngb-toast .toast-body")
+            
+            for toast in toasts:
+                toast_text = toast.text.strip()
+                print(f"DEBUG: Toast encontrado con texto: '{toast_text}'")  # debug
+    
+                if "No results found." in toast_text:
+                    return "No results found."
+                elif "Instructors Found" in toast_text:
+                    return "Instructors Found"
+                elif "The [searchkey] HTTP parameter is null." in toast_text:
+                    return "The [searchkey] HTTP parameter is null."
+    
             return "No encontrado"
+    
+        except TimeoutException:
+            print("DEBUG: Timeout esperando el toast")  # debug
+            return "No encontrado"
+
+
 
     def print_result(self, status, code, input_data, expected, obtained, obs):
         print(f"[{status}] {code}")

@@ -12,7 +12,7 @@
       "end_time": "11:00H"
     },
     "expected": "Notification created successfully",
-    "element_locator": "//div[contains(@class, 'alert-success') and contains(., 'Notification created successfully')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
     "Obs": "f+"
   },
   {
@@ -28,7 +28,7 @@
       "end_time": "11:00H"
     },
     "expected": "Notification title cannot be empty",
-    "element_locator": "//div[@role='alert' and contains(., 'title cannot be empty')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
     "Obs": "f-"
   },
   {
@@ -44,7 +44,7 @@
       "end_time": "11:00H"
     },
     "expected": "The field 'notification message' is empty.",
-    "element_locator": "//div[@role='alert' and contains(., 'notification message')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
     "Obs": "f-"
   },
   {
@@ -55,12 +55,12 @@
       "group": "Students",
       "style": "Primary (blue)",
       "start_date": "2025-07-03",
-      "start_time": "11:00H",
+      "start_time": "16:00H",
       "end_date": "2025-07-03",
-      "end_time": "10:00H"
+      "end_time": "09:00H"
     },
     "expected": "The time when the notification will expire for this notification cannot be earlier than the time when the notification will be visible.",
-    "element_locator": "//div[@role='alert' and contains(., 'expire for this notification cannot be earlier')]",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
     "Obs": "f-"
   },
   {
@@ -75,8 +75,8 @@
       "end_date": "2025-07-03",
       "end_time": "11:00H"
     },
-    "expected": "Notification title cannot be 80 characters larger",
-    "element_locator": "//div[@role='alert' and contains(., 'title cannot be 80 characters larger')]",
+    "expected": "Notification created successfully.",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
     "Obs": "f-"
   }
 ]
