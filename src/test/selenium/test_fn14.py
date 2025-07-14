@@ -24,17 +24,14 @@ class TestFn14:
 
     def go_to_form(self):
         self.driver.get(self.url + self.path)
-        print("[DEBUG] Esperando a que cargue la página de sesiones...")
         time.sleep(4)
-
-        print("[DEBUG] URL actual:", self.driver.current_url)
 
         try:
             WebDriverWait(self.driver, 20).until(
                 EC.presence_of_element_located((By.ID, "btn-add-session"))
             )
             button = self.driver.find_element(By.ID, "btn-add-session")
-            print("[DEBUG] Botón encontrado. Visible:", button.is_displayed(), "| Enabled:", button.is_enabled())
+            
             if button.is_displayed() and button.is_enabled():
                 try:
                     button.click()
@@ -107,7 +104,7 @@ class TestFn14:
     def run_case(self, case):
         self.go_to_form()
         self.fill_form(case["fields"])
-        Utils.solve_recaptcha(self.driver)
+       
         self.submit()
         time.sleep(2)
         obtained_msg = self.get_message(case["element_locator"])
@@ -128,7 +125,7 @@ class TestFn14:
         print(f"******************** RUN TEST-FN14 ********************")
         for case in self.cases:
             self.run_case(case)
-        print(f"******************** ******************* ********************\n")
+        print(f"*********************************************************\n")
 
 if __name__ == "__main__":
     checker = SeleniumConnection()
