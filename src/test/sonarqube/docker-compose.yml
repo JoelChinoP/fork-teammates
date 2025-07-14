@@ -1,19 +1,24 @@
-version: "3.8"
+version: "3.9"
 
 services:
   sonarqube:
-    image: sonarqube:lts-community
+
+    image: sonarqube:25.7.0.110598-community
     container_name: sonarqube
+
     environment:
       - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+
     ports:
       - "9000:9000"
+
     volumes:
       - sonarqube_data:/opt/sonarqube/data
-      - sonarqube_extensions:/opt/sonarqube/extensions
+#      - sonarqube_extensions:/opt/sonarqube/extensions
       - sonarqube_logs:/opt/sonarqube/logs
       - ./plugins:/opt/sonarqube/extensions/plugins
     restart: unless-stopped
+
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:9000/api/system/status || exit 1"]
       interval: 30s
@@ -22,5 +27,5 @@ services:
 
 volumes:
   sonarqube_data:
-  sonarqube_extensions:
+#  sonarqube_extensions:
   sonarqube_logs:
