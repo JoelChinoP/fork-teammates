@@ -47,7 +47,10 @@ class TestFn14:
 
     def fill_form(self, fields):
         # Seleccionar curso
-        Select(self.driver.find_element(*self.form_fields["course"])).select_by_visible_text(fields["course"])
+        course_select = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(self.form_fields["course"])
+        )
+        Select(course_select).select_by_visible_text(fields["course"])
 
         # Nombre de la sesión
         self.driver.find_element(*self.form_fields["session_name"]).clear()
