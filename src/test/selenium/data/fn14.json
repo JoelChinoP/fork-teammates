@@ -3,7 +3,7 @@
     "id": "FN14-CP-001",
     "fields": {
       "course": "PS",
-      "session_name": "Feedback N 1",
+      "session_name": "Feedback 01 ",
       "instructions": "Completa todas las preguntas con sinceridad.",
       "start_date": "2025-07-15",
       "start_time": "22:00H",
@@ -36,7 +36,7 @@
     "id": "TEST-FN14-CP-005",
     "fields": {
       "course": "PS",
-      "session_name": "Feedback N 1",
+      "session_name": "Feedback 01",
       "instructions": "Por favor responda todo el cuestionario",
       "start_date": "2025-07-15",
       "start_time": "20:00H",
@@ -66,3 +66,5 @@
       "Obs": "f-"
   }
 ]
+
+
