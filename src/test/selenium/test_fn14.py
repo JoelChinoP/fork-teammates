@@ -66,7 +66,7 @@ class TestFn14:
             self.driver.find_element(By.TAG_NAME, "body").send_keys(fields["instructions"])
             self.driver.switch_to.default_content()
         except TimeoutException:
-            print("[WARNING] El iframe de instrucciones no fue encontrado. Se omitirá este campo.")
+            print("El iframe de instrucciones no fue encontrado. Se omitirá este campo.")
 
         # Fecha de inicio
         self.driver.execute_script(
@@ -134,3 +134,4 @@ if __name__ == "__main__":
     checker = SeleniumConnection()
     driver, url = checker.connect_and_check_login()
     TestFn14(driver, url).run()
+
