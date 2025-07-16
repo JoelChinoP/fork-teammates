@@ -1,82 +1,104 @@
 [
   {
     "id": "FN8-CP-001",
+    "notification_id": "4ae9c1da-7212-4d45-a7be-c2bc5dd8e3e2",
     "fields": {
       "title": "A",
       "message": "Hola",
       "group": "Students",
-      "style": "SUCCESS",
-      "start_date": "2025-07-06",
-      "start_time": "10:00 AM",
-      "end_date": "2025-07-06",
-      "end_time": "11:00 AM"
+      "style": "Primary (blue)",
+      "start_date": "2025-07-20",
+      "start_time": "10:00H",
+      "end_date": "2025-07-20",
+      "end_time": "11:00H"
     },
     "expected": "Notification updated successfully.",
-    "element_locator": "//div[@class='toast-body' and contains(text(), 'Notification updated successfully')]",
-    "Obs": "FN8-PE-001, FN8-PE-002, FN8-PE-003, FN8-VL-001, FN8-VL-002, FN8-VL-003, FN8-TD-001"
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
+    "Obs": "f+"
   },
   {
     "id": "FN8-CP-002",
+  "notification_id": "4ae9c1da-7212-4d45-a7be-c2bc5dd8e3e2",
     "fields": {
       "title": "",
       "message": "Mensaje válido",
       "group": "Students",
-      "style": "SUCCESS",
-      "start_date": "2025-07-06",
-      "start_time": "10:00 AM",
-      "end_date": "2025-07-06",
-      "end_time": "11:00 AM"
+      "style": "Primary (blue)",
+      "start_date": "2025-07-20",
+      "start_time": "10:00H",
+      "end_date": "2025-07-20",
+      "end_time": "11:00H"
     },
     "expected": "Notification title cannot be empty",
-    "element_locator": "//div[@class='toast-body' and contains(text(), 'Notification title cannot be empty')]",
-    "Obs": "FN8-PE-001, FN8-VL-001"
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
+    "Obs": "f-"
   },
   {
     "id": "FN8-CP-003",
+  "notification_id": "4ae9c1da-7212-4d45-a7be-c2bc5dd8e3e2",
     "fields": {
-      "title": "A",
+      "title": "Título válido",
       "message": "",
       "group": "Students",
-      "style": "SUCCESS",
-      "start_date": "2025-07-06",
-      "start_time": "10:00 AM",
-      "end_date": "2025-07-06",
-      "end_time": "11:00 AM"
+      "style": "Primary (blue)",
+      "start_date": "2025-07-20",
+      "start_time": "10:00H",
+      "end_date": "2025-07-20",
+      "end_time": "11:00H"
     },
-    "expected": "The time when the notification will expire for this notification cannot be earlier than the time when the notification will be visible.\nThe field 'notification message' is empty.",
-    "element_locator": "//div[@class='toast-body' and contains(text(), 'notification will expire') and contains(text(), 'notification message')]",
-    "Obs": "FN8-PE-002, FN8-VL-002"
+    "expected": "The field 'notification message' is empty.",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
+    "Obs": "f-"
   },
   {
     "id": "FN8-CP-004",
+  "notification_id": "4ae9c1da-7212-4d45-a7be-c2bc5dd8e3e2",
     "fields": {
-      "title": "A",
+      "title": "Notificación",
       "message": "Contenido",
       "group": "Students",
-      "style": "SUCCESS",
-      "start_date": "2025-07-06",
-      "start_time": "10:00 AM",
-      "end_date": "2025-07-06",
-      "end_time": "09:00 AM"
+      "style": "Primary (blue)",
+      "start_date": "2025-07-20",
+      "start_time": "16:00H",
+      "end_date": "2025-07-20",
+      "end_time": "09:00H"
     },
-    "expected": "cannot be earlier than the time when the notification will be visible",
-    "element_locator": "//div[@class='toast-body' and contains(text(), 'cannot be earlier than the time when the notification will be visible')]",
-    "Obs": "FN8-PE-003"
+    "expected": "The time when the notification will expire for this notification cannot be earlier than the time when the notification will be visible.",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
+    "Obs": "f-"
+  },
+  {
+    "id": "FN8-CP-005",
+  "notification_id": "4ae9c1da-7212-4d45-a7be-c2bc5dd8e3e2",
+    "fields": {
+      "title": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "message": "Contenido",
+      "group": "Students",
+      "style": "Primary (blue)",
+      "start_date": "2025-07-20",
+      "start_time": "10:00H",
+      "end_date": "2025-07-20",
+      "end_time": "11:00H"
+    },
+    "expected": "",
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
+    "Obs": "f-"
   },
   {
     "id": "FN8-CP-006",
+  "notification_id": "4ae9c1da-7212-4d45-a7be-c2bc5dd8e3e2",
     "fields": {
-      "title": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-      "message": "Este es un mensaje largo para verificar que el límite se respeta correctamente sin errores.",
+      "title": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "message": "Este es un mensaje largo de prueba para verificar que el campo mensaje acepte entradas extensas y las valide correctamente.",
       "group": "Students",
-      "style": "SUCCESS",
-      "start_date": "2025-07-06",
-      "start_time": "10:00 AM",
-      "end_date": "2025-07-06",
-      "end_time": "11:00 AM"
+      "style": "Primary (blue)",
+      "start_date": "2025-07-20",
+      "start_time": "10:00H",
+      "end_date": "2025-07-20",
+      "end_time": "11:00H"
     },
     "expected": "Notification updated successfully.",
-    "element_locator": "//div[@class='toast-body' and contains(text(), 'Notification updated successfully')]",
-    "Obs": "FN8-VL-001, FN8-VL-002"
+    "element_locator": "//ngb-toast//div[contains(@class, 'toast-body')]",
+    "Obs": "f+"
   }
 ]
