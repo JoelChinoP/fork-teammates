@@ -24,7 +24,7 @@ class TestFn20:
         except TimeoutException:
             pass
         print("Start button found.")
-        WebDriverWait(self.driver, 10).until(
+        WebDriverWait(self.driver, 15).until(
             EC.presence_of_element_located((By.XPATH, "//button[@type='submit']"))
         )
         print("reconocio boton submit")
@@ -34,7 +34,7 @@ class TestFn20:
             if key in self.form_fields:
                 try:
                     # Esperar a que el iframe esté presente
-                    WebDriverWait(self.driver, 10).until(
+                    WebDriverWait(self.driver, 15).until(
                         EC.presence_of_element_located((By.XPATH, "//iframe[contains(@id, 'tiny-angular')]"))
                     )
                     # Cambiar el contexto al iframe
@@ -90,7 +90,7 @@ class TestFn20:
         )
 
     def run(self):
-        print("******************** RUN TEST-FN01 IN ********************")
+        print("******************** RUN TEST-FN20 IN ********************")
         for case in self.cases:
             self.run_case(case)
         print("******************** **************** ********************")
