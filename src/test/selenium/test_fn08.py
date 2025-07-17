@@ -2,115 +2,162 @@ from check_connection import SeleniumConnection
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
-import time, json
+import time, json, random, sys
 from utils import Utils
+import contextlib
+import io
 
 class TestFn08:
     def __init__(self, driver, url):
-        self.driver, self.url, self.path = driver, url, "/web/admin/notifications"
+        self.driver = driver
+        self.url = url
+        self.path = "/web/admin/notifications"
+
         self.form_fields = {
+            "title": (By.ID, "notification-title"),
+            "message": (By.ID, "notification-message"),
             "group": (By.ID, "notification-target-user"),
             "style": (By.ID, "notification-style"),
-            "title": (By.ID, "notification-title"),
-            "start_time": (By.ID, "notification-start-time"),
-            "end_time": (By.ID, "notification-end-time"),
-            # Los pickers de fecha son componentes Angular, no inputs HTML nativos
+            "start_date": (By.XPATH, "//div[@id='notification-start-date']//input"),
+            "start_time": (By.XPATH, "//tm-timepicker[@id='notification-start-time']//select"),
+            "end_date": (By.XPATH, "//div[@id='notification-end-date']//input"),
+            "end_time": (By.XPATH, "//tm-timepicker[@id='notification-end-time']//select"),
         }
-        with open("data/fn08.json") as f:
+
+        with open("data/fn08.json", encoding="utf-8") as f:
             self.cases = json.load(f)
 
-    def go_to_form(self):
-        self.driver.get(self.url)
-
+    def go_to_edit_form(self, notification_id):
+        self.driver.get(self.url + self.path)
         try:
             WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located((By.ID, "notifications-table"))
+                EC.presence_of_element_located((By.ID, notification_id))
             )
-        except TimeoutException:
-            print("No se cargó la tabla de notificaciones")
-            return
+            row = self.driver.find_element(By.ID, notification_id)
+            edit_button = row.find_element(By.XPATH, ".//button[contains(text(), 'Edit')]")
+            edit_button.click()
 
-        try:
-            first_edit_btn = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Edit')]"))
-            )
-            first_edit_btn.click()
-
-            # Esperar el campo title (para asegurar que se abrió bien el formulario)
             WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located((By.ID, "notification-title"))
+                EC.element_to_be_clickable((By.ID, "btn-edit-notification"))
             )
 
         except Exception as e:
-            print(f"Error al hacer clic en Edit: {e}")
+            print(f"[ERROR] No se pudo acceder al formulario de edición: {e}")
+            self.driver.quit()
+            sys.exit(1)
 
     def fill_form(self, fields):
         for key, value in fields.items():
-            if key in self.form_fields:
-                el = self.driver.find_element(*self.form_fields[key])
-                el.clear()
-                el.send_keys(value)
+            if key in ["title", "group", "style"]:
+                el = WebDriverWait(self.driver, 5).until(
+                    EC.presence_of_element_located(self.form_fields[key])
+                )
+                if el.tag_name == "select":
+                    for option in el.find_elements(By.TAG_NAME, 'option'):
+                        if value.lower() in option.text.lower():
+                            option.click()
+                            break
+                else:
+                    if el.is_enabled():
+                        self.driver.execute_script("arguments[0].value = '';", el)
+                        el.send_keys(value)
 
-        # Rich Text Editor (TinyMCE)
-        if "message" in fields:
-            self.driver.execute_script(
-                f"tinymce.get('notification-message').setContent(`{fields['message']}`);"
-            )
+            elif key == "message":
+                iframe = WebDriverWait(self.driver, 10).until(
+                    EC.presence_of_element_located((By.CSS_SELECTOR, "iframe.tox-edit-area__iframe"))
+                )
+                self.driver.switch_to.frame(iframe)
+                body = WebDriverWait(self.driver, 5).until(
+                    EC.presence_of_element_located((By.CSS_SELECTOR, "body"))
+                )
+                self.driver.execute_script("arguments[0].innerHTML = '';", body)
+                body.send_keys(value)
+                self.driver.switch_to.default_content()
 
-        # Fechas (componentes Angular: tm-datepicker)
-        if "start_date" in fields:
-            self.driver.execute_script(f"""
-                document.querySelector('#notification-start-date input')?.value = '{fields["start_date"]}';
-                document.querySelector('#notification-start-date input')?.dispatchEvent(new Event('input', {{ bubbles: true }}));
-            """)
-        if "end_date" in fields:
-            self.driver.execute_script(f"""
-                document.querySelector('#notification-end-date input')?.value = '{fields["end_date"]}';
-                document.querySelector('#notification-end-date input')?.dispatchEvent(new Event('input', {{ bubbles: true }}));
-            """)
+            elif key in ["start_date", "end_date"]:
+                el = WebDriverWait(self.driver, 5).until(
+                    EC.presence_of_element_located(self.form_fields[key])
+                )
+                self.driver.execute_script("arguments[0].removeAttribute('readonly')", el)
+                self.driver.execute_script("arguments[0].value = arguments[1];", el, value)
+
+            elif key in ["start_time", "end_time"]:
+                select = WebDriverWait(self.driver, 5).until(
+                    EC.presence_of_element_located(self.form_fields[key])
+                )
+                for option in select.find_elements(By.TAG_NAME, 'option'):
+                    if value in option.text:
+                        option.click()
+                        break
 
     def submit(self):
         self.driver.find_element(By.ID, "btn-edit-notification").click()
 
     def get_message(self, locator):
         try:
-            el = WebDriverWait(self.driver, 10).until(
-                EC.visibility_of_element_located((By.XPATH, locator))
-            )
-            return el.text.strip()
-        except (TimeoutException, NoSuchElementException):
+            if locator.startswith("//"):
+                msg_element = WebDriverWait(self.driver, 7).until(
+                    EC.visibility_of_element_located((By.XPATH, locator))
+                )
+            else:
+                msg_element = WebDriverWait(self.driver, 7).until(
+                    EC.visibility_of_element_located((By.ID, locator))
+                )
+            return msg_element.text.strip()
+        except Exception as e:
+            print(f"[ERROR] No se pudo obtener el mensaje con locator {locator}: {e}")
             return ""
 
     def run_case(self, case):
-        self.go_to_form()
-        self.fill_form(case["fields"])
-        Utils.solve_recaptcha(self.driver)
-        self.submit()
-        time.sleep(1.5)
+        print(f"Ejecutando caso: {case['id']}")
+        try:
+            self.go_to_edit_form(case["notification_id"])
+            self.fill_form(case["fields"])
+            time.sleep(random.uniform(2.5, 4.5))
 
-        locator = case["element_locator"]
-        obtained_msg = self.get_message(locator)
+            try:
+                with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+                    Utils.solve_recaptcha(self.driver)
+            except Exception:
+                pass
 
-        Utils.log_test(
-            case["id"],
-            case["fields"],
-            case["expected"],
-            obtained_msg,
-            case["Obs"]
-        )
-        return {
-            "id": case["id"],
-            "expected": case["expected"],
-            "obtained": obtained_msg
-        }
+            self.submit()
+            time.sleep(2)
+
+            obtained_msg = self.get_message(case["element_locator"])
+            status = "PASSED" if case["expected"] in obtained_msg else "FAILED"
+
+            Utils.log_test(
+                case["id"],
+                case["fields"],
+                case["expected"],
+                obtained_msg,
+                case["Obs"]
+            )
+
+            print(f"{'.' if status == 'PASSED' else '.'} {case['id']} - {status}")
+            return status
+
+        except Exception as e:
+            print(f" {case['id']} - EXCEPTION: {str(e).splitlines()[0]}")
+            return "FAILED"
 
     def run(self):
-        print(f"******************** RUN TEST-FN08 IN ********************")
+        print("\n******************** RUNNING TEST-FN08 ********************")
+        passed = failed = 0
+
         for case in self.cases:
-            self.run_case(case)
-        print(f"******************** **************** ********************")
-        print("")
+            status = self.run_case(case)
+            if status == "PASSED":
+                passed += 1
+            else:
+                failed += 1
+
+        print("\n=============== RESUMEN ===============")
+        print(f" {passed} PASSED")
+        print(f" {failed} FAILED")
+        print("=======================================\n")
+
 
 if __name__ == "__main__":
     checker = SeleniumConnection()
