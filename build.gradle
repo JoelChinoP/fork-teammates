@@ -410,6 +410,15 @@ checkstyle {
         suppressions: file("static-analysis/teammates-checkstyle-suppressions.xml")
     ]
 }
+// Generate reports for both main and test source sets
+tasks.withType(Checkstyle).configureEach {
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+        xml.outputLocation.set(file("$buildDir/reports/checkstyle/checkstyle-report.xml"))
+        html.outputLocation.set(file("$buildDir/reports/checkstyle/index.html"))
+    }
+}
 
 pmd {
     toolVersion = pmdVersion
@@ -417,6 +426,16 @@ pmd {
     ruleSetFiles = files("static-analysis/teammates-pmd.xml", "static-analysis/teammates-pmdMain.xml")
     ruleSets = []
 }
+// Generate reports for both main and test source sets
+tasks.withType(Pmd).configureEach {
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+        xml.outputLocation.set(file("$buildDir/reports/pmd/pmd-report.xml"))
+        html.outputLocation.set(file("$buildDir/reports/pmd/index.html"))
+    }
+}
+
 
 spotbugs {
     reportLevel = com.github.spotbugs.snom.Confidence.valueOf("LOW")
@@ -426,9 +445,12 @@ spotbugs {
 
 tasks.withType(com.github.spotbugs.snom.SpotBugsTask) {
     reports {
-        xml.required = false
-        html.required = false
+        xml.required = true
+        html.required = true
         text.required = true
+        xml.outputLocation.set(file("$buildDir/reports/spotbugs/spotbugs-report.xml"))
+        html.outputLocation.set(file("$buildDir/reports/spotbugs/index.html"))
+        text.outputLocation.set(file("$buildDir/reports/spotbugs/main.txt"))
     }
 }
 
@@ -737,6 +759,8 @@ task jacocoReport(type: JacocoReport) {
     reports {
         xml.required = true
         html.required = true
+        xml.outputLocation = file("$buildDir/reports/jacoco/test/jacocoTestReport.xml")
+        html.outputLocation = file("$buildDir/reports/jacoco/test/html")
     }
     afterEvaluate {
         classDirectories.from files(classDirectories.files.collect {
