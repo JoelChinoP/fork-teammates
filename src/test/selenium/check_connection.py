@@ -31,7 +31,7 @@ class SeleniumConnection:
 
     def connect_and_check_login(self):
         options = Options()
-        options.add_argument("--headless=new")  # Descomentar si se requiere headless
+        #options.add_argument("--headless=new")  # Descomentar si se requiere headless
 
         # Configuración de Chrome
         options.add_argument("--verbose")
